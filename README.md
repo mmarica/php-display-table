@@ -57,3 +57,51 @@ $asciiTable = new AsciiTable(array(
 ));
 print $asciiTable->generate($data) . PHP_EOL;
 ```
+
+Resulting output:
+
+```
+Using defaults:
+.---.-----------.------------------------------.
+| # |  Person   |           Hobbies            |
+:---+-----------+------------------------------:
+| 1 | Mihai     | Cycling, Gaming, Programming |
+| 2 | Chewbacca | Growling                     |
+| 3 | Tudor     | Diets                        |
+'---'-----------'------------------------------'
+
+With custom padding:
+.-----.-------------.--------------------------------.
+|     |             |                                |
+|  #  |   Person    |            Hobbies             |
+|     |             |                                |
+:-----+-------------+--------------------------------:
+|     |             |                                |
+|  1  |  Mihai      |  Cycling, Gaming, Programming  |
+|     |             |                                |
+|     |             |                                |
+|  2  |  Chewbacca  |  Growling                      |
+|     |             |                                |
+|     |             |                                |
+|  3  |  Tudor      |  Diets                         |
+|     |             |                                |
+'-----'-------------'--------------------------------'
+
+MySQL style:
++---+-----------+------------------------------+
+| # |  Person   |           Hobbies            |
++---+-----------+------------------------------+
+| 1 | Mihai     | Cycling, Gaming, Programming |
+| 2 | Chewbacca | Growling                     |
+| 3 | Tudor     | Diets                        |
++---+-----------+------------------------------+
+
+Dots style:
+................................................
+: # :  Person   :           Hobbies            :
+:...:...........:..............................:
+: 1 : Mihai     : Cycling, Gaming, Programming :
+: 2 : Chewbacca : Growling                     :
+: 3 : Tudor     : Diets                        :
+:...:...........:..............................:
+```
