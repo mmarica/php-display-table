@@ -5,7 +5,7 @@ namespace Mmarica\DisplayTable;
 class AsciiTable implements TableInterface
 {
 
-    public function generate(Table\Data $data)
+    public function generate(DataSource\Base $data)
     {
         list($columns, $rows) = $data->get();
 

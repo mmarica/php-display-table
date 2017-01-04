@@ -1,10 +1,10 @@
 <?php
 require_once dirname(__FILE__) . '/../vendor/autoload.php';
 
-use Mmarica\DisplayTable\Table;
+use Mmarica\DisplayTable\DataSource;
 use Mmarica\DisplayTable\AsciiTable;
 
-$data = new Table\Data(
+$data = new DataSource\FromArray(
     array('1', '2', '3'),
     array(
         array('a', 'b', 'c'),

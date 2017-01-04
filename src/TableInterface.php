@@ -4,5 +4,5 @@ namespace Mmarica\DisplayTable;
 
 interface TableInterface
 {
-    public function generate(Table\Data $data);
+    public function generate(DataSource\Base $data);
 }
