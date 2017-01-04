@@ -43,7 +43,7 @@ class AsciiTable implements TableInterface
     const DOTS_BORDERS = array(
         self::TOP_LEFT => '.',
         self::TOP_RIGHT => '.',
-        self::TOP_CENTER => ':',
+        self::TOP_CENTER => '.',
         self::CENTER_CENTER => ':',
         self::CENTER_LEFT => ':',
         self::CENTER_RIGHT => ':',
