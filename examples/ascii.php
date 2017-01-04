@@ -1,5 +1,5 @@
 <?php
-require "Table.php";
+require_once dirname(__FILE__) . '/../vendor/autoload.php';
 
 use Mmarica\DisplayTable\Table;
 use Mmarica\DisplayTable\Template;

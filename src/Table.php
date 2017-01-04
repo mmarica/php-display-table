@@ -2,9 +2,6 @@
 
 namespace Mmarica\DisplayTable;
 
-require "TemplateInterface.php";
-require "Template/Ascii.php";
-
 class Table
 {
     protected $_columnNames;
