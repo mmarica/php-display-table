@@ -34,6 +34,14 @@ $data = new DataSource\FromArray(
     )
 );
 
+// draw a table
 $asciiTable = new AsciiTable();
+print $asciiTable->generate($data);
+
+// draw another table, this time with custom padding
+$asciiTable = new AsciiTable(array(
+    AsciiTable::OPT_HORIZONTAL_PADDING => 2,
+    AsciiTable::OPT_VERTICAL_PADDING => 1,
+));
 print $asciiTable->generate($data);
 ```
