@@ -27,7 +27,33 @@ class AsciiTable implements TableInterface
     const VERTICAL = 'vertical';
 
     // Predefined border styles
-    const SQL_BORDERS = array(
+    const ROUNDED_BORDERS = array(
+        self::TOP_LEFT => '.',
+        self::TOP_RIGHT => '.',
+        self::TOP_CENTER => '.',
+        self::CENTER_CENTER => '+',
+        self::CENTER_LEFT => ':',
+        self::CENTER_RIGHT => ':',
+        self::BOTTOM_LEFT => '\'',
+        self::BOTTOM_RIGHT => '\'',
+        self::BOTTOM_CENTER => '\'',
+        self::HORIZONTAL => '-',
+        self::VERTICAL => '|',
+    );
+    const DOTS_BORDERS = array(
+        self::TOP_LEFT => '.',
+        self::TOP_RIGHT => '.',
+        self::TOP_CENTER => ':',
+        self::CENTER_CENTER => ':',
+        self::CENTER_LEFT => ':',
+        self::CENTER_RIGHT => ':',
+        self::BOTTOM_LEFT => ':',
+        self::BOTTOM_RIGHT => ':',
+        self::BOTTOM_CENTER => ':',
+        self::HORIZONTAL => '.',
+        self::VERTICAL => ':',
+    );
+    const MYSQL_BORDERS = array(
         self::TOP_LEFT => '+',
         self::TOP_RIGHT => '+',
         self::TOP_CENTER => '+',
@@ -45,7 +71,7 @@ class AsciiTable implements TableInterface
     const DEFAULT_OPTIONS = array(
         self::OPT_HORIZONTAL_PADDING => 1,
         self::OPT_VERTICAL_PADDING => 0,
-        self::OPT_BORDERS => self::SQL_BORDERS,
+        self::OPT_BORDERS => self::ROUNDED_BORDERS,
     );
 
     /**

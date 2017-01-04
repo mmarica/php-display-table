@@ -34,14 +34,26 @@ $data = new DataSource\FromArray(
     )
 );
 
-// draw a table
+print 'Using defaults:' . PHP_EOL;
 $asciiTable = new AsciiTable();
-print $asciiTable->generate($data);
+print $asciiTable->generate($data) . PHP_EOL;
 
-// draw another table, this time with custom padding
+print 'With custom padding:' . PHP_EOL;
 $asciiTable = new AsciiTable(array(
     AsciiTable::OPT_HORIZONTAL_PADDING => 2,
-    AsciiTable::OPT_VERTICAL_PADDING => 1,
+    AsciiTable::OPT_VERTICAL_PADDING => 1
 ));
-print $asciiTable->generate($data);
+print $asciiTable->generate($data) . PHP_EOL;
+
+print 'MySQL style:' . PHP_EOL;
+$asciiTable = new AsciiTable(array(
+    AsciiTable::OPT_BORDERS => AsciiTable::MYSQL_BORDERS
+));
+print $asciiTable->generate($data) . PHP_EOL;
+
+print 'Dots style:' . PHP_EOL;
+$asciiTable = new AsciiTable(array(
+    AsciiTable::OPT_BORDERS => AsciiTable::DOTS_BORDERS
+));
+print $asciiTable->generate($data) . PHP_EOL;
 ```
