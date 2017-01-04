@@ -2,7 +2,6 @@
 
 [![Latest Stable Version](https://poser.pugx.org/mmarica/display-table/v/stable)](https://packagist.org/packages/mmarica/display-table)
 [![Build Status](https://travis-ci.org/mmarica/php-display-table.svg?branch=master)](https://travis-ci.org/mmarica/php-display-table)
-[![PHP-Eye](https://php-eye.com/badge/mmarica/php-display-table/tested.svg?style=flat)](https://php-eye.com/package/mmarica/php-display-table)
 
 A simple PHP Library for generating tables in ASCII format, useful for writing summaries in log or console.
 
