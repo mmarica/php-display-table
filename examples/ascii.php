@@ -2,9 +2,9 @@
 require_once dirname(__FILE__) . '/../vendor/autoload.php';
 
 use Mmarica\DisplayTable\Table;
-use Mmarica\DisplayTable\Template;
+use Mmarica\DisplayTable\AsciiTable;
 
-$table = new Table(
+$data = new Table\Data(
     array('1', '2', '3'),
     array(
         array('a', 'b', 'c'),
@@ -12,4 +12,6 @@ $table = new Table(
     )
 );
 
-print $table->generate(new Template\Ascii());
+$asciiTable = new AsciiTable();
+print $asciiTable->generate($data);
+

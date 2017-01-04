@@ -1,24 +1,24 @@
 <?php
 
-namespace Mmarica\DisplayTable\Template;
+namespace Mmarica\DisplayTable;
 
-use Mmarica\DisplayTable\TemplateInterface;
-
-class Ascii implements TemplateInterface
+class AsciiTable implements TableInterface
 {
 
-    public function getOutput($columnNames, $rows)
+    public function generate(Table\Data $data)
     {
+        list($columns, $rows) = $data->get();
+
         $hasHeader = false;
         $colLengths = array();
         $data = array();
 
-        if (count($columnNames)) {
+        if (count($columns)) {
             $hasHeader = true;
-            $data[] = array_values($columnNames);
+            $data[] = array_values($columns);
 
             $index = 0;
-            foreach ($columnNames as $value) {
+            foreach ($columns as $value) {
                 $colLengths[$index] = strlen($value);
                 $index++;
             }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mmarica\DisplayTable;
+namespace Mmarica\DisplayTable\Table;
 
-class Table
+class Data
 {
     protected $_columnNames;
     protected $_rows;
@@ -28,8 +28,8 @@ class Table
         $this->_rows[] = $row;
     }
 
-    public function generate(TemplateInterface $template)
+    public function get()
     {
-        return $template->getOutput($this->_columnNames, $this->_rows);
+        return array($this->_columnNames, $this->_rows);
     }
 }
