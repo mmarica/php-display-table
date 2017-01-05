@@ -1,67 +1,37 @@
-# Display tables
-
-[![Latest Stable Version](https://poser.pugx.org/mmarica/display-table/v/stable)](https://packagist.org/packages/mmarica/display-table)
-[![Build Status](https://travis-ci.org/mmarica/php-display-table.svg?branch=master)](https://travis-ci.org/mmarica/php-display-table)
-[![codecov.io](https://codecov.io/github/mmarica/php-display-table/coverage.svg?branch=master)](https://codecov.io/github/mmarica/php-display-table?branch=master)
-
-A simple PHP Library for generating tables in ASCII format, useful for writing summaries in log or console.
-
-## Installation
-
-The easiest way to install is via composer:
-
-```
-$ composer require mmarica/display-table
-```
-
-## Examples
-
-Print ASCII table to output:
-
-```php
 <?php
-require_once dirname(__FILE__) . '/vendor/autoload.php';
+
+namespace Tests\DisplayTable;
 
 use Mmarica\DisplayTable\DataSource;
 use Mmarica\DisplayTable\AsciiTable;
+use PHPUnit_Framework_TestCase;
 
-$data = new DataSource\FromArray(
-    array('#', 'Person', 'Hobbies'),
-    array(
-        array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-        array('2', 'Chewbacca', 'Growling'),
-        array('3', 'Tudor', 'Diets'),
-    )
-);
+class AsciiTableTest extends PHPUnit_Framework_TestCase
+{
+    /**
+     * @var DataSource\Base
+     */
+    protected $_data;
 
-print 'Using defaults:' . PHP_EOL;
-$asciiTable = new AsciiTable();
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->_data = new DataSource\FromArray(
+            array('#', 'Person', 'Hobbies'),
+            array(
+                array('1', 'Mihai', 'Cycling, Gaming, Programming'),
+                array('2', 'Chewbacca', 'Growling'),
+                array('3', 'Tudor', 'Diets'),
+            )
+        );
+    }
 
-print 'With custom padding:' . PHP_EOL;
-$asciiTable = new AsciiTable(array(
-    AsciiTable::OPT_HORIZONTAL_PADDING => 2,
-    AsciiTable::OPT_VERTICAL_PADDING => 1
-));
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
+    public function testDefaults()
+    {
+        $asciiTable = new AsciiTable();
+        $result = $asciiTable->generate($this->_data);
 
-print 'MySQL style:' . PHP_EOL;
-$asciiTable = new AsciiTable(array(
-    AsciiTable::OPT_BORDERS => AsciiTable::MYSQL_BORDERS
-));
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
-
-print 'Dots style:' . PHP_EOL;
-$asciiTable = new AsciiTable(array(
-    AsciiTable::OPT_BORDERS => AsciiTable::DOTS_BORDERS
-));
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
-```
-
-Resulting output:
-
-```
-Using defaults:
+        $expected = <<<EOF
 .---.-----------.------------------------------.
 | # |  Person   |           Hobbies            |
 :---+-----------+------------------------------:
@@ -69,8 +39,19 @@ Using defaults:
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 '---'-----------'------------------------------'
+EOF;
+        $this->assertSame($expected, $result);
+    }
 
-With custom padding:
+    public function testPadding()
+    {
+        $asciiTable = new AsciiTable(array(
+            AsciiTable::OPT_HORIZONTAL_PADDING => 2,
+            AsciiTable::OPT_VERTICAL_PADDING => 1
+        ));
+        $result = $asciiTable->generate($this->_data);
+
+        $expected = <<<EOF
 .-----.-------------.--------------------------------.
 |     |             |                                |
 |  #  |   Person    |            Hobbies             |
@@ -86,8 +67,18 @@ With custom padding:
 |  3  |  Tudor      |  Diets                         |
 |     |             |                                |
 '-----'-------------'--------------------------------'
+EOF;
+        $this->assertSame($expected, $result);
+    }
 
-MySQL style:
+    public function testMysqlBorders()
+    {
+        $asciiTable = new AsciiTable(array(
+            AsciiTable::OPT_BORDERS => AsciiTable::MYSQL_BORDERS
+        ));
+        $result = $asciiTable->generate($this->_data);
+
+        $expected = <<<EOF
 +---+-----------+------------------------------+
 | # |  Person   |           Hobbies            |
 +---+-----------+------------------------------+
@@ -95,8 +86,18 @@ MySQL style:
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 +---+-----------+------------------------------+
+EOF;
+        $this->assertSame($expected, $result);
+    }
 
-Dots style:
+    public function testDotsBorders()
+    {
+        $asciiTable = new AsciiTable(array(
+            AsciiTable::OPT_BORDERS => AsciiTable::DOTS_BORDERS
+        ));
+        $result = $asciiTable->generate($this->_data);
+
+        $expected = <<<EOF
 ................................................
 : # :  Person   :           Hobbies            :
 :...:...........:..............................:
@@ -104,4 +105,7 @@ Dots style:
 : 2 : Chewbacca : Growling                     :
 : 3 : Tudor     : Diets                        :
 :...:...........:..............................:
-```
+EOF;
+        $this->assertSame($expected, $result);
+    }
+}

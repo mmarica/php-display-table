@@ -170,7 +170,7 @@ class AsciiTable implements TableInterface
         foreach ($this->_rows as $row)
             $output .= $this->_verticalPadding($this->_dataRow($row)) . PHP_EOL;
 
-        $output .= $this->_bottomBorder() . PHP_EOL;
+        $output .= $this->_bottomBorder();
 
         return $output;
     }
