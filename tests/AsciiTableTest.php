@@ -65,9 +65,16 @@ EOF;
     public function testPadding()
     {
         $asciiTable = new AsciiTable(array(
-            AsciiTable::OPT_HORIZONTAL_PADDING => 2,
-            AsciiTable::OPT_VERTICAL_PADDING => 1
+            AsciiTable::OPT_HORIZONTAL_PADDING => 1,
+            AsciiTable::OPT_VERTICAL_PADDING => 2
         ));
+
+        $this->assertSame($asciiTable->getHorizontalPadding(), 1);
+        $this->assertSame($asciiTable->getVerticalPadding(), 2);
+
+        $asciiTable->setHorizontalPadding(2);
+        $asciiTable->setVerticalPadding(1);
+
         $result = $asciiTable->generate($this->_data);
 
         $expected = <<<EOF
@@ -87,8 +94,6 @@ EOF;
 |     |             |                                |
 '-----'-------------'--------------------------------'
 EOF;
-        $this->assertSame($asciiTable->getHorizontalPadding(), 2);
-        $this->assertSame($asciiTable->getVerticalPadding(), 1);
         $this->assertSame($expected, $result);
     }
 
@@ -114,9 +119,8 @@ EOF;
 
     public function testDotsBorders()
     {
-        $asciiTable = new AsciiTable(array(
-            AsciiTable::OPT_BORDERS => AsciiTable::DOTS_BORDERS
-        ));
+        $asciiTable = new AsciiTable();
+        $asciiTable->setBorders(AsciiTable::DOTS_BORDERS);
         $result = $asciiTable->generate($this->_data);
 
         $expected = <<<EOF
