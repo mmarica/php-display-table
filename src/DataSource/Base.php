@@ -2,19 +2,29 @@
 
 namespace Mmarica\DisplayTable\DataSource;
 
-class Base
+abstract class Base
 {
     protected $_columns;
     protected $_rows;
     
-    public function setColumns($columnNames)
+    public function setColumns($columns)
     {
-        $this->_columns = $columnNames;
+        $this->_columns = $columns;
+    }
+
+    public function getColumns()
+    {
+        return $this->_columns;
     }
 
     public function setRows($rows)
     {
         $this->_rows = $rows;
+    }
+
+    public function getRows($rows)
+    {
+        return $this->_rows;
     }
 
     public function addRow($row)

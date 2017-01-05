@@ -43,6 +43,25 @@ EOF;
         $this->assertSame($expected, $result);
     }
 
+    public function testNoPadding()
+    {
+        $asciiTable = new AsciiTable(array(
+            AsciiTable::OPT_HORIZONTAL_PADDING => 0
+        ));
+        $result = $asciiTable->generate($this->_data);
+
+        $expected = <<<EOF
+.-.---------.----------------------------.
+|#| Person  |          Hobbies           |
+:-+---------+----------------------------:
+|1|Mihai    |Cycling, Gaming, Programming|
+|2|Chewbacca|Growling                    |
+|3|Tudor    |Diets                       |
+'-'---------'----------------------------'
+EOF;
+        $this->assertSame($expected, $result);
+    }
+
     public function testPadding()
     {
         $asciiTable = new AsciiTable(array(
@@ -68,6 +87,8 @@ EOF;
 |     |             |                                |
 '-----'-------------'--------------------------------'
 EOF;
+        $this->assertSame($asciiTable->getHorizontalPadding(), 2);
+        $this->assertSame($asciiTable->getVerticalPadding(), 1);
         $this->assertSame($expected, $result);
     }
 
@@ -88,6 +109,7 @@ EOF;
 +---+-----------+------------------------------+
 EOF;
         $this->assertSame($expected, $result);
+        $this->assertSame($asciiTable->getBorders(), AsciiTable::MYSQL_BORDERS);
     }
 
     public function testDotsBorders()

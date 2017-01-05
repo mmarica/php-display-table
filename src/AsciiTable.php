@@ -131,7 +131,17 @@ class AsciiTable implements TableInterface
     }
 
     /**
-     * Set the vertical padding
+     * Get the horizontal padding
+     *
+     * @return int
+     */
+    public function getHorizontalPadding()
+    {
+        return $this->_horizontalPadding;
+    }
+
+    /**
+     * Set the  padding
      *
      * @param int $padding Padding value
      * @return void
@@ -139,6 +149,16 @@ class AsciiTable implements TableInterface
     public function setVerticalPadding($padding)
     {
         $this->_verticalPadding = $padding;
+    }
+
+    /**
+     * Get the vertical padding
+     *
+     * @return int
+     */
+    public function getVerticalPadding()
+    {
+        return $this->_verticalPadding;
     }
 
     /**
@@ -150,6 +170,16 @@ class AsciiTable implements TableInterface
     public function setBorders($borders)
     {
         $this->_borders = $borders;
+    }
+
+    /**
+     * Get the border character set
+     *
+     * @return array
+     */
+    public function getBorders()
+    {
+        return $this->_borders;
     }
 
     /**
