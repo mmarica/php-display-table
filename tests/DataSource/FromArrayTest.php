@@ -35,12 +35,7 @@ class FromArrayTest extends PHPUnit_Framework_TestCase
         $this->assertSame($rows, $this->_rows);
     }
 
-    public function testGetColumns()
-    {
-        $this->assertSame($this->_data->getColumns(), $this->_columns);
-    }
-
-    public function testGetRows()
+    public function testGetSetRows()
     {
         $data = clone $this->_data;
 
@@ -51,5 +46,18 @@ class FromArrayTest extends PHPUnit_Framework_TestCase
         $rows[] = $row;
 
         $this->assertSame($data->getRows(), $rows);
+
+        $data->setRows($this->_rows);
+        $this->assertSame($data->getRows(), $this->_rows);
+    }
+
+    public function testGetSetColumns()
+    {
+        $data = clone $this->_data;
+
+        $columns = array('No.', 'Who', 'Likes');
+        $data->setColumns($columns);
+
+        $this->assertSame($data->getColumns(), $columns);
     }
 }
