@@ -35,27 +35,22 @@ $data = new DataSource\FromArray(
 );
 
 print 'Using defaults:' . PHP_EOL;
-$asciiTable = new AsciiTable();
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
+print AsciiTable::create()->generate($data) . PHP_EOL . PHP_EOL;
 
 print 'With custom padding:' . PHP_EOL;
-$asciiTable = new AsciiTable(array(
-    AsciiTable::OPT_HORIZONTAL_PADDING => 2,
-    AsciiTable::OPT_VERTICAL_PADDING => 1
-));
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
+print AsciiTable::create()
+    ->setHorizontalPadding(2)->setVerticalPadding(1)
+    ->generate($data) . PHP_EOL . PHP_EOL;
 
 print 'MySQL style:' . PHP_EOL;
-$asciiTable = new AsciiTable(array(
-    AsciiTable::OPT_BORDERS => AsciiTable::MYSQL_BORDERS
-));
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
+print AsciiTable::create()
+    ->setBorders(AsciiTable::MYSQL_BORDERS)
+    ->generate($data) . PHP_EOL . PHP_EOL;
 
 print 'Dots style:' . PHP_EOL;
-$asciiTable = new AsciiTable(array(
-    AsciiTable::OPT_BORDERS => AsciiTable::DOTS_BORDERS
-));
-print $asciiTable->generate($data) . PHP_EOL . PHP_EOL;
+print AsciiTable::create()
+    ->setBorders(AsciiTable::DOTS_BORDERS)
+    ->generate($data) . PHP_EOL . PHP_EOL;
 ```
 
 Resulting output:

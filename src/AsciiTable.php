@@ -6,13 +6,8 @@ namespace Mmarica\DisplayTable;
  * Ascii Table Class
  * @package Mmarica\DisplayTable
  */
-class AsciiTable implements TableInterface
+class AsciiTable extends TableBase
 {
-    // Possible options
-    const OPT_HORIZONTAL_PADDING = 'opt_horizontal_padding';
-    const OPT_VERTICAL_PADDING = 'opt_vertical_padding';
-    const OPT_BORDERS = 'opt_borders';
-
     // Border element types
     const TOP_LEFT = 'top_left';
     const TOP_RIGHT = 'top_right';
@@ -67,13 +62,6 @@ class AsciiTable implements TableInterface
         self::VERTICAL => '|',
     );
 
-    // Defaults
-    const DEFAULT_OPTIONS = array(
-        self::OPT_HORIZONTAL_PADDING => 1,
-        self::OPT_VERTICAL_PADDING => 0,
-        self::OPT_BORDERS => self::ROUNDED_BORDERS,
-    );
-
     /**
      * @var integer
      */
@@ -106,28 +94,36 @@ class AsciiTable implements TableInterface
 
     /**
      * AsciiTable constructor.
-     * @param array $options (optional) List of options
      */
-    public function __construct($options = array())
+    protected function __construct()
     {
-        // apply initialization options (if any)
-        $options = array_merge(self::DEFAULT_OPTIONS, $options);
+        $this->_horizontalPadding = 1;
+        $this->_verticalPadding = 0;
+        $this->_borders = self::ROUNDED_BORDERS;
+    }
 
-        // extract options into properties
-        $this->_horizontalPadding = $options[self::OPT_HORIZONTAL_PADDING];
-        $this->_verticalPadding = $options[self::OPT_VERTICAL_PADDING];
-        $this->_borders = $options[self::OPT_BORDERS];
+    /**
+     * Remove horizontal and vertical padding
+     *
+     * @return $this
+     */
+    public function noPadding()
+    {
+        $this->_horizontalPadding = 0;
+        $this->_verticalPadding = 0;
+        return $this;
     }
 
     /**
      * Set the horizontal padding
      *
      * @param int $padding Padding value
-     * @return void
+     * @return self
      */
     public function setHorizontalPadding($padding)
     {
         $this->_horizontalPadding = $padding;
+        return $this;
     }
 
     /**
@@ -141,14 +137,15 @@ class AsciiTable implements TableInterface
     }
 
     /**
-     * Set the  padding
+     * Set the vertical padding
      *
      * @param int $padding Padding value
-     * @return void
+     * @return self
      */
     public function setVerticalPadding($padding)
     {
         $this->_verticalPadding = $padding;
+        return $this;
     }
 
     /**
@@ -165,11 +162,12 @@ class AsciiTable implements TableInterface
      * Set the border character set
      *
      * @param array $borders Border character set
-     * @return void
+     * @return self
      */
     public function setBorders($borders)
     {
         $this->_borders = $borders;
+        return $this;
     }
 
     /**

@@ -28,8 +28,7 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
 
     public function testDefaults()
     {
-        $asciiTable = new AsciiTable();
-        $result = $asciiTable->generate($this->_data);
+        $result = AsciiTable::create()->generate($this->_data);
 
         $expected = <<<EOF
 .---.-----------.------------------------------.
@@ -45,10 +44,8 @@ EOF;
 
     public function testNoPadding()
     {
-        $asciiTable = new AsciiTable(array(
-            AsciiTable::OPT_HORIZONTAL_PADDING => 0
-        ));
-        $result = $asciiTable->generate($this->_data);
+        $result = AsciiTable::create()->noPadding()
+            ->generate($this->_data);
 
         $expected = <<<EOF
 .-.---------.----------------------------.
@@ -64,16 +61,11 @@ EOF;
 
     public function testPadding()
     {
-        $asciiTable = new AsciiTable(array(
-            AsciiTable::OPT_HORIZONTAL_PADDING => 1,
-            AsciiTable::OPT_VERTICAL_PADDING => 2
-        ));
+        $asciiTable = AsciiTable::create()
+            ->setHorizontalPadding(2)->setVerticalPadding(1);
 
-        $this->assertSame($asciiTable->getHorizontalPadding(), 1);
-        $this->assertSame($asciiTable->getVerticalPadding(), 2);
-
-        $asciiTable->setHorizontalPadding(2);
-        $asciiTable->setVerticalPadding(1);
+        $this->assertSame($asciiTable->getHorizontalPadding(), 2);
+        $this->assertSame($asciiTable->getVerticalPadding(), 1);
 
         $result = $asciiTable->generate($this->_data);
 
@@ -99,9 +91,7 @@ EOF;
 
     public function testMysqlBorders()
     {
-        $asciiTable = new AsciiTable(array(
-            AsciiTable::OPT_BORDERS => AsciiTable::MYSQL_BORDERS
-        ));
+        $asciiTable = AsciiTable::create()->setBorders(AsciiTable::MYSQL_BORDERS);
         $result = $asciiTable->generate($this->_data);
 
         $expected = <<<EOF
@@ -119,9 +109,8 @@ EOF;
 
     public function testDotsBorders()
     {
-        $asciiTable = new AsciiTable();
-        $asciiTable->setBorders(AsciiTable::DOTS_BORDERS);
-        $result = $asciiTable->generate($this->_data);
+        $result = AsciiTable::create()->setBorders(AsciiTable::DOTS_BORDERS)
+            ->generate($this->_data);
 
         $expected = <<<EOF
 ................................................
