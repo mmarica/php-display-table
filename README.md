@@ -35,22 +35,23 @@ $data = new DataSource\FromArray(
 );
 
 print 'Using defaults:' . PHP_EOL;
-print AsciiTable::create()->generate($data) . PHP_EOL . PHP_EOL;
+print AsciiTable::create()
+        ->generate($data) . PHP_EOL . PHP_EOL;
 
 print 'With custom padding:' . PHP_EOL;
 print AsciiTable::create()
-    ->setHorizontalPadding(2)->setVerticalPadding(1)
-    ->generate($data) . PHP_EOL . PHP_EOL;
+        ->hPadding(2)->vPadding(1)
+        ->generate($data) . PHP_EOL . PHP_EOL;
 
 print 'MySQL style:' . PHP_EOL;
 print AsciiTable::create()
-    ->setBorders(AsciiTable::MYSQL_BORDERS)
-    ->generate($data) . PHP_EOL . PHP_EOL;
+        ->mysqlBorder()
+        ->generate($data) . PHP_EOL . PHP_EOL;
 
-print 'Dots style:' . PHP_EOL;
+print 'Dotted style:' . PHP_EOL;
 print AsciiTable::create()
-    ->setBorders(AsciiTable::DOTS_BORDERS)
-    ->generate($data) . PHP_EOL . PHP_EOL;
+        ->dottedBorder()
+        ->generate($data) . PHP_EOL . PHP_EOL;
 ```
 
 Resulting output:
@@ -91,7 +92,7 @@ MySQL style:
 | 3 | Tudor     | Diets                        |
 +---+-----------+------------------------------+
 
-Dots style:
+Dotted style:
 ................................................
 : # :  Person   :           Hobbies            :
 :...:...........:..............................:

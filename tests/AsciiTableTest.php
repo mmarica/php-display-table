@@ -62,10 +62,10 @@ EOF;
     public function testPadding()
     {
         $asciiTable = AsciiTable::create()
-            ->setHorizontalPadding(2)->setVerticalPadding(1);
+            ->hPadding(2)->vPadding(1);
 
-        $this->assertSame($asciiTable->getHorizontalPadding(), 2);
-        $this->assertSame($asciiTable->getVerticalPadding(), 1);
+        $this->assertSame($asciiTable->getHPadding(), 2);
+        $this->assertSame($asciiTable->getVPadding(), 1);
 
         $result = $asciiTable->generate($this->_data);
 
@@ -91,7 +91,7 @@ EOF;
 
     public function testMysqlBorders()
     {
-        $asciiTable = AsciiTable::create()->setBorders(AsciiTable::MYSQL_BORDERS);
+        $asciiTable = AsciiTable::create()->mysqlBorder();
         $result = $asciiTable->generate($this->_data);
 
         $expected = <<<EOF
@@ -104,14 +104,11 @@ EOF;
 +---+-----------+------------------------------+
 EOF;
         $this->assertSame($expected, $result);
-        $this->assertSame($asciiTable->getBorders(), AsciiTable::MYSQL_BORDERS);
+        $this->assertSame($asciiTable->getBorder(), AsciiTable::MYSQL_BORDER);
     }
 
     public function testDotsBorders()
     {
-        $result = AsciiTable::create()->setBorders(AsciiTable::DOTS_BORDERS)
-            ->generate($this->_data);
-
         $expected = <<<EOF
 ................................................
 : # :  Person   :           Hobbies            :
@@ -121,6 +118,6 @@ EOF;
 : 3 : Tudor     : Diets                        :
 :...:...........:..............................:
 EOF;
-        $this->assertSame($expected, $result);
+        $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_data));
     }
 }
