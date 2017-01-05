@@ -22,7 +22,7 @@ abstract class Base
         $this->_rows = $rows;
     }
 
-    public function getRows($rows)
+    public function getRows()
     {
         return $this->_rows;
     }

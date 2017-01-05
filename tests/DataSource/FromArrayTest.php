@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests\DisplayTable;
+namespace Tests\DisplayTable\DataSource;
 
 use Mmarica\DisplayTable\DataSource;
+use PHPUnit_Framework_TestCase;
 
-class FromArray extends PHPUnit_Framework_TestCase
+class FromArrayTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var DataSource\Base
@@ -49,6 +50,6 @@ class FromArray extends PHPUnit_Framework_TestCase
         $rows = $this->_rows;
         $rows[] = $row;
 
-        $this->assertSame($this->_data->getRows(), $rows);
+        $this->assertSame($data->getRows(), $rows);
     }
 }
