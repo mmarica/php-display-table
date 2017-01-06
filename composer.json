@@ -2,10 +2,12 @@
     "name": "mmarica/display-table",
     "description": "Display tables in ASCII format",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Mihai Marica",
-            "email": "mihai.marica82@yahoo.com"
+            "email": "mihai.marica82@yahoo.com",
+            "homepage": "http://www.mihai-marica.ro"
         }
     ],
     "require": {
