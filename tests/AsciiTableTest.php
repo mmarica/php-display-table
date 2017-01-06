@@ -89,7 +89,25 @@ EOF;
         $this->assertSame($expected, $result);
     }
 
-    public function testMysqlBorders()
+    public function testRoundedBorder()
+    {
+        $asciiTable = AsciiTable::create()->roundedBorder();
+        $result = $asciiTable->generate($this->_data);
+
+        $expected = <<<EOF
+.---.-----------.------------------------------.
+| # |  Person   |           Hobbies            |
+:---+-----------+------------------------------:
+| 1 | Mihai     | Cycling, Gaming, Programming |
+| 2 | Chewbacca | Growling                     |
+| 3 | Tudor     | Diets                        |
+'---'-----------'------------------------------'
+EOF;
+        $this->assertSame($expected, $result);
+        $this->assertSame($asciiTable->getBorder(), AsciiTable::MYSQL_BORDER);
+    }
+
+    public function testMysqlBorder()
     {
         $asciiTable = AsciiTable::create()->mysqlBorder();
         $result = $asciiTable->generate($this->_data);
@@ -107,7 +125,7 @@ EOF;
         $this->assertSame($asciiTable->getBorder(), AsciiTable::MYSQL_BORDER);
     }
 
-    public function testDotsBorders()
+    public function testDotsBorder()
     {
         $expected = <<<EOF
 ................................................
