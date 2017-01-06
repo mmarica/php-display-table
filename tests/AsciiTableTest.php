@@ -104,7 +104,6 @@ EOF;
 '---'-----------'------------------------------'
 EOF;
         $this->assertSame($expected, $result);
-        $this->assertSame($asciiTable->getBorder(), AsciiTable::MYSQL_BORDER);
     }
 
     public function testMysqlBorder()
