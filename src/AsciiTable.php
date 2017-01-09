@@ -8,59 +8,11 @@ namespace Mmarica\DisplayTable;
  */
 class AsciiTable extends TableBase
 {
-    // Border element types
-    const TOP_LEFT = 'top_left';
-    const TOP_RIGHT = 'top_right';
-    const TOP_CENTER = 'top_center';
-    const CENTER_CENTER = 'center_center';
-    const CENTER_LEFT = 'center_left';
-    const CENTER_RIGHT = 'center_right';
-    const BOTTOM_LEFT = 'bottom_left';
-    const BOTTOM_RIGHT = 'bottom_right';
-    const BOTTOM_CENTER = 'bottom_center';
-    const HORIZONTAL = 'horizontal';
-    const VERTICAL = 'vertical';
-
-    // Predefined border styles
-    const ROUNDED_BORDER = array(
-        self::TOP_LEFT => '.',
-        self::TOP_RIGHT => '.',
-        self::TOP_CENTER => '.',
-        self::CENTER_CENTER => '+',
-        self::CENTER_LEFT => ':',
-        self::CENTER_RIGHT => ':',
-        self::BOTTOM_LEFT => '\'',
-        self::BOTTOM_RIGHT => '\'',
-        self::BOTTOM_CENTER => '\'',
-        self::HORIZONTAL => '-',
-        self::VERTICAL => '|',
-    );
-    const DOTTED_BORDER = array(
-        self::TOP_LEFT => '.',
-        self::TOP_RIGHT => '.',
-        self::TOP_CENTER => '.',
-        self::CENTER_CENTER => ':',
-        self::CENTER_LEFT => ':',
-        self::CENTER_RIGHT => ':',
-        self::BOTTOM_LEFT => ':',
-        self::BOTTOM_RIGHT => ':',
-        self::BOTTOM_CENTER => ':',
-        self::HORIZONTAL => '.',
-        self::VERTICAL => ':',
-    );
-    const MYSQL_BORDER = array(
-        self::TOP_LEFT => '+',
-        self::TOP_RIGHT => '+',
-        self::TOP_CENTER => '+',
-        self::CENTER_CENTER => '+',
-        self::CENTER_LEFT => '+',
-        self::CENTER_RIGHT => '+',
-        self::BOTTOM_LEFT => '+',
-        self::BOTTOM_RIGHT => '+',
-        self::BOTTOM_CENTER => '+',
-        self::HORIZONTAL => '-',
-        self::VERTICAL => '|',
-    );
+    // Border styles
+    const NO_BORDER = 'no_border';
+    const ROUNDED_BORDER = 'rounded_border';
+    const DOTTED_BORDER = 'dotted_border';
+    const MYSQL_BORDER = 'mysql_border';
 
     /**
      * @var integer
@@ -73,7 +25,12 @@ class AsciiTable extends TableBase
     protected $_vPadding;
 
     /**
-     * @var array
+     * @var string
+     */
+    protected $_borderType;
+
+    /**
+     * @var AsciiTable\AbstractBorder
      */
     protected $_border;
 
@@ -93,13 +50,33 @@ class AsciiTable extends TableBase
     protected $_columnLengths;
 
     /**
+     * @var array
+     */
+    protected $_paddedColumnLengths;
+
+    /**
+     * @var array
+     */
+    protected $_paddedColumns;
+
+    /**
+     * @var array
+     */
+    protected $_paddedSpaces;
+
+    /**
+     * @var array
+     */
+    protected $_paddedRows;
+
+    /**
      * AsciiTable constructor.
      */
     protected function __construct()
     {
         $this->_hPadding = 1;
         $this->_vPadding = 0;
-        $this->_border = self::ROUNDED_BORDER;
+        $this->_borderType = self::ROUNDED_BORDER;
     }
 
     /**
@@ -159,13 +136,24 @@ class AsciiTable extends TableBase
     }
 
     /**
+     * No border at all
+     *
+     * @return self
+     */
+    public function noBorder()
+    {
+        $this->_borderType = self::NO_BORDER;
+        return $this;
+    }
+
+    /**
      * Use MySQL style for border
      *
      * @return self
      */
     public function mysqlBorder()
     {
-        $this->_border = self::MYSQL_BORDER;
+        $this->_borderType = self::MYSQL_BORDER;
         return $this;
     }
 
@@ -176,7 +164,7 @@ class AsciiTable extends TableBase
      */
     public function roundedBorder()
     {
-        $this->_border = self::ROUNDED_BORDER;
+        $this->_borderType = self::ROUNDED_BORDER;
         return $this;
     }
 
@@ -187,18 +175,18 @@ class AsciiTable extends TableBase
      */
     public function dottedBorder()
     {
-        $this->_border = self::DOTTED_BORDER;
+        $this->_borderType = self::DOTTED_BORDER;
         return $this;
     }
 
     /**
-     * Get the border character set
+     * Get the border type
      *
-     * @return array
+     * @return string
      */
-    public function getBorder()
+    public function getBorderType()
     {
-        return $this->_border;
+        return $this->_borderType;
     }
 
     /**
@@ -208,24 +196,68 @@ class AsciiTable extends TableBase
     {
         list($this->_columns, $this->_rows) = $data->get();
         $this->_computeColumnLengths();
+        $this->_computePaddedElements();
 
-        $output = $this->_topBorder() . PHP_EOL;
+        $this->_border = $this->_createBorderObject();
 
+        // the header section of the table
         if (count($this->_columns)) {
-            $output .= $this->_verticalPadding($this->_tableHeader()) . PHP_EOL;
-            $output .= $this->_centerBorder() . PHP_EOL;
+            $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($this->_border->headerContent($this->_paddedSpaces), $this->_vPadding) : '';
+
+            $output = $this->_border->headerTop();
+            $output .= $headerVPaddingLines;
+            $output .= $this->_border->headerContent($this->_paddedColumns);
+            $output .= $headerVPaddingLines;
+
+            $output .= $this->_border->headerIntersection();
+        } else {
+            $output = $this->_border->dataTop();
         }
 
-        foreach ($this->_rows as $row)
-            $output .= $this->_verticalPadding($this->_dataRow($row)) . PHP_EOL;
+        // the data section of the table
+        if (count($this->_paddedRows)) {
+            $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($this->_border->dataContent($this->_paddedSpaces), $this->_vPadding) : '';
 
-        $output .= $this->_bottomBorder();
+            foreach ($this->_paddedRows as $row) {
+                $output .= $dataVPaddingLines;
+                $output .= $this->_border->dataContent($row);
+                $output .= $dataVPaddingLines;
+            }
+
+            $output .= $this->_border->dataBottom();
+        }
 
         return $output;
     }
 
     /**
-     * Compute the maximum length for each column
+     * Create a border object instance based on the border type
+     *
+     * @return AsciiTable\AbstractBorder
+     * @throws \Exception
+     */
+    protected function _createBorderObject()
+    {
+        switch ($this->_borderType) {
+            case self::NO_BORDER:
+                return new AsciiTable\NoBorder($this->_paddedColumnLengths);
+
+            case self::ROUNDED_BORDER:
+                return new AsciiTable\RoundedBorder($this->_paddedColumnLengths);
+
+            case self::DOTTED_BORDER:
+                return new AsciiTable\DottedBorder($this->_paddedColumnLengths);
+
+            case self::MYSQL_BORDER:
+                return new AsciiTable\MysqlBorder($this->_paddedColumnLengths);
+
+            default:
+                throw new \Exception('Invalid border type: ' . $this->_borderType);
+        }
+    }
+
+    /**
+     * Compute the maximum length for each column based on the header and data values
      *
      * @return void
      */
@@ -252,132 +284,38 @@ class AsciiTable extends TableBase
         }
 
         $this->_columnLengths = $lengths;
+
+        // compute the padded column lengths by adding the horizontal padding
+        $this->_paddedColumnLengths = array_map(
+            function($length) {
+                return $length + 2 * $this->_hPadding;
+            }
+            , $lengths
+        );
     }
 
     /**
-     * Generate the top border
-     *
-     * @return string
+     * Compute header, data and empty rows with horizontal padding
      */
-    protected function _topBorder()
+    protected function _computePaddedElements()
     {
-        $elements = array();
+        $this->_paddedColumns = array();
+        $this->_paddedSpaces = array();
 
-        foreach ($this->_columnLengths as $length)
-            $elements[] = str_repeat($this->_border[self::HORIZONTAL], $length + 2 * $this->_hPadding);
-
-        return $this->_border[self::TOP_LEFT] . implode($this->_border[self::TOP_CENTER], $elements) . $this->_border[self::TOP_RIGHT];
-    }
-
-    /**
-     * Generate the table header
-     *
-     * @return string
-     */
-    protected function _tableHeader()
-    {
-        $elements = array();
-        foreach ($this->_columnLengths as $index => $length)
-            $elements[] = $this->_horizontalPadding(str_pad($this->_columns[$index], $length, ' ', STR_PAD_BOTH));
-
-        return $this->_border[self::VERTICAL] . implode($this->_border[self::VERTICAL], $elements) . $this->_border[self::VERTICAL];
-    }
-
-    /**
-     * Add vertical padding to an input string
-     *
-     * @param string $input The input string
-     * @return string
-     */
-    protected function _verticalPadding($input)
-    {
-        if ($this->_vPadding < 1) {
-            return $input;
+        foreach ($this->_columnLengths as $index => $length) {
+            $this->_paddedColumns[] = str_pad($this->_columns[$index], $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
+            $this->_paddedSpaces[] = str_repeat(' ', $length + 2 * $this->_hPadding);
         }
 
-        $emptyLine = $this->_emptyRow();
-        $lines = array();
+        $this->_paddedRows = array();
 
-        for ($padding = 0; $padding < $this->_vPadding; $padding++)
-            $lines[] = $emptyLine;
+        foreach ($this->_rows as $row) {
+            $paddedRow = array();
 
-        $lines[] = $input;
+            foreach ($this->_columnLengths as $index => $length)
+                $paddedRow[] = str_pad(str_pad($row[$index], $length), $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
 
-        for ($padding = 0; $padding < $this->_vPadding; $padding++)
-            $lines[] = $emptyLine;
-
-        return implode(PHP_EOL, $lines);
-    }
-
-    /**
-     * Generate an empty row (useful for vertical padding)
-     *
-     * @return string
-     */
-    protected function _emptyRow()
-    {
-        $elements = array();
-        foreach ($this->_columnLengths as $length)
-            $elements[] = str_repeat(' ', $length + 2 * $this->_hPadding);
-
-        return $this->_border[self::VERTICAL] . implode($this->_border[self::VERTICAL], $elements) . $this->_border[self::VERTICAL];
-    }
-
-    /**
-     * Generate the top border (between the table header and the data rows)
-     *
-     * @return string
-     */
-    protected function _centerBorder()
-    {
-        $elements = array();
-        foreach ($this->_columnLengths as $length)
-            $elements[] = str_repeat($this->_border[self::HORIZONTAL], $length + 2 * $this->_hPadding);
-
-        return $this->_border[self::CENTER_LEFT] . implode($this->_border[self::CENTER_CENTER], $elements) . $this->_border[self::CENTER_RIGHT];
-    }
-
-    /**
-     * Generate a data row
-     *
-     * @return string
-     */
-    protected function _dataRow($row)
-    {
-        $elements = array();
-
-        foreach ($this->_columnLengths as $index => $length)
-            $elements[] = $this->_horizontalPadding(str_pad($row[$index], $length));
-
-        return $this->_border[self::VERTICAL] . implode($this->_border[self::VERTICAL], $elements) . $this->_border[self::VERTICAL];
-    }
-
-    /**
-     * Generate the top border
-     *
-     * @return string
-     */
-    protected function _bottomBorder()
-    {
-        $elements = array();
-        foreach ($this->_columnLengths as $length)
-            $elements[] = str_repeat($this->_border[self::HORIZONTAL], $length + 2 * $this->_hPadding);
-
-        return $this->_border[self::BOTTOM_LEFT] . implode($this->_border[self::BOTTOM_CENTER], $elements) . $this->_border[self::BOTTOM_RIGHT];
-    }
-
-    /**
-     * Add horizontal padding to an input string
-     *
-     * @param string $input The input string
-     * @return string
-     */
-    protected function _horizontalPadding($input)
-    {
-        if ($this->_hPadding < 1) {
-            return $input;
+            $this->_paddedRows[] = $paddedRow;
         }
-
-        return str_repeat(' ', $this->_hPadding) . $input . str_repeat(' ', $this->_hPadding);
     }
 }

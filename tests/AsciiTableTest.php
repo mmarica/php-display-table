@@ -38,6 +38,7 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 '---'-----------'------------------------------'
+
 EOF;
         $this->assertSame($expected, $result);
     }
@@ -55,6 +56,7 @@ EOF;
 |2|Chewbacca|Growling                    |
 |3|Tudor    |Diets                       |
 '-'---------'----------------------------'
+
 EOF;
         $this->assertSame($expected, $result);
     }
@@ -85,6 +87,7 @@ EOF;
 |  3  |  Tudor      |  Diets                         |
 |     |             |                                |
 '-----'-------------'--------------------------------'
+
 EOF;
         $this->assertSame($expected, $result);
     }
@@ -102,6 +105,7 @@ EOF;
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 '---'-----------'------------------------------'
+
 EOF;
         $this->assertSame($expected, $result);
     }
@@ -119,12 +123,13 @@ EOF;
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 +---+-----------+------------------------------+
+
 EOF;
         $this->assertSame($expected, $result);
-        $this->assertSame($asciiTable->getBorder(), AsciiTable::MYSQL_BORDER);
+        $this->assertSame($asciiTable->getBorderType(), AsciiTable::MYSQL_BORDER);
     }
 
-    public function testDotsBorder()
+    public function testDottedBorder()
     {
         $expected = <<<EOF
 ................................................
@@ -134,6 +139,7 @@ EOF;
 : 2 : Chewbacca : Growling                     :
 : 3 : Tudor     : Diets                        :
 :...:...........:..............................:
+
 EOF;
         $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_data));
     }

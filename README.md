@@ -36,22 +36,27 @@ $data = new DataSource\FromArray(
 
 print 'Using defaults:' . PHP_EOL;
 print AsciiTable::create()
-        ->generate($data) . PHP_EOL . PHP_EOL;
+        ->generate($data) . PHP_EOL;
 
 print 'With custom padding:' . PHP_EOL;
 print AsciiTable::create()
         ->hPadding(2)->vPadding(1)
-        ->generate($data) . PHP_EOL . PHP_EOL;
+        ->generate($data) . PHP_EOL;
 
 print 'MySQL style:' . PHP_EOL;
 print AsciiTable::create()
         ->mysqlBorder()
-        ->generate($data) . PHP_EOL . PHP_EOL;
+        ->generate($data) . PHP_EOL;
 
 print 'Dotted style:' . PHP_EOL;
 print AsciiTable::create()
         ->dottedBorder()
-        ->generate($data) . PHP_EOL . PHP_EOL;
+        ->generate($data) . PHP_EOL;
+
+print 'No border:' . PHP_EOL;
+print AsciiTable::create()
+        ->noBorder()
+        ->generate($data) . PHP_EOL;
 ```
 
 Resulting output:
@@ -100,4 +105,10 @@ Dotted style:
 : 2 : Chewbacca : Growling                     :
 : 3 : Tudor     : Diets                        :
 :...:...........:..............................:
+
+No border:
+ #   Person              Hobbies            
+ 1  Mihai      Cycling, Gaming, Programming 
+ 2  Chewbacca  Growling                     
+ 3  Tudor      Diets                        
 ```
