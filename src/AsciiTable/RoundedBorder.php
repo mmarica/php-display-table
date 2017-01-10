@@ -2,6 +2,9 @@
 namespace Mmarica\DisplayTable\AsciiTable;
 
 
+/**
+ * Rounded Border Class
+ */
 class RoundedBorder extends AbstractBorder
 {
     protected $_headerTop = array('.', '-', '.', '.');

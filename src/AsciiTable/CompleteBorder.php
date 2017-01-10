@@ -2,6 +2,9 @@
 namespace Mmarica\DisplayTable\AsciiTable;
 
 
+/**
+ * Complete Border Class
+ */
 class CompleteBorder extends AbstractBorder
 {
     protected $_headerTop = array('+', '=', '+', '+');

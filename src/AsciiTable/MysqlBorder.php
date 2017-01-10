@@ -2,6 +2,9 @@
 namespace Mmarica\DisplayTable\AsciiTable;
 
 
+/**
+ * Mysql Border Class
+ */
 class MysqlBorder extends AbstractBorder
 {
     protected $_headerTop = array('+', '-', '+', '+');

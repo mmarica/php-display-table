@@ -2,6 +2,9 @@
 namespace Mmarica\DisplayTable\AsciiTable;
 
 
+/**
+ * Dotted Border Class
+ */
 class DottedBorder extends AbstractBorder
 {
     protected $_headerTop = array('.', '.', '.', '.');

@@ -2,6 +2,9 @@
 namespace Mmarica\DisplayTable\AsciiTable;
 
 
+/**
+ * Bubble Border Class
+ */
 class BubbleBorder extends AbstractBorder
 {
     protected $_headerTop = array(' o8', '=', '(_)', '8o ');

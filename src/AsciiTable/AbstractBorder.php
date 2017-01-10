@@ -2,6 +2,9 @@
 
 namespace Mmarica\DisplayTable\AsciiTable;
 
+/**
+ * Abstract Border Class
+ */
 abstract class AbstractBorder
 {
     /**

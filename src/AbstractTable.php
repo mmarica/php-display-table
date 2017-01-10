@@ -3,7 +3,10 @@
 namespace Mmarica\DisplayTable;
 
 
-abstract class TableBase
+/**
+ * Abstract Table Class
+ */
+abstract class AbstractTable
 {
     /**
      * TableBase constructor

@@ -2,10 +2,11 @@
 
 namespace Mmarica\DisplayTable;
 
+
 /**
  * Ascii Table Class
  */
-class AsciiTable extends TableBase
+class AsciiTable extends AbstractTable
 {
     // Border styles
     const ROUNDED_BORDER = 'rounded_border';
