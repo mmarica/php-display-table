@@ -53,6 +53,11 @@ print AsciiTable::create()
         ->dottedBorder()
         ->generate($data) . PHP_EOL;
 
+print 'GitHub border:' . PHP_EOL;
+print AsciiTable::create()
+        ->githubBorder()
+        ->generate($data) . PHP_EOL;
+
 print 'No border:' . PHP_EOL;
 print AsciiTable::create()
         ->noBorder()
@@ -105,6 +110,13 @@ Dotted style:
 : 2 : Chewbacca : Growling                     :
 : 3 : Tudor     : Diets                        :
 :...:...........:..............................:
+
+GitHub border:
+| # |  Person   |           Hobbies            |
+|---|-----------|------------------------------|
+| 1 | Mihai     | Cycling, Gaming, Programming |
+| 2 | Chewbacca | Growling                     |
+| 3 | Tudor     | Diets                        |
 
 No border:
  #   Person              Hobbies            

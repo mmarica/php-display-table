@@ -13,6 +13,7 @@ class AsciiTable extends TableBase
     const ROUNDED_BORDER = 'rounded_border';
     const DOTTED_BORDER = 'dotted_border';
     const MYSQL_BORDER = 'mysql_border';
+    const GITHUB_BORDER = 'github_border';
 
     /**
      * @var integer
@@ -180,6 +181,17 @@ class AsciiTable extends TableBase
     }
 
     /**
+     * Use github style for border
+     *
+     * @return self
+     */
+    public function githubBorder()
+    {
+        $this->_borderType = self::GITHUB_BORDER;
+        return $this;
+    }
+
+    /**
      * Get the border type
      *
      * @return string
@@ -250,6 +262,9 @@ class AsciiTable extends TableBase
 
             case self::MYSQL_BORDER:
                 return new AsciiTable\MysqlBorder($this->_paddedColumnLengths);
+
+            case self::GITHUB_BORDER:
+                return new AsciiTable\GithutBorder($this->_paddedColumnLengths);
 
             default:
                 throw new \Exception('Invalid border type: ' . $this->_borderType);

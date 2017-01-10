@@ -143,4 +143,29 @@ EOF;
 EOF;
         $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_data));
     }
+
+    public function testNoBorder()
+    {
+        $expected = <<<EOF
+ #   Person              Hobbies            
+ 1  Mihai      Cycling, Gaming, Programming 
+ 2  Chewbacca  Growling                     
+ 3  Tudor      Diets                        
+
+EOF;
+        $this->assertSame($expected, AsciiTable::create()->noBorder()->generate($this->_data));
+    }
+
+    public function testGithubBorder()
+    {
+        $expected = <<<EOF
+| # |  Person   |           Hobbies            |
+|---|-----------|------------------------------|
+| 1 | Mihai     | Cycling, Gaming, Programming |
+| 2 | Chewbacca | Growling                     |
+| 3 | Tudor     | Diets                        |
+
+EOF;
+        $this->assertSame($expected, AsciiTable::create()->githubBorder()->generate($this->_data));
+    }
 }
