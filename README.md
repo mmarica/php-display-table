@@ -34,13 +34,9 @@ $data = new Data\ArraySource(
     )
 );
 
-print 'Using defaults (rounded border):' . PHP_EOL;
+print 'Rounded border (default):' . PHP_EOL;
 print AsciiTable::create()
-        ->generate($data) . PHP_EOL;
-
-print 'With custom padding:' . PHP_EOL;
-print AsciiTable::create()
-        ->hPadding(2)->vPadding(1)
+        ->roundedBorder()
         ->generate($data) . PHP_EOL;
 
 print 'MySQL border:' . PHP_EOL;
@@ -82,12 +78,36 @@ print 'No border:' . PHP_EOL;
 print AsciiTable::create()
         ->noBorder()
         ->generate($data) . PHP_EOL;
+
+print 'Custom padding:' . PHP_EOL;
+print AsciiTable::create()
+        ->hPadding(2)->vPadding(1)
+        ->generate($data) . PHP_EOL;
+
+$data = new Data\ArraySource(
+    array('Only', 'Header', 'Here')
+);
+print 'Header, no rows:' . PHP_EOL;
+print AsciiTable::create()
+        ->completeBorder()
+        ->generate($data) . PHP_EOL;
+
+$data = new Data\ArraySource(
+    array(),
+    array(
+        array('Only', 'Header', 'Here')
+    )
+);
+print 'No header, one row:' . PHP_EOL;
+print AsciiTable::create()
+        ->completeBorder()
+        ->generate($data) . PHP_EOL;
 ```
 
 Resulting output:
 
 ```
-Using defaults (rounded border):
+Rounded border (default):
 .---.-----------.------------------------------.
 | # |  Person   |           Hobbies            |
 :---+-----------+------------------------------:
@@ -95,23 +115,6 @@ Using defaults (rounded border):
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 '---'-----------'------------------------------'
-
-With custom padding:
-.-----.-------------.--------------------------------.
-|     |             |                                |
-|  #  |   Person    |            Hobbies             |
-|     |             |                                |
-:-----+-------------+--------------------------------:
-|     |             |                                |
-|  1  |  Mihai      |  Cycling, Gaming, Programming  |
-|     |             |                                |
-|     |             |                                |
-|  2  |  Chewbacca  |  Growling                      |
-|     |             |                                |
-|     |             |                                |
-|  3  |  Tudor      |  Diets                         |
-|     |             |                                |
-'-----'-------------'--------------------------------'
 
 MySQL border:
 +---+-----------+------------------------------+
@@ -183,4 +186,31 @@ No border:
  1  Mihai      Cycling, Gaming, Programming 
  2  Chewbacca  Growling                     
  3  Tudor      Diets                        
+
+Custom padding:
+.-----.-------------.--------------------------------.
+|     |             |                                |
+|  #  |   Person    |            Hobbies             |
+|     |             |                                |
+:-----+-------------+--------------------------------:
+|     |             |                                |
+|  1  |  Mihai      |  Cycling, Gaming, Programming  |
+|     |             |                                |
+|     |             |                                |
+|  2  |  Chewbacca  |  Growling                      |
+|     |             |                                |
+|     |             |                                |
+|  3  |  Tudor      |  Diets                         |
+|     |             |                                |
+'-----'-------------'--------------------------------'
+
+Header, no rows:
++======+========+======+
+| Only | Header | Here |
++======+========+======+
+
+No header, one row:
++------+--------+------+
+| Only | Header | Here |
++------+--------+------+
 ```
