@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\DisplayTable\DataSource;
+namespace Tests\DisplayTable\Data;
 
-use Mmarica\DisplayTable\DataSource;
+use Mmarica\DisplayTable\Data;
 use PHPUnit_Framework_TestCase;
 
-class FromArrayTest extends PHPUnit_Framework_TestCase
+class ArraySourceTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var DataSource\Base
+     * @var Data\AbstractSource
      */
     protected $_data;
 
@@ -25,7 +25,7 @@ class FromArrayTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->_data = new DataSource\FromArray($this->_columns, $this->_rows);
+        $this->_data = new Data\ArraySource($this->_columns, $this->_rows);
     }
 
     public function testGet()
@@ -56,8 +56,8 @@ class FromArrayTest extends PHPUnit_Framework_TestCase
         $data = clone $this->_data;
 
         $columns = array('No.', 'Who', 'Likes');
-        $data->setColumns($columns);
+        $data->setHeader($columns);
 
-        $this->assertSame($data->getColumns(), $columns);
+        $this->assertSame($data->getHeader(), $columns);
     }
 }

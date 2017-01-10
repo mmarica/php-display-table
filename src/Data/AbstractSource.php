@@ -1,20 +1,20 @@
 <?php
 
-namespace Mmarica\DisplayTable\DataSource;
+namespace Mmarica\DisplayTable\Data;
 
-abstract class Base
+abstract class AbstractSource
 {
-    protected $_columns;
+    protected $_header;
     protected $_rows;
     
-    public function setColumns($columns)
+    public function setHeader($header)
     {
-        $this->_columns = $columns;
+        $this->_header = $header;
     }
 
-    public function getColumns()
+    public function getHeader()
     {
-        return $this->_columns;
+        return $this->_header;
     }
 
     public function setRows($rows)
@@ -34,6 +34,6 @@ abstract class Base
 
     public function get()
     {
-        return array($this->_columns, $this->_rows);
+        return array($this->_header, $this->_rows);
     }
 }

@@ -8,13 +8,6 @@ namespace Mmarica\DisplayTable\AsciiTable;
 abstract class AbstractBorder
 {
     /**
-     * The maximum length for each column after padding
-     *
-     * @var array
-     */
-    protected $_columnLengths;
-
-    /**
      * Elements of the header top border
      * ht0, ht1, ht2, ht3
      *
@@ -77,6 +70,13 @@ abstract class AbstractBorder
      * @var array
      */
     protected $_dataBottom = array('', '', '', '');
+
+    /**
+     * The maximum length for each column after padding
+     *
+     * @var array
+     */
+    protected $_columnLengths;
 
     /**
      * AbstractBorder constructor.
@@ -158,7 +158,6 @@ abstract class AbstractBorder
 
         return $result;
     }
-
 
     /**
      * Data section content row

@@ -27,8 +27,8 @@ abstract class AbstractTable
     /**
      * Generate the table output
      *
-     * @param DataSource\Base $data
+     * @param Data\AbstractSource $data
      * @return string
      */
-    public abstract function generate(DataSource\Base $data);
+    public abstract function generate(Data\AbstractSource $data);
 }

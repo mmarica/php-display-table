@@ -1,6 +1,7 @@
 <?php
-
 namespace Mmarica\DisplayTable;
+
+use Mmarica\DisplayTable\AsciiTable\BorderFactory;
 
 
 /**
@@ -8,17 +9,6 @@ namespace Mmarica\DisplayTable;
  */
 class AsciiTable extends AbstractTable
 {
-    // Border styles
-    const ROUNDED_BORDER = 'rounded_border';
-    const MYSQL_BORDER = 'mysql_border';
-    const DOTTED_BORDER = 'dotted_border';
-    const GITHUB_BORDER = 'github_border';
-    const COMPLETE_BORDER = 'complete_border';
-    const BUBBLE_BORDER = 'bubble_border';
-    const GIRDER_BORDER = 'girder_border';
-    const COMPACT_BORDER = 'compact_border';
-    const NO_BORDER = 'no_border';
-
     /**
      * @var integer
      */
@@ -82,7 +72,7 @@ class AsciiTable extends AbstractTable
     {
         $this->_hPadding = 1;
         $this->_vPadding = 0;
-        $this->_borderType = self::ROUNDED_BORDER;
+        $this->_borderType = BorderFactory::ROUNDED_BORDER;
     }
 
     /**
@@ -148,7 +138,7 @@ class AsciiTable extends AbstractTable
      */
     public function mysqlBorder()
     {
-        $this->_borderType = self::MYSQL_BORDER;
+        $this->_borderType = BorderFactory::MYSQL_BORDER;
         return $this;
     }
 
@@ -159,7 +149,7 @@ class AsciiTable extends AbstractTable
      */
     public function dottedBorder()
     {
-        $this->_borderType = self::DOTTED_BORDER;
+        $this->_borderType = BorderFactory::DOTTED_BORDER;
         return $this;
     }
 
@@ -170,7 +160,7 @@ class AsciiTable extends AbstractTable
      */
     public function githubBorder()
     {
-        $this->_borderType = self::GITHUB_BORDER;
+        $this->_borderType = BorderFactory::GITHUB_BORDER;
         return $this;
     }
 
@@ -181,7 +171,7 @@ class AsciiTable extends AbstractTable
      */
     public function roundedBorder()
     {
-        $this->_borderType = self::ROUNDED_BORDER;
+        $this->_borderType = BorderFactory::ROUNDED_BORDER;
         return $this;
     }
 
@@ -192,7 +182,7 @@ class AsciiTable extends AbstractTable
      */
     public function completeBorder()
     {
-        $this->_borderType = self::COMPLETE_BORDER;
+        $this->_borderType = BorderFactory::COMPLETE_BORDER;
         return $this;
     }
 
@@ -203,7 +193,7 @@ class AsciiTable extends AbstractTable
      */
     public function bubbleBorder()
     {
-        $this->_borderType = self::BUBBLE_BORDER;
+        $this->_borderType = BorderFactory::BUBBLE_BORDER;
         return $this;
     }
 
@@ -214,7 +204,7 @@ class AsciiTable extends AbstractTable
      */
     public function girderBorder()
     {
-        $this->_borderType = self::GIRDER_BORDER;
+        $this->_borderType = BorderFactory::GIRDER_BORDER;
         return $this;
     }
 
@@ -225,7 +215,7 @@ class AsciiTable extends AbstractTable
      */
     public function compactBorder()
     {
-        $this->_borderType = self::COMPACT_BORDER;
+        $this->_borderType = BorderFactory::COMPACT_BORDER;
         return $this;
     }
 
@@ -236,7 +226,7 @@ class AsciiTable extends AbstractTable
      */
     public function noBorder()
     {
-        $this->_borderType = self::NO_BORDER;
+        $this->_borderType = BorderFactory::NO_BORDER;
         return $this;
     }
 
@@ -253,13 +243,13 @@ class AsciiTable extends AbstractTable
     /**
      * @inheritdoc
      */
-    public function generate(DataSource\Base $data)
+    public function generate(Data\AbstractSource $data)
     {
         list($this->_columns, $this->_rows) = $data->get();
         $this->_computeColumnLengths();
         $this->_computePaddedElements();
 
-        $this->_border = $this->_createBorderObject();
+        $this->_border = BorderFactory::create($this->_borderType, $this->_paddedColumnLengths);
 
         // the header section of the table
         if (count($this->_columns)) {
@@ -294,47 +284,6 @@ class AsciiTable extends AbstractTable
         }
 
         return $output;
-    }
-
-    /**
-     * Create a border object instance based on the border type
-     *
-     * @return AsciiTable\AbstractBorder
-     * @throws \Exception
-     */
-    protected function _createBorderObject()
-    {
-        switch ($this->_borderType) {
-            case self::ROUNDED_BORDER:
-                return new AsciiTable\RoundedBorder($this->_paddedColumnLengths);
-
-            case self::MYSQL_BORDER:
-                return new AsciiTable\MysqlBorder($this->_paddedColumnLengths);
-
-            case self::DOTTED_BORDER:
-                return new AsciiTable\DottedBorder($this->_paddedColumnLengths);
-
-            case self::GITHUB_BORDER:
-                return new AsciiTable\GithubBorder($this->_paddedColumnLengths);
-
-            case self::COMPLETE_BORDER:
-                return new AsciiTable\CompleteBorder($this->_paddedColumnLengths);
-
-            case self::BUBBLE_BORDER:
-                return new AsciiTable\BubbleBorder($this->_paddedColumnLengths);
-
-            case self::GIRDER_BORDER:
-                return new AsciiTable\GirderBorder($this->_paddedColumnLengths);
-
-            case self::COMPACT_BORDER:
-                return new AsciiTable\CompactBorder($this->_paddedColumnLengths);
-
-            case self::NO_BORDER:
-                return new AsciiTable\NoBorder($this->_paddedColumnLengths);
-
-            default:
-                throw new \Exception('Invalid border type: ' . $this->_borderType);
-        }
     }
 
     /**

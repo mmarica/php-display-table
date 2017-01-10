@@ -2,21 +2,22 @@
 
 namespace Tests\DisplayTable;
 
-use Mmarica\DisplayTable\DataSource;
+use Mmarica\DisplayTable\Data;
 use Mmarica\DisplayTable\AsciiTable;
 use PHPUnit_Framework_TestCase;
+
 
 class AsciiTableTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var DataSource\Base
+     * @var Data\AbstractSource
      */
     protected $_data;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->_data = new DataSource\FromArray(
+        $this->_data = new Data\ArraySource(
             array('#', 'Person', 'Hobbies'),
             array(
                 array('1', 'Mihai', 'Cycling, Gaming, Programming'),
@@ -126,7 +127,7 @@ EOD;
 
 EOD;
         $this->assertSame($expected, $result);
-        $this->assertSame($asciiTable->getBorderType(), AsciiTable::MYSQL_BORDER);
+        $this->assertSame($asciiTable->getBorderType(), AsciiTable\BorderFactory::MYSQL_BORDER);
     }
 
     public function testDottedBorder()

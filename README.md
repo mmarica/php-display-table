@@ -22,10 +22,10 @@ Print ASCII table to output:
 <?php
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
-use Mmarica\DisplayTable\DataSource;
+use Mmarica\DisplayTable\Data;
 use Mmarica\DisplayTable\AsciiTable;
 
-$data = new DataSource\FromArray(
+$data = new Data\ArraySource(
     array('#', 'Person', 'Hobbies'),
     array(
         array('1', 'Mihai', 'Cycling, Gaming, Programming'),
