@@ -34,7 +34,7 @@ $data = new DataSource\FromArray(
     )
 );
 
-print 'Using defaults:' . PHP_EOL;
+print 'Using defaults (rounded border):' . PHP_EOL;
 print AsciiTable::create()
         ->generate($data) . PHP_EOL;
 
@@ -43,12 +43,17 @@ print AsciiTable::create()
         ->hPadding(2)->vPadding(1)
         ->generate($data) . PHP_EOL;
 
-print 'MySQL style:' . PHP_EOL;
+print 'MySQL border:' . PHP_EOL;
 print AsciiTable::create()
         ->mysqlBorder()
         ->generate($data) . PHP_EOL;
 
-print 'Dotted style:' . PHP_EOL;
+print 'Complete border:' . PHP_EOL;
+print AsciiTable::create()
+        ->completeBorder()
+        ->generate($data) . PHP_EOL;
+
+print 'Dotted border:' . PHP_EOL;
 print AsciiTable::create()
         ->dottedBorder()
         ->generate($data) . PHP_EOL;
@@ -67,7 +72,7 @@ print AsciiTable::create()
 Resulting output:
 
 ```
-Using defaults:
+Using defaults (rounded border):
 .---.-----------.------------------------------.
 | # |  Person   |           Hobbies            |
 :---+-----------+------------------------------:
@@ -93,7 +98,7 @@ With custom padding:
 |     |             |                                |
 '-----'-------------'--------------------------------'
 
-MySQL style:
+MySQL border:
 +---+-----------+------------------------------+
 | # |  Person   |           Hobbies            |
 +---+-----------+------------------------------+
@@ -102,7 +107,18 @@ MySQL style:
 | 3 | Tudor     | Diets                        |
 +---+-----------+------------------------------+
 
-Dotted style:
+Complete border:
++===+===========+==============================+
+| # |  Person   |           Hobbies            |
++===+===========+==============================+
+| 1 | Mihai     | Cycling, Gaming, Programming |
++---+-----------+------------------------------+
+| 2 | Chewbacca | Growling                     |
++---+-----------+------------------------------+
+| 3 | Tudor     | Diets                        |
++---+-----------+------------------------------+
+
+Dotted border:
 ................................................
 : # :  Person   :           Hobbies            :
 :...:...........:..............................:

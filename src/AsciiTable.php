@@ -14,6 +14,7 @@ class AsciiTable extends TableBase
     const DOTTED_BORDER = 'dotted_border';
     const MYSQL_BORDER = 'mysql_border';
     const GITHUB_BORDER = 'github_border';
+    const COMPLETE_BORDER = 'complete_border';
 
     /**
      * @var integer
@@ -159,6 +160,17 @@ class AsciiTable extends TableBase
     }
 
     /**
+     * Use Complete style for border
+     *
+     * @return self
+     */
+    public function completeBorder()
+    {
+        $this->_borderType = self::COMPLETE_BORDER;
+        return $this;
+    }
+
+    /**
      * Use rounded style for border
      *
      * @return self
@@ -230,12 +242,17 @@ class AsciiTable extends TableBase
         if (count($this->_paddedRows)) {
             $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($this->_border->dataContent($this->_paddedSpaces), $this->_vPadding) : '';
 
+            $dataParts = array();
+
             foreach ($this->_paddedRows as $row) {
-                $output .= $dataVPaddingLines;
-                $output .= $this->_border->dataContent($row);
-                $output .= $dataVPaddingLines;
+                $dataPart = $dataVPaddingLines;
+                $dataPart .= $this->_border->dataContent($row);
+                $dataPart .= $dataVPaddingLines;
+
+                $dataParts[] = $dataPart;
             }
 
+            $output .= implode($this->_border->dataIntersection(), $dataParts);
             $output .= $this->_border->dataBottom();
         }
 
@@ -265,6 +282,9 @@ class AsciiTable extends TableBase
 
             case self::GITHUB_BORDER:
                 return new AsciiTable\GithutBorder($this->_paddedColumnLengths);
+
+            case self::COMPLETE_BORDER:
+                return new AsciiTable\CompleteBorder($this->_paddedColumnLengths);
 
             default:
                 throw new \Exception('Invalid border type: ' . $this->_borderType);

@@ -169,6 +169,26 @@ abstract class AbstractBorder
     }
 
     /**
+     * Data section intersection border (used between two data rows)
+     *
+     * @return string
+     */
+    public function dataIntersection()
+    {
+        $elements = array();
+
+        foreach ($this->_celLengths as $length)
+            $elements[] = str_repeat($this->_dataIntersection[1], $length);
+
+        $result = $this->_dataIntersection[0] . implode($this->_dataIntersection[2], $elements) . $this->_dataIntersection[3];
+
+        if (strlen($result))
+            $result .= PHP_EOL;
+
+        return $result;
+    }
+
+    /**
      * Data section bottom border
      *
      * @return string

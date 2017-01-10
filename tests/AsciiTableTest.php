@@ -168,4 +168,21 @@ EOF;
 EOF;
         $this->assertSame($expected, AsciiTable::create()->githubBorder()->generate($this->_data));
     }
+
+    public function testCompleteBorder()
+    {
+        $expected = <<<EOF
++===+===========+==============================+
+| # |  Person   |           Hobbies            |
++===+===========+==============================+
+| 1 | Mihai     | Cycling, Gaming, Programming |
++---+-----------+------------------------------+
+| 2 | Chewbacca | Growling                     |
++---+-----------+------------------------------+
+| 3 | Tudor     | Diets                        |
++---+-----------+------------------------------+
+
+EOF;
+        $this->assertSame($expected, AsciiTable::create()->completeBorder()->generate($this->_data));
+    }
 }
