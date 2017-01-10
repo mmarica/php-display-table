@@ -73,6 +73,11 @@ print AsciiTable::create()
         ->bubbleBorder()
         ->generate($data) . PHP_EOL;
 
+print 'Girder border:' . PHP_EOL;
+print AsciiTable::create()
+        ->girderBorder()
+        ->generate($data) . PHP_EOL;
+
 print 'No border:' . PHP_EOL;
 print AsciiTable::create()
         ->noBorder()
@@ -161,6 +166,17 @@ Bubble border:
 (88---(_)-----------(_)------------------------------88)
 (_) 3 (_) Tudor     (_) Diets                        (_)
  o8---(_)-----------(_)------------------------------8o 
+
+Girder border:
+//===[]===========[]==============================\\
+|| # ||  Person   ||           Hobbies            ||
+|]===[]===========[]==============================[|
+|| 1 || Mihai     || Cycling, Gaming, Programming ||
+|]===[]===========[]==============================[|
+|| 2 || Chewbacca || Growling                     ||
+|]===[]===========[]==============================[|
+|| 3 || Tudor     || Diets                        ||
+\\---[]-----------[]------------------------------//
 
 No border:
  #   Person              Hobbies            

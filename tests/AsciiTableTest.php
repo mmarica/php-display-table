@@ -215,4 +215,21 @@ EOF;
 EOF;
         $this->assertSame($expected, AsciiTable::create()->bubbleBorder()->generate($this->_data));
     }
+
+    public function testGirderBorder()
+    {
+        $expected = <<<EOF
+//===[]===========[]==============================\\\\
+|| # ||  Person   ||           Hobbies            ||
+|]===[]===========[]==============================[|
+|| 1 || Mihai     || Cycling, Gaming, Programming ||
+|]===[]===========[]==============================[|
+|| 2 || Chewbacca || Growling                     ||
+|]===[]===========[]==============================[|
+|| 3 || Tudor     || Diets                        ||
+\\\\---[]-----------[]------------------------------//
+
+EOF;
+        $this->assertSame($expected, AsciiTable::create()->girderBorder()->generate($this->_data));
+    }
 }

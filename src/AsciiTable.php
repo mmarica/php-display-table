@@ -17,6 +17,7 @@ class AsciiTable extends TableBase
     const COMPLETE_BORDER = 'complete_border';
     const COMPACT_BORDER = 'compact_border';
     const BUBBLE_BORDER = 'bubble_border';
+    const GIRDER_BORDER = 'girder_border';
 
     /**
      * @var integer
@@ -228,6 +229,17 @@ class AsciiTable extends TableBase
     }
 
     /**
+     * Use girder style for border
+     *
+     * @return self
+     */
+    public function girderBorder()
+    {
+        $this->_borderType = self::GIRDER_BORDER;
+        return $this;
+    }
+
+    /**
      * Get the border type
      *
      * @return string
@@ -315,6 +327,9 @@ class AsciiTable extends TableBase
 
             case self::BUBBLE_BORDER:
                 return new AsciiTable\BubbleBorder($this->_paddedColumnLengths);
+
+            case self::GIRDER_BORDER:
+                return new AsciiTable\GirderBorder($this->_paddedColumnLengths);
 
             default:
                 throw new \Exception('Invalid border type: ' . $this->_borderType);
