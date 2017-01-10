@@ -68,6 +68,11 @@ print AsciiTable::create()
         ->compactBorder()
         ->generate($data) . PHP_EOL;
 
+print 'Bubble border:' . PHP_EOL;
+print AsciiTable::create()
+        ->bubbleBorder()
+        ->generate($data) . PHP_EOL;
+
 print 'No border:' . PHP_EOL;
 print AsciiTable::create()
         ->noBorder()
@@ -145,6 +150,17 @@ Compact border:
  1  Mihai      Cycling, Gaming, Programming 
  2  Chewbacca  Growling                     
  3  Tudor      Diets                        
+
+Bubble border:
+ o8===(_)===========(_)==============================8o 
+(_) # (_)  Person   (_)           Hobbies            (_)
+(88===(_)===========(_)==============================88)
+(_) 1 (_) Mihai     (_) Cycling, Gaming, Programming (_)
+(88---(_)-----------(_)------------------------------88)
+(_) 2 (_) Chewbacca (_) Growling                     (_)
+(88---(_)-----------(_)------------------------------88)
+(_) 3 (_) Tudor     (_) Diets                        (_)
+ o8---(_)-----------(_)------------------------------8o 
 
 No border:
  #   Person              Hobbies            

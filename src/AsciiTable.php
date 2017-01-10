@@ -16,6 +16,7 @@ class AsciiTable extends TableBase
     const GITHUB_BORDER = 'github_border';
     const COMPLETE_BORDER = 'complete_border';
     const COMPACT_BORDER = 'compact_border';
+    const BUBBLE_BORDER = 'bubble_border';
 
     /**
      * @var integer
@@ -216,6 +217,17 @@ class AsciiTable extends TableBase
     }
 
     /**
+     * Use bubble style for border
+     *
+     * @return self
+     */
+    public function bubbleBorder()
+    {
+        $this->_borderType = self::BUBBLE_BORDER;
+        return $this;
+    }
+
+    /**
      * Get the border type
      *
      * @return string
@@ -300,6 +312,9 @@ class AsciiTable extends TableBase
 
             case self::COMPACT_BORDER:
                 return new AsciiTable\CompactBorder($this->_paddedColumnLengths);
+
+            case self::BUBBLE_BORDER:
+                return new AsciiTable\BubbleBorder($this->_paddedColumnLengths);
 
             default:
                 throw new \Exception('Invalid border type: ' . $this->_borderType);

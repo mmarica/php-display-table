@@ -198,4 +198,21 @@ EOF;
 EOF;
         $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_data));
     }
+
+    public function testBubbleBorder()
+    {
+        $expected = <<<EOF
+ o8===(_)===========(_)==============================8o 
+(_) # (_)  Person   (_)           Hobbies            (_)
+(88===(_)===========(_)==============================88)
+(_) 1 (_) Mihai     (_) Cycling, Gaming, Programming (_)
+(88---(_)-----------(_)------------------------------88)
+(_) 2 (_) Chewbacca (_) Growling                     (_)
+(88---(_)-----------(_)------------------------------88)
+(_) 3 (_) Tudor     (_) Diets                        (_)
+ o8---(_)-----------(_)------------------------------8o 
+
+EOF;
+        $this->assertSame($expected, AsciiTable::create()->bubbleBorder()->generate($this->_data));
+    }
 }
