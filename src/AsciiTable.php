@@ -15,6 +15,7 @@ class AsciiTable extends TableBase
     const MYSQL_BORDER = 'mysql_border';
     const GITHUB_BORDER = 'github_border';
     const COMPLETE_BORDER = 'complete_border';
+    const COMPACT_BORDER = 'compact_border';
 
     /**
      * @var integer
@@ -160,7 +161,7 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * Use Complete style for border
+     * Use complete style for border
      *
      * @return self
      */
@@ -193,13 +194,24 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * Use github style for border
+     * Use GitHub style for border
      *
      * @return self
      */
     public function githubBorder()
     {
         $this->_borderType = self::GITHUB_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use compact style for border
+     *
+     * @return self
+     */
+    public function compactBorder()
+    {
+        $this->_borderType = self::COMPACT_BORDER;
         return $this;
     }
 
@@ -285,6 +297,9 @@ class AsciiTable extends TableBase
 
             case self::COMPLETE_BORDER:
                 return new AsciiTable\CompleteBorder($this->_paddedColumnLengths);
+
+            case self::COMPACT_BORDER:
+                return new AsciiTable\CompactBorder($this->_paddedColumnLengths);
 
             default:
                 throw new \Exception('Invalid border type: ' . $this->_borderType);

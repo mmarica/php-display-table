@@ -185,4 +185,17 @@ EOF;
 EOF;
         $this->assertSame($expected, AsciiTable::create()->completeBorder()->generate($this->_data));
     }
+
+    public function testCompactBorder()
+    {
+        $expected = <<<EOF
+ #   Person              Hobbies            
+--------------------------------------------
+ 1  Mihai      Cycling, Gaming, Programming 
+ 2  Chewbacca  Growling                     
+ 3  Tudor      Diets                        
+
+EOF;
+        $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_data));
+    }
 }
