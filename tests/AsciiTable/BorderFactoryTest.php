@@ -17,7 +17,7 @@ class BorderFactoryTest extends PHPUnit_Framework_TestCase
 {
     public function test_create_InvalidBorderType()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->setExpectedException(\UnexpectedValueException::class);
         BorderFactory::create('invalid', array());
     }
 
