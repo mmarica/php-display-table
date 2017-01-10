@@ -343,7 +343,7 @@ class AsciiTable extends AbstractTable
             $paddedRow = array();
 
             foreach ($this->_columnLengths as $index => $length)
-                $paddedRow[] = str_pad(str_pad($row[$index], $length), $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
+                $paddedRow[] = str_pad(str_pad(isset($row[$index]) ? $row[$index] : '', $length), $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
 
             $this->_paddedRows[] = $paddedRow;
         }
