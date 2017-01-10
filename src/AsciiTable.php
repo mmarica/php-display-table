@@ -32,7 +32,7 @@ class AsciiTable extends AbstractTable
     /**
      * @var array
      */
-    protected $_columns;
+    protected $_header;
 
     /**
      * @var array
@@ -52,7 +52,7 @@ class AsciiTable extends AbstractTable
     /**
      * @var array
      */
-    protected $_paddedColumns;
+    protected $_paddedHeader;
 
     /**
      * @var array
@@ -245,19 +245,19 @@ class AsciiTable extends AbstractTable
      */
     public function generate(Data\AbstractSource $data)
     {
-        list($this->_columns, $this->_rows) = $data->get();
+        list($this->_header, $this->_rows) = $data->get();
         $this->_computeColumnLengths();
         $this->_computePaddedElements();
 
         $this->_border = BorderFactory::create($this->_borderType, $this->_paddedColumnLengths);
 
         // the header section of the table
-        if (count($this->_columns)) {
+        if (count($this->_header)) {
             $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($this->_border->headerContent($this->_paddedSpaces), $this->_vPadding) : '';
 
             $output = $this->_border->headerTop();
             $output .= $headerVPaddingLines;
-            $output .= $this->_border->headerContent($this->_paddedColumns);
+            $output .= $this->_border->headerContent($this->_paddedHeader);
             $output .= $headerVPaddingLines;
 
             $output .= $this->_border->headerIntersection();
@@ -295,9 +295,9 @@ class AsciiTable extends AbstractTable
         $lengths = array();
 
         // if a table header exists, take into account the length of the column names
-        if (count($this->_columns)) {
+        if (count($this->_header)) {
             $index = 0;
-            foreach ($this->_columns as $value) {
+            foreach ($this->_header as $value) {
                 $lengths[$index] = strlen($value);
                 $index++;
             }
@@ -329,11 +329,11 @@ class AsciiTable extends AbstractTable
      */
     protected function _computePaddedElements()
     {
-        $this->_paddedColumns = array();
+        $this->_paddedHeader = array();
         $this->_paddedSpaces = array();
 
         foreach ($this->_columnLengths as $index => $length) {
-            $this->_paddedColumns[] = str_pad($this->_columns[$index], $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
+            $this->_paddedHeader[] = str_pad(isset($this->_header[$index]) ? $this->_header[$index] : '', $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
             $this->_paddedSpaces[] = str_repeat(' ', $length + 2 * $this->_hPadding);
         }
 
