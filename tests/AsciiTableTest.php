@@ -12,12 +12,18 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
     /**
      * @var Data\AbstractSource
      */
-    protected $_data;
+    protected $_dataNoHeaderOneRow;
+
+    /**
+     * @var Data\AbstractSource
+     */
+    protected $_dataOneHeaderMultipleRows;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->_data = new Data\ArraySource(
+
+        $this->_dataOneHeaderMultipleRows = new Data\ArraySource(
             array('#', 'Person', 'Hobbies'),
             array(
                 array('1', 'Mihai', 'Cycling, Gaming, Programming'),
@@ -25,29 +31,26 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
                 array('3', 'Tudor', 'Diets'),
             )
         );
+
+        $this->_dataOneHeaderNoRows = new Data\ArraySource(
+            array(
+                array('Only', 'one', 'header', 'row'),
+            ),
+            array()
+        );
+
+        $this->_dataNoHeaderOneRow = new Data\ArraySource(
+            array(),
+            array(
+                array('Only', 'one', 'data', 'row'),
+            )
+        );
     }
 
-    public function testDefaults()
-    {
-        $result = AsciiTable::create()->generate($this->_data);
-
-        $expected = <<<'EOD'
-.---.-----------.------------------------------.
-| # |  Person   |           Hobbies            |
-:---+-----------+------------------------------:
-| 1 | Mihai     | Cycling, Gaming, Programming |
-| 2 | Chewbacca | Growling                     |
-| 3 | Tudor     | Diets                        |
-'---'-----------'------------------------------'
-
-EOD;
-        $this->assertSame($expected, $result);
-    }
-
-    public function testNoPadding()
+    public function test_NoPadding()
     {
         $result = AsciiTable::create()->noPadding()
-            ->generate($this->_data);
+            ->generate($this->_dataOneHeaderMultipleRows);
 
         $expected = <<<'EOD'
 .-.---------.----------------------------.
@@ -62,7 +65,7 @@ EOD;
         $this->assertSame($expected, $result);
     }
 
-    public function testPadding()
+    public function test_CustomPadding()
     {
         $asciiTable = AsciiTable::create()
             ->hPadding(2)->vPadding(1);
@@ -70,7 +73,7 @@ EOD;
         $this->assertSame($asciiTable->getHPadding(), 2);
         $this->assertSame($asciiTable->getVPadding(), 1);
 
-        $result = $asciiTable->generate($this->_data);
+        $result = $asciiTable->generate($this->_dataOneHeaderMultipleRows);
 
         $expected = <<<'EOD'
 .-----.-------------.--------------------------------.
@@ -93,11 +96,23 @@ EOD;
         $this->assertSame($expected, $result);
     }
 
-    public function testRoundedBorder()
+    public function test_GetBorderType()
     {
-        $asciiTable = AsciiTable::create()->roundedBorder();
-        $result = $asciiTable->generate($this->_data);
+        $this->assertSame(AsciiTable::create()->mysqlBorder()->getBorderType(), AsciiTable\BorderFactory::MYSQL_BORDER);
+    }
 
+    public function test_RoundedBorder()
+    {
+        // no headers, one row
+        $expected = <<<'EOD'
+.------.-----.------.-----.
+| Only | one | data | row |
+'------'-----'------'-----'
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->roundedBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
 .---.-----------.------------------------------.
 | # |  Person   |           Hobbies            |
@@ -108,14 +123,23 @@ EOD;
 '---'-----------'------------------------------'
 
 EOD;
+        $asciiTable = AsciiTable::create()->roundedBorder();
+        $result = $asciiTable->generate($this->_dataOneHeaderMultipleRows);
         $this->assertSame($expected, $result);
     }
 
-    public function testMysqlBorder()
+    public function test_MysqlBorder()
     {
-        $asciiTable = AsciiTable::create()->mysqlBorder();
-        $result = $asciiTable->generate($this->_data);
+        // no headers, one row
+        $expected = <<<'EOD'
++------+-----+------+-----+
+| Only | one | data | row |
++------+-----+------+-----+
 
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->mysqlBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
 +---+-----------+------------------------------+
 | # |  Person   |           Hobbies            |
@@ -126,12 +150,24 @@ EOD;
 +---+-----------+------------------------------+
 
 EOD;
+        $asciiTable = AsciiTable::create()->mysqlBorder();
+        $result = $asciiTable->generate($this->_dataOneHeaderMultipleRows);
+
         $this->assertSame($expected, $result);
-        $this->assertSame($asciiTable->getBorderType(), AsciiTable\BorderFactory::MYSQL_BORDER);
     }
 
-    public function testDottedBorder()
+    public function test_DottedBorder()
     {
+        // no headers, one row
+        $expected = <<<'EOD'
+...........................
+: Only : one : data : row :
+:......:.....:......:.....:
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
 ................................................
 : # :  Person   :           Hobbies            :
@@ -142,11 +178,19 @@ EOD;
 :...:...........:..............................:
 
 EOD;
-        $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_data));
+        $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_dataOneHeaderMultipleRows));
     }
 
-    public function testGithubBorder()
+    public function test_GithubBorder()
     {
+        // no headers, one row
+        $expected = <<<'EOD'
+| Only | one | data | row |
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->githubBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
 | # |  Person   |           Hobbies            |
 |---|-----------|------------------------------|
@@ -155,11 +199,21 @@ EOD;
 | 3 | Tudor     | Diets                        |
 
 EOD;
-        $this->assertSame($expected, AsciiTable::create()->githubBorder()->generate($this->_data));
+        $this->assertSame($expected, AsciiTable::create()->githubBorder()->generate($this->_dataOneHeaderMultipleRows));
     }
 
-    public function testCompleteBorder()
+    public function test_CompleteBorder()
     {
+        // no headers, one row
+        $expected = <<<'EOD'
++------+-----+------+-----+
+| Only | one | data | row |
++------+-----+------+-----+
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->completeBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
 +===+===========+==============================+
 | # |  Person   |           Hobbies            |
@@ -172,11 +226,21 @@ EOD;
 +---+-----------+------------------------------+
 
 EOD;
-        $this->assertSame($expected, AsciiTable::create()->completeBorder()->generate($this->_data));
+        $this->assertSame($expected, AsciiTable::create()->completeBorder()->generate($this->_dataOneHeaderMultipleRows));
     }
 
-    public function testBubbleBorder()
+    public function test_BubbleBorder()
     {
+        // no headers, one row
+        $expected = <<<'EOD'
+ o8------(_)-----(_)------(_)-----8o 
+(_) Only (_) one (_) data (_) row (_)
+ o8------(_)-----(_)------(_)-----8o 
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->bubbleBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
  o8===(_)===========(_)==============================8o 
 (_) # (_)  Person   (_)           Hobbies            (_)
@@ -189,11 +253,21 @@ EOD;
  o8---(_)-----------(_)------------------------------8o 
 
 EOD;
-        $this->assertSame($expected, AsciiTable::create()->bubbleBorder()->generate($this->_data));
+        $this->assertSame($expected, AsciiTable::create()->bubbleBorder()->generate($this->_dataOneHeaderMultipleRows));
     }
 
-    public function testGirderBorder()
+    public function test_GirderBorder()
     {
+        // no headers, one row
+        $expected = <<<'EOD'
+//------[]-----[]------[]-----\\
+|| Only || one || data || row ||
+\\------[]-----[]------[]-----//
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->girderBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
 //===[]===========[]==============================\\
 || # ||  Person   ||           Hobbies            ||
@@ -206,11 +280,19 @@ EOD;
 \\---[]-----------[]------------------------------//
 
 EOD;
-        $this->assertSame($expected, AsciiTable::create()->girderBorder()->generate($this->_data));
+        $this->assertSame($expected, AsciiTable::create()->girderBorder()->generate($this->_dataOneHeaderMultipleRows));
     }
 
-    public function testCompactBorder()
+    public function test_CompactBorder()
     {
+        // no headers, one row
+        $expected = <<<'EOD'
+ Only  one  data  row 
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
  #   Person              Hobbies            
 --------------------------------------------
@@ -219,11 +301,19 @@ EOD;
  3  Tudor      Diets                        
 
 EOD;
-        $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_data));
+        $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_dataOneHeaderMultipleRows));
     }
 
-    public function testNoBorder()
+    public function test_NoBorder()
     {
+        // no headers, one row
+        $expected = <<<'EOD'
+ Only  one  data  row 
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->noBorder()->generate($this->_dataNoHeaderOneRow));
+
+        // one header, multiple rows
         $expected = <<<'EOD'
  #   Person              Hobbies            
  1  Mihai      Cycling, Gaming, Programming 
@@ -231,6 +321,6 @@ EOD;
  3  Tudor      Diets                        
 
 EOD;
-        $this->assertSame($expected, AsciiTable::create()->noBorder()->generate($this->_data));
+        $this->assertSame($expected, AsciiTable::create()->noBorder()->generate($this->_dataOneHeaderMultipleRows));
     }
 }
