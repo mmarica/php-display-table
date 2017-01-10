@@ -12,6 +12,11 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
     /**
      * @var Data\AbstractSource
      */
+    protected $_dataOneHeaderNoRows;
+
+    /**
+     * @var Data\AbstractSource
+     */
     protected $_dataNoHeaderOneRow;
 
     /**
@@ -23,26 +28,23 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_dataOneHeaderMultipleRows = new Data\ArraySource(
-            array('#', 'Person', 'Hobbies'),
-            array(
-                array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-                array('2', 'Chewbacca', 'Growling'),
-                array('3', 'Tudor', 'Diets'),
-            )
-        );
-
         $this->_dataOneHeaderNoRows = new Data\ArraySource(
-            array(
-                array('Only', 'one', 'header', 'row'),
-            ),
-            array()
+            array('Only', 'one', 'header', 'row')
         );
 
         $this->_dataNoHeaderOneRow = new Data\ArraySource(
             array(),
             array(
                 array('Only', 'one', 'data', 'row'),
+            )
+        );
+
+        $this->_dataOneHeaderMultipleRows = new Data\ArraySource(
+            array('#', 'Person', 'Hobbies'),
+            array(
+                array('1', 'Mihai', 'Cycling, Gaming, Programming'),
+                array('2', 'Chewbacca', 'Growling'),
+                array('3', 'Tudor', 'Diets'),
             )
         );
     }
@@ -103,6 +105,15 @@ EOD;
 
     public function test_RoundedBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
+.------.-----.--------.-----.
+| Only | one | header | row |
+'------'-----'--------'-----'
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->roundedBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
 .------.-----.------.-----.
@@ -130,6 +141,15 @@ EOD;
 
     public function test_MysqlBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
++------+-----+--------+-----+
+| Only | one | header | row |
++------+-----+--------+-----+
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->mysqlBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
 +------+-----+------+-----+
@@ -158,6 +178,15 @@ EOD;
 
     public function test_DottedBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
+.............................
+: Only : one : header : row :
+:......:.....:........:.....:
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
 ...........................
@@ -183,6 +212,13 @@ EOD;
 
     public function test_GithubBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
+| Only | one | header | row |
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->githubBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
 | Only | one | data | row |
@@ -204,6 +240,15 @@ EOD;
 
     public function test_CompleteBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
++======+=====+========+=====+
+| Only | one | header | row |
++======+=====+========+=====+
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->completeBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
 +------+-----+------+-----+
@@ -231,6 +276,15 @@ EOD;
 
     public function test_BubbleBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
+ o8======(_)=====(_)========(_)=====8o 
+(_) Only (_) one (_) header (_) row (_)
+ o8======(_)=====(_)========(_)=====8o 
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->bubbleBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
  o8------(_)-----(_)------(_)-----8o 
@@ -258,6 +312,15 @@ EOD;
 
     public function test_GirderBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
+//======[]=====[]========[]=====\\
+|| Only || one || header || row ||
+\\======[]=====[]========[]=====//
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->girderBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
 //------[]-----[]------[]-----\\
@@ -285,6 +348,13 @@ EOD;
 
     public function test_CompactBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
+ Only  one  header  row 
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
  Only  one  data  row 
@@ -306,6 +376,13 @@ EOD;
 
     public function test_NoBorder()
     {
+        // one header, no rows
+        $expected = <<<'EOD'
+ Only  one  header  row 
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->noBorder()->generate($this->_dataOneHeaderNoRows));
+
         // no headers, one row
         $expected = <<<'EOD'
  Only  one  data  row 

@@ -140,6 +140,26 @@ abstract class AbstractBorder
     }
 
     /**
+     * Header section bottom border
+     *
+     * @return string
+     */
+    public function headerBottom()
+    {
+        $elements = array();
+
+        foreach ($this->_columnLengths as $length)
+            $elements[] = str_repeat($this->_headerBottom[1], $length);
+
+        $result = $this->_headerBottom[0] . implode($this->_headerBottom[2], $elements) . $this->_headerBottom[3];
+
+        if (strlen($result))
+            $result .= PHP_EOL;
+
+        return $result;
+    }
+
+    /**
      * Data section top border
      *
      * @return string

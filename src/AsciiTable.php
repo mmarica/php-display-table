@@ -260,7 +260,7 @@ class AsciiTable extends AbstractTable
             $output .= $this->_border->headerContent($this->_paddedHeader);
             $output .= $headerVPaddingLines;
 
-            $output .= $this->_border->headerIntersection();
+            $output .= count($this->_rows) ? $this->_border->headerIntersection() : $this->_border->headerBottom();
         } else {
             $output = $this->_border->dataTop();
         }
