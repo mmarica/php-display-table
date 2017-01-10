@@ -2,14 +2,18 @@
 
 namespace Mmarica\DisplayTable;
 
+
 abstract class TableBase
 {
     /**
-     * TableBase constructor.
+     * TableBase constructor
+     *
      */
     protected abstract function __construct();
 
     /**
+     * Create a table instance
+     *
      * @return static
      */
     public static function create()

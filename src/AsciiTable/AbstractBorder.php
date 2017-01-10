@@ -5,11 +5,11 @@ namespace Mmarica\DisplayTable\AsciiTable;
 abstract class AbstractBorder
 {
     /**
-     * The maximum cell lengths after padding
+     * The maximum length for each column after padding
      *
      * @var array
      */
-    protected $_celLengths;
+    protected $_columnLengths;
 
     /**
      * Elements of the header top border
@@ -78,11 +78,11 @@ abstract class AbstractBorder
     /**
      * AbstractBorder constructor.
      *
-     * @param array $celLengths The maximum cell lengths after padding
+     * @param array $columnLengths The maximum length for each column after padding
      */
-    public function __construct($celLengths)
+    public function __construct($columnLengths)
     {
-        $this->_celLengths = $celLengths;
+        $this->_columnLengths = $columnLengths;
     }
 
     /**
@@ -94,7 +94,7 @@ abstract class AbstractBorder
     {
         $elements = array();
 
-        foreach ($this->_celLengths as $length)
+        foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_headerTop[1], $length);
 
         $result = $this->_headerTop[0] . implode($this->_headerTop[2], $elements) . $this->_headerTop[3];
@@ -125,7 +125,7 @@ abstract class AbstractBorder
     {
         $elements = array();
 
-        foreach ($this->_celLengths as $length)
+        foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_headerIntersection[1], $length);
 
         $result = $this->_headerIntersection[0] . implode($this->_headerIntersection[2], $elements) . $this->_headerIntersection[3];
@@ -145,7 +145,7 @@ abstract class AbstractBorder
     {
         $elements = array();
 
-        foreach ($this->_celLengths as $length)
+        foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_dataTop[1], $length);
 
         $result = $this->_dataTop[0] . implode($this->_dataTop[2], $elements) . $this->_dataTop[3];
@@ -177,7 +177,7 @@ abstract class AbstractBorder
     {
         $elements = array();
 
-        foreach ($this->_celLengths as $length)
+        foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_dataIntersection[1], $length);
 
         $result = $this->_dataIntersection[0] . implode($this->_dataIntersection[2], $elements) . $this->_dataIntersection[3];
@@ -197,7 +197,7 @@ abstract class AbstractBorder
     {
         $elements = array();
 
-        foreach ($this->_celLengths as $length)
+        foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_dataBottom[1], $length);
 
         $result = $this->_dataBottom[0] . implode($this->_dataBottom[2], $elements) . $this->_dataBottom[3];

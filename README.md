@@ -48,11 +48,6 @@ print AsciiTable::create()
         ->mysqlBorder()
         ->generate($data) . PHP_EOL;
 
-print 'Complete border:' . PHP_EOL;
-print AsciiTable::create()
-        ->completeBorder()
-        ->generate($data) . PHP_EOL;
-
 print 'Dotted border:' . PHP_EOL;
 print AsciiTable::create()
         ->dottedBorder()
@@ -63,9 +58,9 @@ print AsciiTable::create()
         ->githubBorder()
         ->generate($data) . PHP_EOL;
 
-print 'Compact border:' . PHP_EOL;
+print 'Complete border:' . PHP_EOL;
 print AsciiTable::create()
-        ->compactBorder()
+        ->completeBorder()
         ->generate($data) . PHP_EOL;
 
 print 'Bubble border:' . PHP_EOL;
@@ -76,6 +71,11 @@ print AsciiTable::create()
 print 'Girder border:' . PHP_EOL;
 print AsciiTable::create()
         ->girderBorder()
+        ->generate($data) . PHP_EOL;
+
+print 'Compact border:' . PHP_EOL;
+print AsciiTable::create()
+        ->compactBorder()
         ->generate($data) . PHP_EOL;
 
 print 'No border:' . PHP_EOL;
@@ -122,17 +122,6 @@ MySQL border:
 | 3 | Tudor     | Diets                        |
 +---+-----------+------------------------------+
 
-Complete border:
-+===+===========+==============================+
-| # |  Person   |           Hobbies            |
-+===+===========+==============================+
-| 1 | Mihai     | Cycling, Gaming, Programming |
-+---+-----------+------------------------------+
-| 2 | Chewbacca | Growling                     |
-+---+-----------+------------------------------+
-| 3 | Tudor     | Diets                        |
-+---+-----------+------------------------------+
-
 Dotted border:
 ................................................
 : # :  Person   :           Hobbies            :
@@ -149,12 +138,16 @@ GitHub border:
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 
-Compact border:
- #   Person              Hobbies            
---------------------------------------------
- 1  Mihai      Cycling, Gaming, Programming 
- 2  Chewbacca  Growling                     
- 3  Tudor      Diets                        
+Complete border:
++===+===========+==============================+
+| # |  Person   |           Hobbies            |
++===+===========+==============================+
+| 1 | Mihai     | Cycling, Gaming, Programming |
++---+-----------+------------------------------+
+| 2 | Chewbacca | Growling                     |
++---+-----------+------------------------------+
+| 3 | Tudor     | Diets                        |
++---+-----------+------------------------------+
 
 Bubble border:
  o8===(_)===========(_)==============================8o 
@@ -177,6 +170,13 @@ Girder border:
 |]===[]===========[]==============================[|
 || 3 || Tudor     || Diets                        ||
 \\---[]-----------[]------------------------------//
+
+Compact border:
+ #   Person              Hobbies            
+--------------------------------------------
+ 1  Mihai      Cycling, Gaming, Programming 
+ 2  Chewbacca  Growling                     
+ 3  Tudor      Diets                        
 
 No border:
  #   Person              Hobbies            

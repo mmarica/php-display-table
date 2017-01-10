@@ -4,20 +4,19 @@ namespace Mmarica\DisplayTable;
 
 /**
  * Ascii Table Class
- * @package Mmarica\DisplayTable
  */
 class AsciiTable extends TableBase
 {
     // Border styles
-    const NO_BORDER = 'no_border';
     const ROUNDED_BORDER = 'rounded_border';
-    const DOTTED_BORDER = 'dotted_border';
     const MYSQL_BORDER = 'mysql_border';
+    const DOTTED_BORDER = 'dotted_border';
     const GITHUB_BORDER = 'github_border';
     const COMPLETE_BORDER = 'complete_border';
-    const COMPACT_BORDER = 'compact_border';
     const BUBBLE_BORDER = 'bubble_border';
     const GIRDER_BORDER = 'girder_border';
+    const COMPACT_BORDER = 'compact_border';
+    const NO_BORDER = 'no_border';
 
     /**
      * @var integer
@@ -75,7 +74,8 @@ class AsciiTable extends TableBase
     protected $_paddedRows;
 
     /**
-     * AsciiTable constructor.
+     * AsciiTable constructor
+     *
      */
     protected function __construct()
     {
@@ -141,18 +141,7 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * No border at all
-     *
-     * @return self
-     */
-    public function noBorder()
-    {
-        $this->_borderType = self::NO_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use MySQL style for border
+     * Use MySQL border
      *
      * @return self
      */
@@ -163,29 +152,7 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * Use complete style for border
-     *
-     * @return self
-     */
-    public function completeBorder()
-    {
-        $this->_borderType = self::COMPLETE_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use rounded style for border
-     *
-     * @return self
-     */
-    public function roundedBorder()
-    {
-        $this->_borderType = self::ROUNDED_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use dotted style for border
+     * Use dotted border
      *
      * @return self
      */
@@ -196,7 +163,7 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * Use GitHub style for border
+     * Use GitHub border
      *
      * @return self
      */
@@ -207,18 +174,29 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * Use compact style for border
+     * Use rounded border
      *
      * @return self
      */
-    public function compactBorder()
+    public function roundedBorder()
     {
-        $this->_borderType = self::COMPACT_BORDER;
+        $this->_borderType = self::ROUNDED_BORDER;
         return $this;
     }
 
     /**
-     * Use bubble style for border
+     * Use complete border
+     *
+     * @return self
+     */
+    public function completeBorder()
+    {
+        $this->_borderType = self::COMPLETE_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use bubble border
      *
      * @return self
      */
@@ -229,13 +207,35 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * Use girder style for border
+     * Use girder border
      *
      * @return self
      */
     public function girderBorder()
     {
         $this->_borderType = self::GIRDER_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use compact border
+     *
+     * @return self
+     */
+    public function compactBorder()
+    {
+        $this->_borderType = self::COMPACT_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use no border
+     *
+     * @return self
+     */
+    public function noBorder()
+    {
+        $this->_borderType = self::NO_BORDER;
         return $this;
     }
 
@@ -304,32 +304,32 @@ class AsciiTable extends TableBase
     protected function _createBorderObject()
     {
         switch ($this->_borderType) {
-            case self::NO_BORDER:
-                return new AsciiTable\NoBorder($this->_paddedColumnLengths);
-
             case self::ROUNDED_BORDER:
                 return new AsciiTable\RoundedBorder($this->_paddedColumnLengths);
-
-            case self::DOTTED_BORDER:
-                return new AsciiTable\DottedBorder($this->_paddedColumnLengths);
 
             case self::MYSQL_BORDER:
                 return new AsciiTable\MysqlBorder($this->_paddedColumnLengths);
 
+            case self::DOTTED_BORDER:
+                return new AsciiTable\DottedBorder($this->_paddedColumnLengths);
+
             case self::GITHUB_BORDER:
-                return new AsciiTable\GithutBorder($this->_paddedColumnLengths);
+                return new AsciiTable\GithubBorder($this->_paddedColumnLengths);
 
             case self::COMPLETE_BORDER:
                 return new AsciiTable\CompleteBorder($this->_paddedColumnLengths);
-
-            case self::COMPACT_BORDER:
-                return new AsciiTable\CompactBorder($this->_paddedColumnLengths);
 
             case self::BUBBLE_BORDER:
                 return new AsciiTable\BubbleBorder($this->_paddedColumnLengths);
 
             case self::GIRDER_BORDER:
                 return new AsciiTable\GirderBorder($this->_paddedColumnLengths);
+
+            case self::COMPACT_BORDER:
+                return new AsciiTable\CompactBorder($this->_paddedColumnLengths);
+
+            case self::NO_BORDER:
+                return new AsciiTable\NoBorder($this->_paddedColumnLengths);
 
             default:
                 throw new \Exception('Invalid border type: ' . $this->_borderType);
@@ -339,7 +339,6 @@ class AsciiTable extends TableBase
     /**
      * Compute the maximum length for each column based on the header and data values
      *
-     * @return void
      */
     protected function _computeColumnLengths()
     {
@@ -375,7 +374,8 @@ class AsciiTable extends TableBase
     }
 
     /**
-     * Compute header, data and empty rows with horizontal padding
+     * Compute header, data and empty row elements with horizontal padding
+     *
      */
     protected function _computePaddedElements()
     {

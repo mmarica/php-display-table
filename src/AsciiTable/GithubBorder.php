@@ -2,7 +2,7 @@
 namespace Mmarica\DisplayTable\AsciiTable;
 
 
-class GithutBorder extends AbstractBorder
+class GithubBorder extends AbstractBorder
 {
     protected $_headerContent = array('|', '|', '|');
     protected $_headerIntersection = array('|', '-', '|', '|');

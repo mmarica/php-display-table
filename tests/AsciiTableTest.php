@@ -30,7 +30,7 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
     {
         $result = AsciiTable::create()->generate($this->_data);
 
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 .---.-----------.------------------------------.
 | # |  Person   |           Hobbies            |
 :---+-----------+------------------------------:
@@ -39,7 +39,7 @@ class AsciiTableTest extends PHPUnit_Framework_TestCase
 | 3 | Tudor     | Diets                        |
 '---'-----------'------------------------------'
 
-EOF;
+EOD;
         $this->assertSame($expected, $result);
     }
 
@@ -48,7 +48,7 @@ EOF;
         $result = AsciiTable::create()->noPadding()
             ->generate($this->_data);
 
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 .-.---------.----------------------------.
 |#| Person  |          Hobbies           |
 :-+---------+----------------------------:
@@ -57,7 +57,7 @@ EOF;
 |3|Tudor    |Diets                       |
 '-'---------'----------------------------'
 
-EOF;
+EOD;
         $this->assertSame($expected, $result);
     }
 
@@ -71,7 +71,7 @@ EOF;
 
         $result = $asciiTable->generate($this->_data);
 
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 .-----.-------------.--------------------------------.
 |     |             |                                |
 |  #  |   Person    |            Hobbies             |
@@ -88,7 +88,7 @@ EOF;
 |     |             |                                |
 '-----'-------------'--------------------------------'
 
-EOF;
+EOD;
         $this->assertSame($expected, $result);
     }
 
@@ -97,7 +97,7 @@ EOF;
         $asciiTable = AsciiTable::create()->roundedBorder();
         $result = $asciiTable->generate($this->_data);
 
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 .---.-----------.------------------------------.
 | # |  Person   |           Hobbies            |
 :---+-----------+------------------------------:
@@ -106,7 +106,7 @@ EOF;
 | 3 | Tudor     | Diets                        |
 '---'-----------'------------------------------'
 
-EOF;
+EOD;
         $this->assertSame($expected, $result);
     }
 
@@ -115,7 +115,7 @@ EOF;
         $asciiTable = AsciiTable::create()->mysqlBorder();
         $result = $asciiTable->generate($this->_data);
 
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 +---+-----------+------------------------------+
 | # |  Person   |           Hobbies            |
 +---+-----------+------------------------------+
@@ -124,14 +124,14 @@ EOF;
 | 3 | Tudor     | Diets                        |
 +---+-----------+------------------------------+
 
-EOF;
+EOD;
         $this->assertSame($expected, $result);
         $this->assertSame($asciiTable->getBorderType(), AsciiTable::MYSQL_BORDER);
     }
 
     public function testDottedBorder()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 ................................................
 : # :  Person   :           Hobbies            :
 :...:...........:..............................:
@@ -140,38 +140,26 @@ EOF;
 : 3 : Tudor     : Diets                        :
 :...:...........:..............................:
 
-EOF;
+EOD;
         $this->assertSame($expected, AsciiTable::create()->dottedBorder()->generate($this->_data));
-    }
-
-    public function testNoBorder()
-    {
-        $expected = <<<EOF
- #   Person              Hobbies            
- 1  Mihai      Cycling, Gaming, Programming 
- 2  Chewbacca  Growling                     
- 3  Tudor      Diets                        
-
-EOF;
-        $this->assertSame($expected, AsciiTable::create()->noBorder()->generate($this->_data));
     }
 
     public function testGithubBorder()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 | # |  Person   |           Hobbies            |
 |---|-----------|------------------------------|
 | 1 | Mihai     | Cycling, Gaming, Programming |
 | 2 | Chewbacca | Growling                     |
 | 3 | Tudor     | Diets                        |
 
-EOF;
+EOD;
         $this->assertSame($expected, AsciiTable::create()->githubBorder()->generate($this->_data));
     }
 
     public function testCompleteBorder()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOD'
 +===+===========+==============================+
 | # |  Person   |           Hobbies            |
 +===+===========+==============================+
@@ -182,26 +170,13 @@ EOF;
 | 3 | Tudor     | Diets                        |
 +---+-----------+------------------------------+
 
-EOF;
+EOD;
         $this->assertSame($expected, AsciiTable::create()->completeBorder()->generate($this->_data));
-    }
-
-    public function testCompactBorder()
-    {
-        $expected = <<<EOF
- #   Person              Hobbies            
---------------------------------------------
- 1  Mihai      Cycling, Gaming, Programming 
- 2  Chewbacca  Growling                     
- 3  Tudor      Diets                        
-
-EOF;
-        $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_data));
     }
 
     public function testBubbleBorder()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOD'
  o8===(_)===========(_)==============================8o 
 (_) # (_)  Person   (_)           Hobbies            (_)
 (88===(_)===========(_)==============================88)
@@ -212,14 +187,14 @@ EOF;
 (_) 3 (_) Tudor     (_) Diets                        (_)
  o8---(_)-----------(_)------------------------------8o 
 
-EOF;
+EOD;
         $this->assertSame($expected, AsciiTable::create()->bubbleBorder()->generate($this->_data));
     }
 
     public function testGirderBorder()
     {
-        $expected = <<<EOF
-//===[]===========[]==============================\\\\
+        $expected = <<<'EOD'
+//===[]===========[]==============================\\
 || # ||  Person   ||           Hobbies            ||
 |]===[]===========[]==============================[|
 || 1 || Mihai     || Cycling, Gaming, Programming ||
@@ -227,9 +202,34 @@ EOF;
 || 2 || Chewbacca || Growling                     ||
 |]===[]===========[]==============================[|
 || 3 || Tudor     || Diets                        ||
-\\\\---[]-----------[]------------------------------//
+\\---[]-----------[]------------------------------//
 
-EOF;
+EOD;
         $this->assertSame($expected, AsciiTable::create()->girderBorder()->generate($this->_data));
+    }
+
+    public function testCompactBorder()
+    {
+        $expected = <<<'EOD'
+ #   Person              Hobbies            
+--------------------------------------------
+ 1  Mihai      Cycling, Gaming, Programming 
+ 2  Chewbacca  Growling                     
+ 3  Tudor      Diets                        
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->compactBorder()->generate($this->_data));
+    }
+
+    public function testNoBorder()
+    {
+        $expected = <<<'EOD'
+ #   Person              Hobbies            
+ 1  Mihai      Cycling, Gaming, Programming 
+ 2  Chewbacca  Growling                     
+ 3  Tudor      Diets                        
+
+EOD;
+        $this->assertSame($expected, AsciiTable::create()->noBorder()->generate($this->_data));
     }
 }
