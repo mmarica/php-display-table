@@ -1,11 +1,11 @@
 <?php
-namespace Mmarica\DisplayTable\AsciiTable;
+namespace Mmarica\DisplayTable\Output\Ascii\Border;
 
 
 /**
- * Complete Border Class
+ * Differentiated Border Class
  */
-class CompleteBorder extends AbstractBorder
+class Differentiated extends AbstractBorder
 {
     protected $_headerTop = array('+', '=', '+', '+');
     protected $_headerContent = array('|', '|', '|');

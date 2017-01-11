@@ -1,6 +1,6 @@
 <?php
 
-namespace Mmarica\DisplayTable\AsciiTable;
+namespace Mmarica\DisplayTable\Output\Ascii\Border;
 
 /**
  * Abstract Border Class

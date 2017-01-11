@@ -22,29 +22,28 @@ Print ASCII table to output:
 <?php
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
-use Mmarica\DisplayTable\AsciiTable;
+use Mmarica\DisplayTable;
 
-print $table = AsciiTable::fromArray(
-        array('#', 'Person', 'Hobbies'),
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling'),
-            array('3', 'Tudor', 'Diets'),
-        )
+print $table = DisplayTable::fromArrays(
+    array('#', 'Person', 'Hobbies'),
+    array(
+        array('1', 'Mihai', 'Cycling, Gaming, Programming'),
+        array('2', 'Chewbacca', 'Growling, hibernating'),
+        array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
     )
-    ->generate();
-
+)
+->toAscii()->generate();
 ```
 
 The result:
 ```
-.---.-----------.------------------------------.
-| # |  Person   |           Hobbies            |
-:---+-----------+------------------------------:
-| 1 | Mihai     | Cycling, Gaming, Programming |
-| 2 | Chewbacca | Growling                     |
-| 3 | Tudor     | Diets                        |
-'---'-----------'------------------------------'
+.---.---------------.----------------------------------.
+| # |    Person     |             Hobbies              |
+:---+---------------+----------------------------------:
+| 1 | Mihai         | Cycling, Gaming, Programming     |
+| 2 | Chewbacca     | Growling, hibernating            |
+| 3 | Philip J. Fry | Time traveling, eating anchovies |
+'---'---------------'----------------------------------'
 ```
 
 <!--( Clean up these paragraphs and include them in the next version. 

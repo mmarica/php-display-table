@@ -1,11 +1,11 @@
 <?php
-namespace Mmarica\DisplayTable\AsciiTable;
+namespace Mmarica\DisplayTable\Output\Ascii\Border;
 
 
 /**
  * Github Border Class
  */
-class GithubBorder extends AbstractBorder
+class Github extends AbstractBorder
 {
     protected $_headerContent = array('|', '|', '|');
     protected $_headerIntersection = array('|', '-', '|', '|');

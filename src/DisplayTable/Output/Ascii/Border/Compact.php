@@ -1,11 +1,11 @@
 <?php
-namespace Mmarica\DisplayTable\AsciiTable;
+namespace Mmarica\DisplayTable\Output\Ascii\Border;
 
 
 /**
  * Compact Border Class
  */
-class CompactBorder extends AbstractBorder
+class Compact extends AbstractBorder
 {
     protected $_headerIntersection = array('', '-', '', '');
 }

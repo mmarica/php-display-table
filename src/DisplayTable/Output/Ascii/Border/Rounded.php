@@ -1,11 +1,11 @@
 <?php
-namespace Mmarica\DisplayTable\AsciiTable;
+namespace Mmarica\DisplayTable\Output\Ascii\Border;
 
 
 /**
  * Rounded Border Class
  */
-class RoundedBorder extends AbstractBorder
+class Rounded extends AbstractBorder
 {
     protected $_headerTop = array('.', '-', '.', '.');
     protected $_headerContent = array('|', '|', '|');

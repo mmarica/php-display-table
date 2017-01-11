@@ -1,8 +1,8 @@
 <?php
 
-namespace Mmarica\DisplayTable\Data;
+namespace Mmarica\DisplayTable\Input;
 
-class ArraySource extends AbstractSource
+class Arrays extends AbstractInput
 {
     public function __construct($header = array(), $rows = array())
     {

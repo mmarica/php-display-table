@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\DisplayTable\Data;
+namespace Tests\DisplayTable\Input;
 
-use Mmarica\DisplayTable\Data;
+use Mmarica\DisplayTable\Input;
 use PHPUnit_Framework_TestCase;
 
-class ArraySourceTest extends PHPUnit_Framework_TestCase
+class ArraysTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Data\AbstractSource
+     * @var Input\AbstractInput
      */
-    protected $_data;
+    protected $_input;
 
     /**
      * @var array
@@ -25,19 +25,19 @@ class ArraySourceTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->_data = new Data\ArraySource($this->_columns, $this->_rows);
+        $this->_input = new Input\Arrays($this->_columns, $this->_rows);
     }
 
     public function testGet()
     {
-        list($columns, $rows) = $this->_data->get();
+        list($columns, $rows) = $this->_input->get();
         $this->assertSame($columns, $this->_columns);
         $this->assertSame($rows, $this->_rows);
     }
 
     public function testGetSetRows()
     {
-        $data = clone $this->_data;
+        $data = clone $this->_input;
 
         $row = array('4', 'Peter', 'Unit tests');
         $data->addRow($row);
@@ -53,7 +53,7 @@ class ArraySourceTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetColumns()
     {
-        $data = clone $this->_data;
+        $data = clone $this->_input;
 
         $columns = array('No.', 'Who', 'Likes');
         $data->setHeader($columns);

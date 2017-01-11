@@ -1,28 +1,28 @@
 <?php
-namespace Mmarica\DisplayTable;
+namespace Mmarica\DisplayTable\Output;
 
-use Mmarica\DisplayTable\AsciiTable\BorderFactory;
+use Mmarica\DisplayTable\Output\Ascii\BorderFactory;
 
 
 /**
  * Ascii Table Class
  */
-class AsciiTable extends AbstractTable
+class Ascii extends AbstractOutput
 {
     /**
      * @var integer
      */
-    protected $_hPadding;
+    protected $_hPadding = 1;
 
     /**
      * @var integer
      */
-    protected $_vPadding;
+    protected $_vPadding = 0;
 
     /**
      * @var string
      */
-    protected $_borderType;
+    protected $_borderType = BorderFactory::ROUNDED_BORDER;
 
     /**
      * @var array
@@ -58,17 +58,6 @@ class AsciiTable extends AbstractTable
      * @var array
      */
     protected $_paddedRows;
-
-    /**
-     * AsciiTable constructor
-     *
-     */
-    protected function __construct()
-    {
-        $this->_hPadding = 1;
-        $this->_vPadding = 0;
-        $this->_borderType = BorderFactory::ROUNDED_BORDER;
-    }
 
     /**
      * Remove horizontal and vertical padding
@@ -175,9 +164,9 @@ class AsciiTable extends AbstractTable
      *
      * @return self
      */
-    public function completeBorder()
+    public function differentiatedBorder()
     {
-        $this->_borderType = BorderFactory::COMPLETE_BORDER;
+        $this->_borderType = BorderFactory::DIFFERENTIATED_BORDER;
         return $this;
     }
 
@@ -240,7 +229,7 @@ class AsciiTable extends AbstractTable
      */
     public function generate()
     {
-        list($this->_header, $this->_rows) = $this->_dataSource->get();
+        list($this->_header, $this->_rows) = $this->_input->get();
         $this->_computeColumnLengths();
         $this->_computePaddedElements();
 

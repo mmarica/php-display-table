@@ -1,11 +1,11 @@
 <?php
 
-namespace Mmarica\DisplayTable\Data;
+namespace Mmarica\DisplayTable\Input;
 
-abstract class AbstractSource
+abstract class AbstractInput
 {
-    protected $_header;
-    protected $_rows;
+    protected $_header = array();
+    protected $_rows = array();
     
     public function setHeader($header)
     {
