@@ -5,7 +5,7 @@ namespace Tests\DisplayTable\Input;
 use Mmarica\DisplayTable\Input;
 use PHPUnit_Framework_TestCase;
 
-class ArraysTest extends PHPUnit_Framework_TestCase
+class ArrayInputTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Input\AbstractInput
@@ -25,7 +25,7 @@ class ArraysTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->_input = new Input\Arrays($this->_columns, $this->_rows);
+        $this->_input = new Input\ArrayInput($this->_columns, $this->_rows);
     }
 
     public function testGet()

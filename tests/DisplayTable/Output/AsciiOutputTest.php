@@ -1,25 +1,26 @@
 <?php
 namespace Tests\DisplayTable;
 
-use Mmarica\DisplayTable\Input;
+use Mmarica\DisplayTable\Input\AbstractInput;
+use Mmarica\DisplayTable\Input\ArrayInput;
 use Mmarica\DisplayTable\Output;
 use PHPUnit_Framework_TestCase;
 
 
-class AsciiTest extends PHPUnit_Framework_TestCase
+class AsciiOutputTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Input\AbstractInput
+     * @var AbstractInput
      */
     protected $_oneHeaderNoRows;
 
     /**
-     * @var Input\AbstractInput
+     * @var AbstractInput
      */
     protected $_noHeadersOneRow;
 
     /**
-     * @var Input\AbstractInput
+     * @var AbstractInput
      */
     protected $_noHeadersMultipleRows;
 
@@ -45,15 +46,15 @@ class AsciiTest extends PHPUnit_Framework_TestCase
         );
 
         // ready to use inputs
-        $this->_oneHeaderNoRows = new Input\Arrays($header);
-        $this->_noHeadersOneRow = new Input\Arrays(array(), array($rows[0]));
-        $this->_noHeadersMultipleRows = new Input\Arrays(array(), $rows);
-        $this->_oneHeaderMultipleRows = new Input\Arrays($header, $rows);
+        $this->_oneHeaderNoRows = new ArrayInput($header);
+        $this->_noHeadersOneRow = new ArrayInput(array(), array($rows[0]));
+        $this->_noHeadersMultipleRows = new ArrayInput(array(), $rows);
+        $this->_oneHeaderMultipleRows = new ArrayInput($header, $rows);
     }
 
     public function test_NoPadding()
     {
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $result = $output->noPadding()->generate();
 
         $expected = <<<'EOD'
@@ -71,7 +72,7 @@ EOD;
 
     public function test_CustomPadding()
     {
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
 
         $this->assertSame($output->hPadding(2)->getHPadding(), 2);
         $this->assertSame($output->vPadding(1)->getVPadding(), 1);
@@ -101,7 +102,7 @@ EOD;
 
     public function test_GetBorderType()
     {
-        $output = new Output\Ascii();
+        $output = new Output\AsciiOutput();
         $this->assertSame($output->mysqlBorder()->getBorderType(), Output\Ascii\BorderFactory::MYSQL_BORDER);
     }
 
@@ -114,7 +115,7 @@ EOD;
 '---'--------'---------'
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->roundedBorder()->generate());
 
         // no headers, one row
@@ -124,7 +125,7 @@ EOD;
 '---'-------'------------------------------'
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->roundedBorder()->generate());
 
         // one header, multiple rows
@@ -138,7 +139,7 @@ EOD;
 '---'---------------'----------------------------------'
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->roundedBorder()->generate());
     }
 
@@ -151,7 +152,7 @@ EOD;
 +---+--------+---------+
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->mysqlBorder()->generate());
 
         // no headers, one row
@@ -161,7 +162,7 @@ EOD;
 +---+-------+------------------------------+
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->mysqlBorder()->generate());
 
         // one header, multiple rows
@@ -175,7 +176,7 @@ EOD;
 +---+---------------+----------------------------------+
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->mysqlBorder()->generate());
     }
 
@@ -188,7 +189,7 @@ EOD;
 :...:........:.........:
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->dottedBorder()->generate());
 
         // no headers, one row
@@ -198,7 +199,7 @@ EOD;
 :...:.......:..............................:
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->dottedBorder()->generate());
 
         // one header, multiple rows
@@ -212,7 +213,7 @@ EOD;
 :...:...............:..................................:
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->dottedBorder()->generate());
     }
 
@@ -223,7 +224,7 @@ EOD;
 | # | Person | Hobbies |
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->githubBorder()->generate());
 
         // no headers, one row
@@ -231,7 +232,7 @@ EOD;
 | 1 | Mihai | Cycling, Gaming, Programming |
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->githubBorder()->generate());
 
         // one header, multiple rows
@@ -243,7 +244,7 @@ EOD;
 | 3 | Philip J. Fry | Time traveling, eating anchovies |
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->githubBorder()->generate());
     }
 
@@ -256,7 +257,7 @@ EOD;
 +===+========+=========+
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->differentiatedBorder()->generate());
 
         // no headers, one row
@@ -266,7 +267,7 @@ EOD;
 +---+-------+------------------------------+
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->differentiatedBorder()->generate());
 
         // one header, multiple rows
@@ -282,7 +283,7 @@ EOD;
 +---+---------------+----------------------------------+
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->differentiatedBorder()->generate());
     }
 
@@ -295,7 +296,7 @@ EOD;
  o8===(_)========(_)=========8o 
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
 
         // no headers, one row
@@ -305,7 +306,7 @@ EOD;
  o8---(_)-------(_)------------------------------8o 
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
 
         // one header, multiple rows
@@ -321,7 +322,7 @@ EOD;
  o8---(_)---------------(_)----------------------------------8o 
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
     }
 
@@ -334,7 +335,7 @@ EOD;
 \\===[]========[]=========//
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->girderBorder()->generate());
 
         // no headers, one row
@@ -344,7 +345,7 @@ EOD;
 \\---[]-------[]------------------------------//
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->girderBorder()->generate());
 
         // one header, multiple rows
@@ -360,7 +361,7 @@ EOD;
 \\---[]---------------[]----------------------------------//
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->girderBorder()->generate());
     }
 
@@ -371,7 +372,7 @@ EOD;
  #  Person  Hobbies 
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->compactBorder()->generate());
 
         // no headers, one row
@@ -379,7 +380,7 @@ EOD;
  1  Mihai  Cycling, Gaming, Programming 
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->compactBorder()->generate());
 
         // one header, multiple rows
@@ -391,7 +392,7 @@ EOD;
  3  Philip J. Fry  Time traveling, eating anchovies 
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->compactBorder()->generate());
     }
 
@@ -402,7 +403,7 @@ EOD;
  #  Person  Hobbies 
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderNoRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->noBorder()->generate());
 
         // no headers, one row
@@ -410,7 +411,7 @@ EOD;
  1  Mihai  Cycling, Gaming, Programming 
 
 EOD;
-        $output = new Output\Ascii($this->_noHeadersOneRow);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->noBorder()->generate());
 
         // one header, multiple rows
@@ -421,7 +422,7 @@ EOD;
  3  Philip J. Fry  Time traveling, eating anchovies 
 
 EOD;
-        $output = new Output\Ascii($this->_oneHeaderMultipleRows);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->noBorder()->generate());
     }
 }

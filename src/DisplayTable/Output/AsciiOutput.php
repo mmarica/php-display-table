@@ -5,9 +5,9 @@ use Mmarica\DisplayTable\Output\Ascii\BorderFactory;
 
 
 /**
- * Ascii Table Class
+ * Ascii Output Class
  */
-class Ascii extends AbstractOutput
+class AsciiOutput extends AbstractOutput
 {
     /**
      * @var integer

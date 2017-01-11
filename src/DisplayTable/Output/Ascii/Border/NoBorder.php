@@ -5,4 +5,4 @@ namespace Mmarica\DisplayTable\Output\Ascii\Border;
 /**
  * No Border Class
  */
-class None extends AbstractBorder {}
+class NoBorder extends AbstractBorder {}

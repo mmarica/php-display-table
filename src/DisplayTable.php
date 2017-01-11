@@ -4,6 +4,10 @@ namespace Mmarica;
 use Mmarica\DisplayTable\Input;
 use Mmarica\DisplayTable\Output;
 
+
+/**
+ * Display Table Class
+ */
 class DisplayTable
 {
     /**
@@ -24,10 +28,23 @@ class DisplayTable
      * @param array $rows   (optional) Data rows
      * @return static
      */
-    public static function fromArrays($header = array(), $rows = array())
+    public static function fromArray($header = array(), $rows = array())
     {
         $instance = new static();
-        $instance->_input = new Input\Arrays($header, $rows);
+        $instance->_input = new Input\ArrayInput($header, $rows);
+
+        return $instance;
+    }
+
+    /**
+     * Create a table instance with an array input and no data
+     *
+     * @return static
+     */
+    public static function withoutData()
+    {
+        $instance = new static();
+        $instance->_input = new Input\ArrayInput();
 
         return $instance;
     }
@@ -35,11 +52,11 @@ class DisplayTable
     /**
      * Get an Output\Ascii object
      *
-     * @return Output\Ascii
+     * @return Output\AsciiOutput
      */
     public function toAscii()
     {
-        $table = new Output\Ascii($this->_input);
+        $table = new Output\AsciiOutput($this->_input);
         return $table;
     }
 }

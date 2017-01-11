@@ -5,7 +5,7 @@ namespace Mmarica\DisplayTable\Output\Ascii\Border;
 /**
  * Compact Border Class
  */
-class Compact extends AbstractBorder
+class CompactBorder extends AbstractBorder
 {
     protected $_headerIntersection = array('', '-', '', '');
 }

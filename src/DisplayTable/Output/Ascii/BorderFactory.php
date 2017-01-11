@@ -1,7 +1,16 @@
 <?php
 namespace Mmarica\DisplayTable\Output\Ascii;
 
-use Mmarica\DisplayTable\Output\Ascii\Border;
+use Mmarica\DisplayTable\Output\Ascii\Border\AbstractBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\BubbleBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\CompactBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\DifferentiatedBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\DottedBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\GirderBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\GithubBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\MysqlBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\NoBorder;
+use Mmarica\DisplayTable\Output\Ascii\Border\RoundedBorder;
 
 
 /**
@@ -23,38 +32,38 @@ class BorderFactory
     /**
      * @param string $borderType    Border type
      * @param array  $columnLengths List of maximum lengths for every column
-     * @return Border\AbstractBorder
+     * @return AbstractBorder
      * @throws \Exception
      */
     public static function create($borderType, $columnLengths)
     {
         switch ($borderType) {
             case self::ROUNDED_BORDER:
-                return new Border\Rounded($columnLengths);
+                return new RoundedBorder($columnLengths);
 
             case self::MYSQL_BORDER:
-                return new Border\Mysql($columnLengths);
+                return new MysqlBorder($columnLengths);
 
             case self::DOTTED_BORDER:
-                return new Border\Dotted($columnLengths);
+                return new DottedBorder($columnLengths);
 
             case self::GITHUB_BORDER:
-                return new Border\Github($columnLengths);
+                return new GithubBorder($columnLengths);
 
             case self::DIFFERENTIATED_BORDER:
-                return new Border\Differentiated($columnLengths);
+                return new DifferentiatedBorder($columnLengths);
 
             case self::BUBBLE_BORDER:
-                return new Border\Bubble($columnLengths);
+                return new BubbleBorder($columnLengths);
 
             case self::GIRDER_BORDER:
-                return new Border\Girder($columnLengths);
+                return new GirderBorder($columnLengths);
 
             case self::COMPACT_BORDER:
-                return new Border\Compact($columnLengths);
+                return new CompactBorder($columnLengths);
 
             case self::NO_BORDER:
-                return new Border\None($columnLengths);
+                return new NoBorder($columnLengths);
 
             default:
                 throw new \UnexpectedValueException('Invalid border type: ' . $borderType);

@@ -2,7 +2,10 @@
 
 namespace Mmarica\DisplayTable\Input;
 
-class Arrays extends AbstractInput
+/**
+ * Array Input Class
+ */
+class ArrayInput extends AbstractInput
 {
     public function __construct($header = array(), $rows = array())
     {

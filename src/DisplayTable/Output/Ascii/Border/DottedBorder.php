@@ -5,7 +5,7 @@ namespace Mmarica\DisplayTable\Output\Ascii\Border;
 /**
  * Dotted Border Class
  */
-class Dotted extends AbstractBorder
+class DottedBorder extends AbstractBorder
 {
     protected $_headerTop = array('.', '.', '.', '.');
     protected $_headerContent = array(':', ':', ':');

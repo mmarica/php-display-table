@@ -5,7 +5,7 @@ namespace Mmarica\DisplayTable\Output\Ascii\Border;
 /**
  * Differentiated Border Class
  */
-class Differentiated extends AbstractBorder
+class DifferentiatedBorder extends AbstractBorder
 {
     protected $_headerTop = array('+', '=', '+', '+');
     protected $_headerContent = array('|', '|', '|');

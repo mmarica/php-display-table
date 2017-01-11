@@ -5,7 +5,7 @@ namespace Mmarica\DisplayTable\Output\Ascii\Border;
 /**
  * Girder Border Class
  */
-class Girder extends AbstractBorder
+class GirderBorder extends AbstractBorder
 {
     protected $_headerTop = array('//', '=', '[]', '\\\\');
     protected $_headerContent = array('||', '||', '||');

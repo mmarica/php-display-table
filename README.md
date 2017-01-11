@@ -24,7 +24,7 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 use Mmarica\DisplayTable;
 
-print $table = DisplayTable::fromArrays(
+print $table = DisplayTable::fromArray(
     array('#', 'Person', 'Hobbies'),
     array(
         array('1', 'Mihai', 'Cycling, Gaming, Programming'),

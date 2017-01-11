@@ -9,7 +9,7 @@ use PHPUnit_Framework_TestCase;
 
 class DisplayTableTest extends PHPUnit_Framework_TestCase
 {
-    public function test_FromArrays()
+    public function test_FromArray()
     {
         $header = array('#', 'Person', 'Hobbies');
         $rows = array(
@@ -18,11 +18,16 @@ class DisplayTableTest extends PHPUnit_Framework_TestCase
             array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
         );
 
-        $this->assertInstanceOf(DisplayTable::class, DisplayTable::fromArrays($header, $rows));
+        $this->assertInstanceOf(DisplayTable::class, DisplayTable::fromArray($header, $rows));
+    }
+
+    public function test_WithoutData()
+    {
+        $this->assertInstanceOf(DisplayTable::class, DisplayTable::withoutData());
     }
 
     public function test_ToAscii()
     {
-        $this->assertInstanceOf(Output\Ascii::class, DisplayTable::fromArrays()->toAscii());
+        $this->assertInstanceOf(Output\AsciiOutput::class, DisplayTable::fromArray()->toAscii());
     }
 }

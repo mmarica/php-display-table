@@ -23,7 +23,7 @@ abstract class AbstractOutput
     public function __construct($input = null)
     {
         if (is_null($input))
-            $input = new Input\EmptyInput();
+            $input = new Input\ArrayInput();
 
         $this->_input = $input;
     }
