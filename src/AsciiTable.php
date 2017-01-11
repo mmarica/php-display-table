@@ -25,11 +25,6 @@ class AsciiTable extends AbstractTable
     protected $_borderType;
 
     /**
-     * @var AsciiTable\AbstractBorder
-     */
-    protected $_border;
-
-    /**
      * @var array
      */
     protected $_header;
@@ -243,44 +238,44 @@ class AsciiTable extends AbstractTable
     /**
      * @inheritdoc
      */
-    public function generate(Data\AbstractSource $data)
+    public function generate()
     {
-        list($this->_header, $this->_rows) = $data->get();
+        list($this->_header, $this->_rows) = $this->_dataSource->get();
         $this->_computeColumnLengths();
         $this->_computePaddedElements();
 
-        $this->_border = BorderFactory::create($this->_borderType, $this->_paddedColumnLengths);
+        $border = BorderFactory::create($this->_borderType, $this->_paddedColumnLengths);
 
         // the header section of the table
         if (count($this->_header)) {
-            $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($this->_border->headerContent($this->_paddedSpaces), $this->_vPadding) : '';
+            $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->headerContent($this->_paddedSpaces), $this->_vPadding) : '';
 
-            $output = $this->_border->headerTop();
+            $output = $border->headerTop();
             $output .= $headerVPaddingLines;
-            $output .= $this->_border->headerContent($this->_paddedHeader);
+            $output .= $border->headerContent($this->_paddedHeader);
             $output .= $headerVPaddingLines;
 
-            $output .= count($this->_rows) ? $this->_border->headerIntersection() : $this->_border->headerBottom();
+            $output .= count($this->_rows) ? $border->headerIntersection() : $border->headerBottom();
         } else {
-            $output = $this->_border->dataTop();
+            $output = $border->dataTop();
         }
 
         // the data section of the table
         if (count($this->_paddedRows)) {
-            $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($this->_border->dataContent($this->_paddedSpaces), $this->_vPadding) : '';
+            $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->dataContent($this->_paddedSpaces), $this->_vPadding) : '';
 
             $dataParts = array();
 
             foreach ($this->_paddedRows as $row) {
                 $dataPart = $dataVPaddingLines;
-                $dataPart .= $this->_border->dataContent($row);
+                $dataPart .= $border->dataContent($row);
                 $dataPart .= $dataVPaddingLines;
 
                 $dataParts[] = $dataPart;
             }
 
-            $output .= implode($this->_border->dataIntersection(), $dataParts);
-            $output .= $this->_border->dataBottom();
+            $output .= implode($border->dataIntersection(), $dataParts);
+            $output .= $border->dataBottom();
         }
 
         return $output;
