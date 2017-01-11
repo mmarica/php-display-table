@@ -18,7 +18,7 @@
 
     <testsuites>
         <testsuite name="Display Table Test Suite">
-            <directory>tests</directory>
+            <directory>tests/src</directory>
         </testsuite>
     </testsuites>
 </phpunit>

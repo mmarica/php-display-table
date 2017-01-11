@@ -106,9 +106,8 @@ EOD;
         $this->assertSame($output->mysqlBorder()->getBorderType(), Output\Ascii\BorderFactory::MYSQL_BORDER);
     }
 
-    public function test_RoundedBorder()
+    public function test_RoundedBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
 .---.--------.---------.
 | # | Person | Hobbies |
@@ -117,8 +116,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->roundedBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_RoundedBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
 .---.-------.------------------------------.
 | 1 | Mihai | Cycling, Gaming, Programming |
@@ -127,8 +128,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->roundedBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_RoundedBorder_oneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
 .---.---------------.----------------------------------.
 | # |    Person     |             Hobbies              |
@@ -143,9 +146,8 @@ EOD;
         $this->assertSame($expected, $output->roundedBorder()->generate());
     }
 
-    public function test_MysqlBorder()
+    public function test_MysqlBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
 +---+--------+---------+
 | # | Person | Hobbies |
@@ -154,8 +156,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_MysqlBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
 +---+-------+------------------------------+
 | 1 | Mihai | Cycling, Gaming, Programming |
@@ -164,8 +168,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_MysqlBorder_OneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
 +---+---------------+----------------------------------+
 | # |    Person     |             Hobbies              |
@@ -180,9 +186,8 @@ EOD;
         $this->assertSame($expected, $output->mysqlBorder()->generate());
     }
 
-    public function test_DottedBorder()
+    public function test_DottedBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
 ........................
 : # : Person : Hobbies :
@@ -191,8 +196,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_DottedBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
 ............................................
 : 1 : Mihai : Cycling, Gaming, Programming :
@@ -201,8 +208,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_DottedBorder_oneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
 ........................................................
 : # :    Person     :             Hobbies              :
@@ -217,25 +226,28 @@ EOD;
         $this->assertSame($expected, $output->dottedBorder()->generate());
     }
 
-    public function test_GithubBorder()
+    public function test_GithubBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
 | # | Person | Hobbies |
 
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->githubBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_GithubBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
 | 1 | Mihai | Cycling, Gaming, Programming |
 
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->githubBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_GithubBorder_OneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
 | # |    Person     |             Hobbies              |
 |---|---------------|----------------------------------|
@@ -248,9 +260,8 @@ EOD;
         $this->assertSame($expected, $output->githubBorder()->generate());
     }
 
-    public function test_DifferentiatedBorder()
+    public function test_DifferentiatedBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
 +===+========+=========+
 | # | Person | Hobbies |
@@ -259,8 +270,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_DifferentiatedBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
 +---+-------+------------------------------+
 | 1 | Mihai | Cycling, Gaming, Programming |
@@ -269,8 +282,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_DifferentiatedBorder_OneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
 +===+===============+==================================+
 | # |    Person     |             Hobbies              |
@@ -287,9 +302,8 @@ EOD;
         $this->assertSame($expected, $output->differentiatedBorder()->generate());
     }
 
-    public function test_BubbleBorder()
+    public function test_BubbleBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
  o8===(_)========(_)=========8o 
 (_) # (_) Person (_) Hobbies (_)
@@ -298,8 +312,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_BubbleBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
  o8---(_)-------(_)------------------------------8o 
 (_) 1 (_) Mihai (_) Cycling, Gaming, Programming (_)
@@ -308,8 +324,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_BubbleBorder_OneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
  o8===(_)===============(_)==================================8o 
 (_) # (_)    Person     (_)             Hobbies              (_)
@@ -326,9 +344,8 @@ EOD;
         $this->assertSame($expected, $output->bubbleBorder()->generate());
     }
 
-    public function test_GirderBorder()
+    public function test_GirderBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
 //===[]========[]=========\\
 || # || Person || Hobbies ||
@@ -337,8 +354,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->girderBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_GirderBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
 //---[]-------[]------------------------------\\
 || 1 || Mihai || Cycling, Gaming, Programming ||
@@ -347,8 +366,10 @@ EOD;
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->girderBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_GirderBorder_OneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
 //===[]===============[]==================================\\
 || # ||    Person     ||             Hobbies              ||
@@ -365,25 +386,28 @@ EOD;
         $this->assertSame($expected, $output->girderBorder()->generate());
     }
 
-    public function test_CompactBorder()
+    public function test_CompactBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
  #  Person  Hobbies 
 
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->compactBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_CompactBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
  1  Mihai  Cycling, Gaming, Programming 
 
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->compactBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_CompactBorder_oneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
  #     Person                  Hobbies              
 ----------------------------------------------------
@@ -396,25 +420,28 @@ EOD;
         $this->assertSame($expected, $output->compactBorder()->generate());
     }
 
-    public function test_NoBorder()
+    public function test_NoBorder_OneHeaderNoRows()
     {
-        // one header, no rows
         $expected = <<<'EOD'
  #  Person  Hobbies 
 
 EOD;
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
         $this->assertSame($expected, $output->noBorder()->generate());
+    }
 
-        // no headers, one row
+    public function test_NoBorder_NoHeadersOneRow()
+    {
         $expected = <<<'EOD'
  1  Mihai  Cycling, Gaming, Programming 
 
 EOD;
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->noBorder()->generate());
+    }
 
-        // one header, multiple rows
+    public function test_NoBorder_OneHeaderMultipleRows()
+    {
         $expected = <<<'EOD'
  #     Person                  Hobbies              
  1  Mihai          Cycling, Gaming, Programming     
