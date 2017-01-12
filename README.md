@@ -6,6 +6,12 @@
 
 A simple PHP Library for generating tables in ASCII format, useful for writing summaries in log or console.
 
+## Table of Contents
+
++ [Installation](#installation)
++ [Requirements](#requirements)
++ [Examples](#examples)
+
 ## Installation
 
 The easiest way to install is via composer:
@@ -14,9 +20,19 @@ The easiest way to install is via composer:
 $ composer require mmarica/display-table
 ```
 
+## Requirements
+
+The following versions of PHP are supported by this version.
+
++ PHP 5.6
++ PHP 7.0
++ PHP 7.1
+
 ## Examples
 
-Print ASCII table to output:
+### Your first console table
+
+Printing an ASCII table is as simple as this:
 
 ```php
 <?php
@@ -24,7 +40,7 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 use Mmarica\DisplayTable;
 
-print $table = DisplayTable::fromArray(
+print DisplayTable::fromArray(
     array('#', 'Person', 'Hobbies'),
     array(
         array('1', 'Mihai', 'Cycling, Gaming, Programming'),
@@ -35,7 +51,6 @@ print $table = DisplayTable::fromArray(
 ->toAscii()->generate();
 ```
 
-The result:
 ```
 .---.---------------.----------------------------------.
 | # |    Person     |             Hobbies              |
@@ -46,205 +61,128 @@ The result:
 '---'---------------'----------------------------------'
 ```
 
-<!--( Clean up these paragraphs and include them in the next version. 
-## Examples
+### Changing the border style
 
-Print ASCII table to output:
+Multiple border styles are available:
++ Bubble
++ Compact
++ Differentiated
++ Dotted
++ Girder
++ Github
++ Mysql
++ Rounded (default)
++ No Border
+
+Changing the border style is a method call away:
+ 
+```php
+<?php
+require_once dirname(__FILE__) . '/vendor/autoload.php';
+
+use Mmarica\DisplayTable;
+
+print DisplayTable::fromArray(
+    array('#', 'Person', 'Hobbies'),
+    array(
+        array('1', 'Mihai', 'Cycling, Gaming, Programming'),
+        array('2', 'Chewbacca', 'Growling, hibernating'),
+        array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
+    )
+)
+->toAscii()
+->mysqlBorder()
+->generate();
+```
+
+```
++---+---------------+----------------------------------+
+| # |    Person     |             Hobbies              |
++---+---------------+----------------------------------+
+| 1 | Mihai         | Cycling, Gaming, Programming     |
+| 2 | Chewbacca     | Growling, hibernating            |
+| 3 | Philip J. Fry | Time traveling, eating anchovies |
++---+---------------+----------------------------------+
+
+```
+
+### Customizing the padding
+
+The horizontal and vertical padding can be easily customized:
 
 ```php
 <?php
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
-use Mmarica\DisplayTable\Data;
-use Mmarica\DisplayTable\AsciiTable;
+use Mmarica\DisplayTable;
 
-$data = new Data\ArraySource(
+print DisplayTable::fromArray(
     array('#', 'Person', 'Hobbies'),
     array(
         array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-        array('2', 'Chewbacca', 'Growling'),
-        array('3', 'Tudor', 'Diets'),
+        array('2', 'Chewbacca', 'Growling, hibernating'),
+        array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
     )
-);
+)
+->toAscii()
+->hPadding(2)->vPadding(1)
+->generate();
+```
 
-print 'Rounded border (default):' . PHP_EOL;
-print AsciiTable::create()
-        ->roundedBorder()
-        ->generate($data) . PHP_EOL;
+```
+.-----.-----------------.------------------------------------.
+|     |                 |                                    |
+|  #  |     Person      |              Hobbies               |
+|     |                 |                                    |
+:-----+-----------------+------------------------------------:
+|     |                 |                                    |
+|  1  |  Mihai          |  Cycling, Gaming, Programming      |
+|     |                 |                                    |
+|     |                 |                                    |
+|  2  |  Chewbacca      |  Growling, hibernating             |
+|     |                 |                                    |
+|     |                 |                                    |
+|  3  |  Philip J. Fry  |  Time traveling, eating anchovies  |
+|     |                 |                                    |
+'-----'-----------------'------------------------------------'
+```
 
-print 'MySQL border:' . PHP_EOL;
-print AsciiTable::create()
-        ->mysqlBorder()
-        ->generate($data) . PHP_EOL;
+### Using the same data to print multiple tables in different styles
 
-print 'Dotted border:' . PHP_EOL;
-print AsciiTable::create()
-        ->dottedBorder()
-        ->generate($data) . PHP_EOL;
+```php
+<?php
+require_once dirname(__FILE__) . '/vendor/autoload.php';
 
-print 'GitHub border:' . PHP_EOL;
-print AsciiTable::create()
-        ->githubBorder()
-        ->generate($data) . PHP_EOL;
+use Mmarica\DisplayTable;
 
-print 'Complete border:' . PHP_EOL;
-print AsciiTable::create()
-        ->completeBorder()
-        ->generate($data) . PHP_EOL;
-
-print 'Bubble border:' . PHP_EOL;
-print AsciiTable::create()
-        ->bubbleBorder()
-        ->generate($data) . PHP_EOL;
-
-print 'Girder border:' . PHP_EOL;
-print AsciiTable::create()
-        ->girderBorder()
-        ->generate($data) . PHP_EOL;
-
-print 'Compact border:' . PHP_EOL;
-print AsciiTable::create()
-        ->compactBorder()
-        ->generate($data) . PHP_EOL;
-
-print 'No border:' . PHP_EOL;
-print AsciiTable::create()
-        ->noBorder()
-        ->generate($data) . PHP_EOL;
-
-print 'Custom padding:' . PHP_EOL;
-print AsciiTable::create()
-        ->hPadding(2)->vPadding(1)
-        ->generate($data) . PHP_EOL;
-
-$data = new Data\ArraySource(
-    array('Only', 'Header', 'Here')
-);
-print 'Header, no rows:' . PHP_EOL;
-print AsciiTable::create()
-        ->completeBorder()
-        ->generate($data) . PHP_EOL;
-
-$data = new Data\ArraySource(
-    array(),
+$table = DisplayTable::fromArray(
+    array('#', 'Person', 'Hobbies'),
     array(
-        array('Only', 'Header', 'Here')
+        array('1', 'Mihai', 'Cycling, Gaming, Programming'),
+        array('2', 'Chewbacca', 'Growling, hibernating'),
+        array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
     )
 );
-print 'No header, one row:' . PHP_EOL;
-print AsciiTable::create()
-        ->completeBorder()
-        ->generate($data) . PHP_EOL;
+
+print $table->toAscii()->differentiatedBorder()->generate();
+print $table->toAscii()->dottedBorder()->generate();
 ```
 
-Resulting output:
-
 ```
-Rounded border (default):
-.---.-----------.------------------------------.
-| # |  Person   |           Hobbies            |
-:---+-----------+------------------------------:
-| 1 | Mihai     | Cycling, Gaming, Programming |
-| 2 | Chewbacca | Growling                     |
-| 3 | Tudor     | Diets                        |
-'---'-----------'------------------------------'
-
-MySQL border:
-+---+-----------+------------------------------+
-| # |  Person   |           Hobbies            |
-+---+-----------+------------------------------+
-| 1 | Mihai     | Cycling, Gaming, Programming |
-| 2 | Chewbacca | Growling                     |
-| 3 | Tudor     | Diets                        |
-+---+-----------+------------------------------+
-
-Dotted border:
-................................................
-: # :  Person   :           Hobbies            :
-:...:...........:..............................:
-: 1 : Mihai     : Cycling, Gaming, Programming :
-: 2 : Chewbacca : Growling                     :
-: 3 : Tudor     : Diets                        :
-:...:...........:..............................:
-
-GitHub border:
-| # |  Person   |           Hobbies            |
-|---|-----------|------------------------------|
-| 1 | Mihai     | Cycling, Gaming, Programming |
-| 2 | Chewbacca | Growling                     |
-| 3 | Tudor     | Diets                        |
-
-Complete border:
-+===+===========+==============================+
-| # |  Person   |           Hobbies            |
-+===+===========+==============================+
-| 1 | Mihai     | Cycling, Gaming, Programming |
-+---+-----------+------------------------------+
-| 2 | Chewbacca | Growling                     |
-+---+-----------+------------------------------+
-| 3 | Tudor     | Diets                        |
-+---+-----------+------------------------------+
-
-Bubble border:
- o8===(_)===========(_)==============================8o 
-(_) # (_)  Person   (_)           Hobbies            (_)
-(88===(_)===========(_)==============================88)
-(_) 1 (_) Mihai     (_) Cycling, Gaming, Programming (_)
-(88---(_)-----------(_)------------------------------88)
-(_) 2 (_) Chewbacca (_) Growling                     (_)
-(88---(_)-----------(_)------------------------------88)
-(_) 3 (_) Tudor     (_) Diets                        (_)
- o8---(_)-----------(_)------------------------------8o 
-
-Girder border:
-//===[]===========[]==============================\\
-|| # ||  Person   ||           Hobbies            ||
-|]===[]===========[]==============================[|
-|| 1 || Mihai     || Cycling, Gaming, Programming ||
-|]===[]===========[]==============================[|
-|| 2 || Chewbacca || Growling                     ||
-|]===[]===========[]==============================[|
-|| 3 || Tudor     || Diets                        ||
-\\---[]-----------[]------------------------------//
-
-Compact border:
- #   Person              Hobbies            
---------------------------------------------
- 1  Mihai      Cycling, Gaming, Programming 
- 2  Chewbacca  Growling                     
- 3  Tudor      Diets                        
-
-No border:
- #   Person              Hobbies            
- 1  Mihai      Cycling, Gaming, Programming 
- 2  Chewbacca  Growling                     
- 3  Tudor      Diets                        
-
-Custom padding:
-.-----.-------------.--------------------------------.
-|     |             |                                |
-|  #  |   Person    |            Hobbies             |
-|     |             |                                |
-:-----+-------------+--------------------------------:
-|     |             |                                |
-|  1  |  Mihai      |  Cycling, Gaming, Programming  |
-|     |             |                                |
-|     |             |                                |
-|  2  |  Chewbacca  |  Growling                      |
-|     |             |                                |
-|     |             |                                |
-|  3  |  Tudor      |  Diets                         |
-|     |             |                                |
-'-----'-------------'--------------------------------'
-
-Header, no rows:
-+======+========+======+
-| Only | Header | Here |
-+======+========+======+
-
-No header, one row:
-+------+--------+------+
-| Only | Header | Here |
-+------+--------+------+
++===+===============+==================================+
+| # |    Person     |             Hobbies              |
++===+===============+==================================+
+| 1 | Mihai         | Cycling, Gaming, Programming     |
++---+---------------+----------------------------------+
+| 2 | Chewbacca     | Growling, hibernating            |
++---+---------------+----------------------------------+
+| 3 | Philip J. Fry | Time traveling, eating anchovies |
++---+---------------+----------------------------------+
+........................................................
+: # :    Person     :             Hobbies              :
+:...:...............:..................................:
+: 1 : Mihai         : Cycling, Gaming, Programming     :
+: 2 : Chewbacca     : Growling, hibernating            :
+: 3 : Philip J. Fry : Time traveling, eating anchovies :
+:...:...............:..................................:
 ```
-)--> 
