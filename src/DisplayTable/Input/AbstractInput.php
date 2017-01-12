@@ -1,7 +1,10 @@
 <?php
-
 namespace Mmarica\DisplayTable\Input;
 
+
+/**
+ * Abstract Input Class
+ */
 abstract class AbstractInput
 {
     protected $_header = array();

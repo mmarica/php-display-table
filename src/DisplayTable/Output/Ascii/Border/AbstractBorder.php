@@ -2,6 +2,7 @@
 
 namespace Mmarica\DisplayTable\Output\Ascii\Border;
 
+
 /**
  * Abstract Border Class
  */

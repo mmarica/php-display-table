@@ -1,5 +1,4 @@
 <?php
-
 namespace Mmarica\DisplayTable\Output;
 
 use Mmarica\DisplayTable\Input\AbstractInput;
