@@ -4,7 +4,7 @@ namespace Tests\DisplayTable;
 
 use Tests\AbstractTest;
 use Mmarica\DisplayTable;
-use Mmarica\DisplayTable\Output\AsciiOutput;
+use Mmarica\DisplayTable\Output\TextOutput;
 
 
 class DisplayTableTest extends AbstractTest
@@ -26,8 +26,8 @@ class DisplayTableTest extends AbstractTest
         $this->assertInstanceOf(DisplayTable::class, DisplayTable::withoutData());
     }
 
-    public function test_ToAscii()
+    public function test_ToText()
     {
-        $this->assertInstanceOf(AsciiOutput::class, DisplayTable::fromArray()->toAscii());
+        $this->assertInstanceOf(TextOutput::class, DisplayTable::fromArray()->toText());
     }
 }

@@ -50,13 +50,13 @@ class DisplayTable
     }
 
     /**
-     * Get an Output\Ascii object
+     * Get a Text Output object
      *
-     * @return Output\AsciiOutput
+     * @return Output\TextOutput
      */
-    public function toAscii()
+    public function toText()
     {
-        $table = new Output\AsciiOutput($this->_input);
+        $table = new Output\TextOutput($this->_input);
         return $table;
     }
 }

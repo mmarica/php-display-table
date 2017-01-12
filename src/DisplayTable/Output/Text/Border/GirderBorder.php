@@ -1,5 +1,5 @@
 <?php
-namespace Mmarica\DisplayTable\Output\Ascii\Border;
+namespace Mmarica\DisplayTable\Output\Text\Border;
 
 
 /**

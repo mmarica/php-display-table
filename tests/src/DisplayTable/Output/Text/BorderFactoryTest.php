@@ -1,16 +1,16 @@
 <?php
-namespace Tests\DisplayTable\Output\Ascii;
+namespace Tests\DisplayTable\Output\Text;
 
 use Tests\AbstractTest;
-use Mmarica\DisplayTable\Output\Ascii\Border\BubbleBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\CompactBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\DifferentiatedBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\DottedBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\GirderBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\MysqlBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\NoBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\RoundedBorder;
-use Mmarica\DisplayTable\Output\Ascii\BorderFactory;
+use Mmarica\DisplayTable\Output\Text\Border\BubbleBorder;
+use Mmarica\DisplayTable\Output\Text\Border\CompactBorder;
+use Mmarica\DisplayTable\Output\Text\Border\DifferentiatedBorder;
+use Mmarica\DisplayTable\Output\Text\Border\DottedBorder;
+use Mmarica\DisplayTable\Output\Text\Border\GirderBorder;
+use Mmarica\DisplayTable\Output\Text\Border\MysqlBorder;
+use Mmarica\DisplayTable\Output\Text\Border\NoBorder;
+use Mmarica\DisplayTable\Output\Text\Border\RoundedBorder;
+use Mmarica\DisplayTable\Output\Text\BorderFactory;
 
 
 class BorderFactoryTest extends AbstractTest

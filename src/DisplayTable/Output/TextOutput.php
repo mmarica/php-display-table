@@ -1,13 +1,13 @@
 <?php
 namespace Mmarica\DisplayTable\Output;
 
-use Mmarica\DisplayTable\Output\Ascii\BorderFactory;
+use Mmarica\DisplayTable\Output\Text\BorderFactory;
 
 
 /**
- * Ascii Output Class
+ * Text Output Class
  */
-class AsciiOutput extends AbstractOutput
+class TextOutput extends AbstractOutput
 {
     /**
      * @var integer

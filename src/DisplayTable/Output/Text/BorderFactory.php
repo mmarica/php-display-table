@@ -1,16 +1,16 @@
 <?php
-namespace Mmarica\DisplayTable\Output\Ascii;
+namespace Mmarica\DisplayTable\Output\Text;
 
-use Mmarica\DisplayTable\Output\Ascii\Border\AbstractBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\BubbleBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\CompactBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\DifferentiatedBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\DottedBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\GirderBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\GithubBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\MysqlBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\NoBorder;
-use Mmarica\DisplayTable\Output\Ascii\Border\RoundedBorder;
+use Mmarica\DisplayTable\Output\Text\Border\AbstractBorder;
+use Mmarica\DisplayTable\Output\Text\Border\BubbleBorder;
+use Mmarica\DisplayTable\Output\Text\Border\CompactBorder;
+use Mmarica\DisplayTable\Output\Text\Border\DifferentiatedBorder;
+use Mmarica\DisplayTable\Output\Text\Border\DottedBorder;
+use Mmarica\DisplayTable\Output\Text\Border\GirderBorder;
+use Mmarica\DisplayTable\Output\Text\Border\GithubBorder;
+use Mmarica\DisplayTable\Output\Text\Border\MysqlBorder;
+use Mmarica\DisplayTable\Output\Text\Border\NoBorder;
+use Mmarica\DisplayTable\Output\Text\Border\RoundedBorder;
 
 
 /**

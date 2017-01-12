@@ -5,7 +5,7 @@
 [![Build Status](https://img.shields.io/travis/mmarica/php-display-table.svg?style=flat)](https://travis-ci.org/mmarica/php-display-table)
 [![codecov.io](https://img.shields.io/codecov/c/github/mmarica/php-display-table.svg?style=flat)](https://codecov.io/github/mmarica/php-display-table?branch=master)
 
-A simple PHP Library for generating tables in ASCII format, useful for writing summaries in log or console.
+A simple PHP Library for generating tables in text format, useful for writing summaries in log or console.
 
 ## Table of Contents
 
@@ -33,7 +33,7 @@ The following versions of PHP are supported by this version.
 
 ### Your first console table
 
-Printing an ASCII table is as simple as this:
+Printing a text table is as simple as this:
 
 ```php
 <?php
@@ -49,7 +49,7 @@ print DisplayTable::fromArray(
         array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
     )
 )
-->toAscii()->generate();
+->toText()->generate();
 ```
 
 ```
@@ -91,7 +91,7 @@ print DisplayTable::fromArray(
         array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
     )
 )
-->toAscii()
+->toText()
 ->mysqlBorder()
 ->generate();
 ```
@@ -125,7 +125,7 @@ print DisplayTable::fromArray(
         array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
     )
 )
-->toAscii()
+->toText()
 ->hPadding(2)->vPadding(1)
 ->generate();
 ```
@@ -165,8 +165,8 @@ $table = DisplayTable::fromArray(
     )
 );
 
-print $table->toAscii()->differentiatedBorder()->generate();
-print $table->toAscii()->dottedBorder()->generate();
+print $table->toText()->differentiatedBorder()->generate();
+print $table->toText()->dottedBorder()->generate();
 ```
 
 ```
