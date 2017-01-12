@@ -1,9 +1,9 @@
 # Display tables
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/mmarica/display-table.svg)](https://packagist.org/packages/mmarica/display-table)
-[![Software License](https://img.shields.io/github/license/mmarica/php-display-table.svg)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/mmarica/php-display-table.svg)](https://travis-ci.org/mmarica/php-display-table)
-[![codecov.io](https://img.shields.io/codecov/c/github/mmarica/php-display-table.svg)](https://codecov.io/github/mmarica/php-display-table?branch=master)
+[![Latest Stable Version](https://img.shields.io/packagist/v/mmarica/display-table.svg?style=flat&label=release)](https://packagist.org/packages/mmarica/display-table)
+[![Software License](https://img.shields.io/github/license/mmarica/php-display-table.svg?style=flat)](LICENSE)
+[![Build Status](https://img.shields.io/travis/mmarica/php-display-table.svg?style=flat)](https://travis-ci.org/mmarica/php-display-table)
+[![codecov.io](https://img.shields.io/codecov/c/github/mmarica/php-display-table.svg?style=flat)](https://codecov.io/github/mmarica/php-display-table?branch=master)
 
 A simple PHP Library for generating tables in ASCII format, useful for writing summaries in log or console.
 
