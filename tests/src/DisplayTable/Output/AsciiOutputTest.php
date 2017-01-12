@@ -1,13 +1,13 @@
 <?php
-namespace Tests\DisplayTable;
+namespace Tests\DisplayTable\Output;
 
+use Tests\AbstractTest;
 use Mmarica\DisplayTable\Input\AbstractInput;
 use Mmarica\DisplayTable\Input\ArrayInput;
 use Mmarica\DisplayTable\Output;
-use PHPUnit_Framework_TestCase;
 
 
-class AsciiOutputTest extends PHPUnit_Framework_TestCase
+class AsciiOutputTest extends AbstractTest
 {
     /**
      * @var AbstractInput
@@ -45,7 +45,7 @@ class AsciiOutputTest extends PHPUnit_Framework_TestCase
             array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
         );
 
-        // ready to use inputs
+        // ready-to-use inputs
         $this->_oneHeaderNoRows = new ArrayInput($header);
         $this->_noHeadersOneRow = new ArrayInput(array(), array($rows[0]));
         $this->_noHeadersMultipleRows = new ArrayInput(array(), $rows);
@@ -56,17 +56,7 @@ class AsciiOutputTest extends PHPUnit_Framework_TestCase
     {
         $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $result = $output->noPadding()->generate();
-
-        $expected = <<<'EOD'
-.-.-------------.--------------------------------.
-|#|   Person    |            Hobbies             |
-:-+-------------+--------------------------------:
-|1|Mihai        |Cycling, Gaming, Programming    |
-|2|Chewbacca    |Growling, hibernating           |
-|3|Philip J. Fry|Time traveling, eating anchovies|
-'-'-------------'--------------------------------'
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $this->assertSame($expected, $result);
     }
 
@@ -78,25 +68,7 @@ EOD;
         $this->assertSame($output->vPadding(1)->getVPadding(), 1);
 
         $result = $output->generate();
-
-        $expected = <<<'EOD'
-.-----.-----------------.------------------------------------.
-|     |                 |                                    |
-|  #  |     Person      |              Hobbies               |
-|     |                 |                                    |
-:-----+-----------------+------------------------------------:
-|     |                 |                                    |
-|  1  |  Mihai          |  Cycling, Gaming, Programming      |
-|     |                 |                                    |
-|     |                 |                                    |
-|  2  |  Chewbacca      |  Growling, hibernating             |
-|     |                 |                                    |
-|     |                 |                                    |
-|  3  |  Philip J. Fry  |  Time traveling, eating anchovies  |
-|     |                 |                                    |
-'-----'-----------------'------------------------------------'
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $this->assertSame($expected, $result);
     }
 
@@ -106,350 +78,255 @@ EOD;
         $this->assertSame($output->mysqlBorder()->getBorderType(), Output\Ascii\BorderFactory::MYSQL_BORDER);
     }
 
-    public function test_RoundedBorder_OneHeaderNoRows()
+    public function test_BubbleBorder_NoHeadersMultipleRows()
     {
-        $expected = <<<'EOD'
-.---.--------.---------.
-| # | Person | Hobbies |
-'---'--------'---------'
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
-        $this->assertSame($expected, $output->roundedBorder()->generate());
-    }
-
-    public function test_RoundedBorder_NoHeadersOneRow()
-    {
-        $expected = <<<'EOD'
-.---.-------.------------------------------.
-| 1 | Mihai | Cycling, Gaming, Programming |
-'---'-------'------------------------------'
-
-EOD;
-        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
-        $this->assertSame($expected, $output->roundedBorder()->generate());
-    }
-
-    public function test_RoundedBorder_oneHeaderMultipleRows()
-    {
-        $expected = <<<'EOD'
-.---.---------------.----------------------------------.
-| # |    Person     |             Hobbies              |
-:---+---------------+----------------------------------:
-| 1 | Mihai         | Cycling, Gaming, Programming     |
-| 2 | Chewbacca     | Growling, hibernating            |
-| 3 | Philip J. Fry | Time traveling, eating anchovies |
-'---'---------------'----------------------------------'
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
-        $this->assertSame($expected, $output->roundedBorder()->generate());
-    }
-
-    public function test_MysqlBorder_OneHeaderNoRows()
-    {
-        $expected = <<<'EOD'
-+---+--------+---------+
-| # | Person | Hobbies |
-+---+--------+---------+
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
-        $this->assertSame($expected, $output->mysqlBorder()->generate());
-    }
-
-    public function test_MysqlBorder_NoHeadersOneRow()
-    {
-        $expected = <<<'EOD'
-+---+-------+------------------------------+
-| 1 | Mihai | Cycling, Gaming, Programming |
-+---+-------+------------------------------+
-
-EOD;
-        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
-        $this->assertSame($expected, $output->mysqlBorder()->generate());
-    }
-
-    public function test_MysqlBorder_OneHeaderMultipleRows()
-    {
-        $expected = <<<'EOD'
-+---+---------------+----------------------------------+
-| # |    Person     |             Hobbies              |
-+---+---------------+----------------------------------+
-| 1 | Mihai         | Cycling, Gaming, Programming     |
-| 2 | Chewbacca     | Growling, hibernating            |
-| 3 | Philip J. Fry | Time traveling, eating anchovies |
-+---+---------------+----------------------------------+
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
-        $this->assertSame($expected, $output->mysqlBorder()->generate());
-    }
-
-    public function test_DottedBorder_OneHeaderNoRows()
-    {
-        $expected = <<<'EOD'
-........................
-: # : Person : Hobbies :
-:...:........:.........:
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
-        $this->assertSame($expected, $output->dottedBorder()->generate());
-    }
-
-    public function test_DottedBorder_NoHeadersOneRow()
-    {
-        $expected = <<<'EOD'
-............................................
-: 1 : Mihai : Cycling, Gaming, Programming :
-:...:.......:..............................:
-
-EOD;
-        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
-        $this->assertSame($expected, $output->dottedBorder()->generate());
-    }
-
-    public function test_DottedBorder_oneHeaderMultipleRows()
-    {
-        $expected = <<<'EOD'
-........................................................
-: # :    Person     :             Hobbies              :
-:...:...............:..................................:
-: 1 : Mihai         : Cycling, Gaming, Programming     :
-: 2 : Chewbacca     : Growling, hibernating            :
-: 3 : Philip J. Fry : Time traveling, eating anchovies :
-:...:...............:..................................:
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
-        $this->assertSame($expected, $output->dottedBorder()->generate());
-    }
-
-    public function test_GithubBorder_OneHeaderNoRows()
-    {
-        $expected = <<<'EOD'
-| # | Person | Hobbies |
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
-        $this->assertSame($expected, $output->githubBorder()->generate());
-    }
-
-    public function test_GithubBorder_NoHeadersOneRow()
-    {
-        $expected = <<<'EOD'
-| 1 | Mihai | Cycling, Gaming, Programming |
-
-EOD;
-        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
-        $this->assertSame($expected, $output->githubBorder()->generate());
-    }
-
-    public function test_GithubBorder_OneHeaderMultipleRows()
-    {
-        $expected = <<<'EOD'
-| # |    Person     |             Hobbies              |
-|---|---------------|----------------------------------|
-| 1 | Mihai         | Cycling, Gaming, Programming     |
-| 2 | Chewbacca     | Growling, hibernating            |
-| 3 | Philip J. Fry | Time traveling, eating anchovies |
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
-        $this->assertSame($expected, $output->githubBorder()->generate());
-    }
-
-    public function test_DifferentiatedBorder_OneHeaderNoRows()
-    {
-        $expected = <<<'EOD'
-+===+========+=========+
-| # | Person | Hobbies |
-+===+========+=========+
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
-        $this->assertSame($expected, $output->differentiatedBorder()->generate());
-    }
-
-    public function test_DifferentiatedBorder_NoHeadersOneRow()
-    {
-        $expected = <<<'EOD'
-+---+-------+------------------------------+
-| 1 | Mihai | Cycling, Gaming, Programming |
-+---+-------+------------------------------+
-
-EOD;
-        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
-        $this->assertSame($expected, $output->differentiatedBorder()->generate());
-    }
-
-    public function test_DifferentiatedBorder_OneHeaderMultipleRows()
-    {
-        $expected = <<<'EOD'
-+===+===============+==================================+
-| # |    Person     |             Hobbies              |
-+===+===============+==================================+
-| 1 | Mihai         | Cycling, Gaming, Programming     |
-+---+---------------+----------------------------------+
-| 2 | Chewbacca     | Growling, hibernating            |
-+---+---------------+----------------------------------+
-| 3 | Philip J. Fry | Time traveling, eating anchovies |
-+---+---------------+----------------------------------+
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
-        $this->assertSame($expected, $output->differentiatedBorder()->generate());
-    }
-
-    public function test_BubbleBorder_OneHeaderNoRows()
-    {
-        $expected = <<<'EOD'
- o8===(_)========(_)=========8o 
-(_) # (_) Person (_) Hobbies (_)
- o8===(_)========(_)=========8o 
-
-EOD;
-        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
     }
 
     public function test_BubbleBorder_NoHeadersOneRow()
     {
-        $expected = <<<'EOD'
- o8---(_)-------(_)------------------------------8o 
-(_) 1 (_) Mihai (_) Cycling, Gaming, Programming (_)
- o8---(_)-------(_)------------------------------8o 
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
     }
 
     public function test_BubbleBorder_OneHeaderMultipleRows()
     {
-        $expected = <<<'EOD'
- o8===(_)===============(_)==================================8o 
-(_) # (_)    Person     (_)             Hobbies              (_)
-(88===(_)===============(_)==================================88)
-(_) 1 (_) Mihai         (_) Cycling, Gaming, Programming     (_)
-(88---(_)---------------(_)----------------------------------88)
-(_) 2 (_) Chewbacca     (_) Growling, hibernating            (_)
-(88---(_)---------------(_)----------------------------------88)
-(_) 3 (_) Philip J. Fry (_) Time traveling, eating anchovies (_)
- o8---(_)---------------(_)----------------------------------8o 
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->bubbleBorder()->generate());
     }
 
-    public function test_GirderBorder_OneHeaderNoRows()
+    public function test_BubbleBorder_OneHeaderNoRows()
     {
-        $expected = <<<'EOD'
-//===[]========[]=========\\
-|| # || Person || Hobbies ||
-\\===[]========[]=========//
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->bubbleBorder()->generate());
+    }
+
+    public function test_CompactBorder_NoHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
+        $this->assertSame($expected, $output->compactBorder()->generate());
+    }
+
+    public function test_CompactBorder_NoHeadersOneRow()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
+        $this->assertSame($expected, $output->compactBorder()->generate());
+    }
+
+    public function test_CompactBorder_OneHeaderMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
+        $this->assertSame($expected, $output->compactBorder()->generate());
+    }
+
+    public function test_CompactBorder_OneHeaderNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->compactBorder()->generate());
+    }
+
+    public function test_DifferentiatedBorder_NoHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
+        $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
+
+    public function test_DifferentiatedBorder_NoHeadersOneRow()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
+        $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
+
+    public function test_DifferentiatedBorder_OneHeaderMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
+        $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
+
+    public function test_DifferentiatedBorder_OneHeaderNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
+
+    public function test_DottedBorder_NoHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
+        $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
+
+    public function test_DottedBorder_NoHeadersOneRow()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
+        $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
+
+    public function test_DottedBorder_OneHeaderMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
+        $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
+
+    public function test_DottedBorder_OneHeaderNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
+
+    public function test_GirderBorder_NoHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
         $this->assertSame($expected, $output->girderBorder()->generate());
     }
 
     public function test_GirderBorder_NoHeadersOneRow()
     {
-        $expected = <<<'EOD'
-//---[]-------[]------------------------------\\
-|| 1 || Mihai || Cycling, Gaming, Programming ||
-\\---[]-------[]------------------------------//
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->girderBorder()->generate());
     }
 
     public function test_GirderBorder_OneHeaderMultipleRows()
     {
-        $expected = <<<'EOD'
-//===[]===============[]==================================\\
-|| # ||    Person     ||             Hobbies              ||
-|]===[]===============[]==================================[|
-|| 1 || Mihai         || Cycling, Gaming, Programming     ||
-|]===[]===============[]==================================[|
-|| 2 || Chewbacca     || Growling, hibernating            ||
-|]===[]===============[]==================================[|
-|| 3 || Philip J. Fry || Time traveling, eating anchovies ||
-\\---[]---------------[]----------------------------------//
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->girderBorder()->generate());
     }
 
-    public function test_CompactBorder_OneHeaderNoRows()
+    public function test_GirderBorder_OneHeaderNoRows()
     {
-        $expected = <<<'EOD'
- #  Person  Hobbies 
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
-        $this->assertSame($expected, $output->compactBorder()->generate());
+        $this->assertSame($expected, $output->girderBorder()->generate());
     }
 
-    public function test_CompactBorder_NoHeadersOneRow()
+    public function test_GithubBorder_NoHeadersMultipleRows()
     {
-        $expected = <<<'EOD'
- 1  Mihai  Cycling, Gaming, Programming 
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
+        $this->assertSame($expected, $output->githubBorder()->generate());
+    }
 
-EOD;
+    public function test_GithubBorder_NoHeadersOneRow()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
-        $this->assertSame($expected, $output->compactBorder()->generate());
+        $this->assertSame($expected, $output->githubBorder()->generate());
     }
 
-    public function test_CompactBorder_oneHeaderMultipleRows()
+    public function test_GithubBorder_OneHeaderMultipleRows()
     {
-        $expected = <<<'EOD'
- #     Person                  Hobbies              
-----------------------------------------------------
- 1  Mihai          Cycling, Gaming, Programming     
- 2  Chewbacca      Growling, hibernating            
- 3  Philip J. Fry  Time traveling, eating anchovies 
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
-        $this->assertSame($expected, $output->compactBorder()->generate());
+        $this->assertSame($expected, $output->githubBorder()->generate());
     }
 
-    public function test_NoBorder_OneHeaderNoRows()
+    public function test_GithubBorder_OneHeaderNoRows()
     {
-        $expected = <<<'EOD'
- #  Person  Hobbies 
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->githubBorder()->generate());
+    }
+
+    public function test_MysqlBorder_NoHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
+        $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
+
+    public function test_MysqlBorder_NoHeadersOneRow()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
+        $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
+
+    public function test_MysqlBorder_OneHeaderMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
+        $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
+
+    public function test_MysqlBorder_OneHeaderNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
+
+    public function test_NoBorder_NoHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
         $this->assertSame($expected, $output->noBorder()->generate());
     }
 
     public function test_NoBorder_NoHeadersOneRow()
     {
-        $expected = <<<'EOD'
- 1  Mihai  Cycling, Gaming, Programming 
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_noHeadersOneRow);
         $this->assertSame($expected, $output->noBorder()->generate());
     }
 
     public function test_NoBorder_OneHeaderMultipleRows()
     {
-        $expected = <<<'EOD'
- #     Person                  Hobbies              
- 1  Mihai          Cycling, Gaming, Programming     
- 2  Chewbacca      Growling, hibernating            
- 3  Philip J. Fry  Time traveling, eating anchovies 
-
-EOD;
+        $expected = $this->_loadTxtResource(__METHOD__);
         $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
         $this->assertSame($expected, $output->noBorder()->generate());
+    }
+
+    public function test_NoBorder_OneHeaderNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->noBorder()->generate());
+    }
+
+    public function test_RoundedBorder_NoHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersMultipleRows);
+        $this->assertSame($expected, $output->roundedBorder()->generate());
+    }
+
+    public function test_RoundedBorder_NoHeadersOneRow()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_noHeadersOneRow);
+        $this->assertSame($expected, $output->roundedBorder()->generate());
+    }
+
+    public function test_RoundedBorder_OneHeaderMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderMultipleRows);
+        $this->assertSame($expected, $output->roundedBorder()->generate());
+    }
+
+    public function test_RoundedBorder_OneHeaderNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new Output\AsciiOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->roundedBorder()->generate());
     }
 }

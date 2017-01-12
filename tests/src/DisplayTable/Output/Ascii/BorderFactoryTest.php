@@ -1,12 +1,12 @@
 <?php
 namespace Tests\DisplayTable\Output\Ascii;
 
+use Tests\AbstractTest;
 use Mmarica\DisplayTable\Output\Ascii\BorderFactory;
 use Mmarica\DisplayTable\Output\Ascii\Border;
-use PHPUnit_Framework_TestCase;
 
 
-class BorderFactoryTest extends PHPUnit_Framework_TestCase
+class BorderFactoryTest extends AbstractTest
 {
     public function test_create_InvalidBorderType()
     {

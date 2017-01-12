@@ -116,61 +116,6 @@ class AsciiOutput extends AbstractOutput
     }
 
     /**
-     * Use MySQL border
-     *
-     * @return self
-     */
-    public function mysqlBorder()
-    {
-        $this->_borderType = BorderFactory::MYSQL_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use dotted border
-     *
-     * @return self
-     */
-    public function dottedBorder()
-    {
-        $this->_borderType = BorderFactory::DOTTED_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use GitHub border
-     *
-     * @return self
-     */
-    public function githubBorder()
-    {
-        $this->_borderType = BorderFactory::GITHUB_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use rounded border
-     *
-     * @return self
-     */
-    public function roundedBorder()
-    {
-        $this->_borderType = BorderFactory::ROUNDED_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use complete border
-     *
-     * @return self
-     */
-    public function differentiatedBorder()
-    {
-        $this->_borderType = BorderFactory::DIFFERENTIATED_BORDER;
-        return $this;
-    }
-
-    /**
      * Use bubble border
      *
      * @return self
@@ -178,17 +123,6 @@ class AsciiOutput extends AbstractOutput
     public function bubbleBorder()
     {
         $this->_borderType = BorderFactory::BUBBLE_BORDER;
-        return $this;
-    }
-
-    /**
-     * Use girder border
-     *
-     * @return self
-     */
-    public function girderBorder()
-    {
-        $this->_borderType = BorderFactory::GIRDER_BORDER;
         return $this;
     }
 
@@ -204,6 +138,61 @@ class AsciiOutput extends AbstractOutput
     }
 
     /**
+     * Use differentiated border
+     *
+     * @return self
+     */
+    public function differentiatedBorder()
+    {
+        $this->_borderType = BorderFactory::DIFFERENTIATED_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use dotted border
+     *
+     * @return self
+     */
+    public function dottedBorder()
+    {
+        $this->_borderType = BorderFactory::DOTTED_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use girder border
+     *
+     * @return self
+     */
+    public function girderBorder()
+    {
+        $this->_borderType = BorderFactory::GIRDER_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use GitHub border
+     *
+     * @return self
+     */
+    public function githubBorder()
+    {
+        $this->_borderType = BorderFactory::GITHUB_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use MySQL border
+     *
+     * @return self
+     */
+    public function mysqlBorder()
+    {
+        $this->_borderType = BorderFactory::MYSQL_BORDER;
+        return $this;
+    }
+
+    /**
      * Use no border
      *
      * @return self
@@ -211,6 +200,17 @@ class AsciiOutput extends AbstractOutput
     public function noBorder()
     {
         $this->_borderType = BorderFactory::NO_BORDER;
+        return $this;
+    }
+
+    /**
+     * Use rounded border
+     *
+     * @return self
+     */
+    public function roundedBorder()
+    {
+        $this->_borderType = BorderFactory::ROUNDED_BORDER;
         return $this;
     }
 

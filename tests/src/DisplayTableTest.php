@@ -2,12 +2,12 @@
 namespace Tests\DisplayTable;
 
 
+use Tests\AbstractTest;
 use Mmarica\DisplayTable;
 use Mmarica\DisplayTable\Output;
-use PHPUnit_Framework_TestCase;
 
 
-class DisplayTableTest extends PHPUnit_Framework_TestCase
+class DisplayTableTest extends AbstractTest
 {
     public function test_FromArray()
     {

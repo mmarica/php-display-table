@@ -1,11 +1,11 @@
 <?php
-
 namespace Tests\DisplayTable\Input;
 
+use Tests\AbstractTest;
 use Mmarica\DisplayTable\Input;
-use PHPUnit_Framework_TestCase;
 
-class ArrayInputTest extends PHPUnit_Framework_TestCase
+
+class ArrayInputTest extends AbstractTest
 {
     /**
      * @var Input\AbstractInput
