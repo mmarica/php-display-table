@@ -22,29 +22,29 @@ class DisplayTable
     protected function __construct() {}
 
     /**
-     * Create a table instance with an array input
+     * Create a table instance with data from an array
      *
-     * @param array $header (optional) Header row
-     * @param array $rows   (optional) Data rows
+     * @param array $headers (optional) Header rows
+     * @param array $data    (optional) Data rows
      * @return static
      */
-    public static function fromArray($header = array(), $rows = array())
+    public static function fromArray($headers = array(), $data = array())
     {
         $instance = new static();
-        $instance->_input = new Input\ArrayInput($header, $rows);
+        $instance->_input = new Input\DefaultInput($headers, $data);
 
         return $instance;
     }
 
     /**
-     * Create a table instance with an array input and no data
+     * Create a table instance without any data
      *
      * @return static
      */
     public static function withoutData()
     {
         $instance = new static();
-        $instance->_input = new Input\ArrayInput();
+        $instance->_input = new Input\DefaultInput();
 
         return $instance;
     }

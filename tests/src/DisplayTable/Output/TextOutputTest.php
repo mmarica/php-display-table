@@ -3,7 +3,7 @@ namespace Tests\DisplayTable\Output;
 
 use Tests\AbstractTest;
 use Mmarica\DisplayTable\Input\AbstractInput;
-use Mmarica\DisplayTable\Input\ArrayInput;
+use Mmarica\DisplayTable\Input\DefaultInput;
 use Mmarica\DisplayTable\Output\TextOutput;
 use Mmarica\DisplayTable\Output\Text\BorderFactory;
 
@@ -42,10 +42,10 @@ class TextOutputTest extends AbstractTest
         );
 
         // ready-to-use inputs
-        $this->_oneHeaderNoRows = new ArrayInput($header);
-        $this->_noHeadersOneRow = new ArrayInput(array(), array($rows[0]));
-        $this->_noHeadersMultipleRows = new ArrayInput(array(), $rows);
-        $this->_oneHeaderMultipleRows = new ArrayInput($header, $rows);
+        $this->_oneHeaderNoRows = new DefaultInput($header);
+        $this->_noHeadersOneRow = new DefaultInput(array(), array($rows[0]));
+        $this->_noHeadersMultipleRows = new DefaultInput(array(), $rows);
+        $this->_oneHeaderMultipleRows = new DefaultInput($header, $rows);
     }
 
     public function test_NoPadding()

@@ -2,13 +2,13 @@
 namespace Tests\DisplayTable\Input;
 
 use Tests\AbstractTest;
-use Mmarica\DisplayTable\Input\ArrayInput;
+use Mmarica\DisplayTable\Input\DefaultInput;
 
 
-class ArrayInputTest extends AbstractTest
+class DefaultInputTest extends AbstractTest
 {
     /**
-     * @var ArrayInput
+     * @var DefaultInput
      */
     protected $_input;
 
@@ -25,7 +25,7 @@ class ArrayInputTest extends AbstractTest
     protected function setUp()
     {
         parent::setUp();
-        $this->_input = new ArrayInput($this->_columns, $this->_rows);
+        $this->_input = new DefaultInput($this->_columns, $this->_rows);
     }
 
     public function testGet()
