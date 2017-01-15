@@ -128,10 +128,6 @@ class TextOutputTest extends AbstractTest
     {
         $expected = $this->_loadTxtResource(__METHOD__);
         $output = new TextOutput($this->_multipleHeadersMultipleRows);
-        file_put_contents(
-            '/home/gonzales/projects/php/php-display-table/tests/resources/DisplayTable/Output/TextOutputTest/BubbleBorder_MultipleHeadersMultipleRows.txt',
-            $output->bubbleBorder()->generate()
-        );
         $this->assertSame($expected, $output->bubbleBorder()->generate());
     }
 
