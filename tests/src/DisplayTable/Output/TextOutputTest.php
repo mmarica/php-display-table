@@ -13,12 +13,12 @@ class TextOutputTest extends AbstractTest
     /**
      * @var AbstractInput
      */
-    protected $_oneHeaderNoRows;
+    protected $_noHeadersOneRow;
 
     /**
      * @var AbstractInput
      */
-    protected $_noHeadersOneRow;
+    protected $_oneHeaderNoRows;
 
     /**
      * @var AbstractInput
@@ -30,11 +30,24 @@ class TextOutputTest extends AbstractTest
      */
     protected $_oneHeaderMultipleRows;
 
+    /**
+     * @var AbstractInput
+     */
+    protected $_multipleHeadersNoRows;
+
+    /**
+     * @var AbstractInput
+     */
+    protected $_multipleHeadersMultipleRows;
+
     protected function setUp()
     {
         parent::setUp();
 
-        $header = array('#', 'Person', 'Hobbies');
+        $headers = array(
+            array('#', 'Person', 'Hobbies'),
+            array('-', '(who)', '(what)'),
+        );
         $rows = array(
             array('1', 'Mihai', 'Cycling, Gaming, Programming'),
             array('2', 'Chewbacca', 'Growling, hibernating'),
@@ -42,10 +55,12 @@ class TextOutputTest extends AbstractTest
         );
 
         // ready-to-use inputs
-        $this->_oneHeaderNoRows = new DefaultInput($header);
         $this->_noHeadersOneRow = new DefaultInput(array(), array($rows[0]));
         $this->_noHeadersMultipleRows = new DefaultInput(array(), $rows);
-        $this->_oneHeaderMultipleRows = new DefaultInput($header, $rows);
+        $this->_oneHeaderNoRows = new DefaultInput(array($headers[0]));
+        $this->_oneHeaderMultipleRows = new DefaultInput(array($headers[0]), $rows);
+        $this->_multipleHeadersNoRows = new DefaultInput($headers, array());
+        $this->_multipleHeadersMultipleRows = new DefaultInput($headers, $rows);
     }
 
     public function test_NoPadding()
@@ -70,7 +85,7 @@ class TextOutputTest extends AbstractTest
 
     public function test_GetBorderType()
     {
-        $output = new TextOutput();
+        $output = new TextOutput(new DefaultInput());
         $this->assertSame($output->mysqlBorder()->getBorderType(), BorderFactory::MYSQL_BORDER);
     }
 
@@ -102,6 +117,24 @@ class TextOutputTest extends AbstractTest
         $this->assertSame($expected, $output->bubbleBorder()->generate());
     }
 
+    public function test_BubbleBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->bubbleBorder()->generate());
+    }
+
+    public function test_BubbleBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
+        file_put_contents(
+            '/home/gonzales/projects/php/php-display-table/tests/resources/DisplayTable/Output/TextOutputTest/BubbleBorder_MultipleHeadersMultipleRows.txt',
+            $output->bubbleBorder()->generate()
+        );
+        $this->assertSame($expected, $output->bubbleBorder()->generate());
+    }
+
     public function test_CompactBorder_NoHeadersMultipleRows()
     {
         $expected = $this->_loadTxtResource(__METHOD__);
@@ -127,6 +160,20 @@ class TextOutputTest extends AbstractTest
     {
         $expected = $this->_loadTxtResource(__METHOD__);
         $output = new TextOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->compactBorder()->generate());
+    }
+
+    public function test_CompactBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->compactBorder()->generate());
+    }
+
+    public function test_CompactBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
         $this->assertSame($expected, $output->compactBorder()->generate());
     }
 
@@ -158,6 +205,20 @@ class TextOutputTest extends AbstractTest
         $this->assertSame($expected, $output->differentiatedBorder()->generate());
     }
 
+    public function test_DifferentiatedBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
+
+    public function test_DifferentiatedBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
+        $this->assertSame($expected, $output->differentiatedBorder()->generate());
+    }
+
     public function test_DottedBorder_NoHeadersMultipleRows()
     {
         $expected = $this->_loadTxtResource(__METHOD__);
@@ -183,6 +244,20 @@ class TextOutputTest extends AbstractTest
     {
         $expected = $this->_loadTxtResource(__METHOD__);
         $output = new TextOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
+
+    public function test_DottedBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->dottedBorder()->generate());
+    }
+
+    public function test_DottedBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
         $this->assertSame($expected, $output->dottedBorder()->generate());
     }
 
@@ -214,6 +289,20 @@ class TextOutputTest extends AbstractTest
         $this->assertSame($expected, $output->girderBorder()->generate());
     }
 
+    public function test_GirderBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->girderBorder()->generate());
+    }
+
+    public function test_GirderBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
+        $this->assertSame($expected, $output->girderBorder()->generate());
+    }
+
     public function test_GithubBorder_NoHeadersMultipleRows()
     {
         $expected = $this->_loadTxtResource(__METHOD__);
@@ -239,6 +328,20 @@ class TextOutputTest extends AbstractTest
     {
         $expected = $this->_loadTxtResource(__METHOD__);
         $output = new TextOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->githubBorder()->generate());
+    }
+
+    public function test_GithubBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->githubBorder()->generate());
+    }
+
+    public function test_GithubBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
         $this->assertSame($expected, $output->githubBorder()->generate());
     }
 
@@ -270,6 +373,20 @@ class TextOutputTest extends AbstractTest
         $this->assertSame($expected, $output->mysqlBorder()->generate());
     }
 
+    public function test_MysqlBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
+
+    public function test_MysqlBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
+        $this->assertSame($expected, $output->mysqlBorder()->generate());
+    }
+
     public function test_NoBorder_NoHeadersMultipleRows()
     {
         $expected = $this->_loadTxtResource(__METHOD__);
@@ -298,6 +415,20 @@ class TextOutputTest extends AbstractTest
         $this->assertSame($expected, $output->noBorder()->generate());
     }
 
+    public function test_NoBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->noBorder()->generate());
+    }
+
+    public function test_NoBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
+        $this->assertSame($expected, $output->noBorder()->generate());
+    }
+
     public function test_RoundedBorder_NoHeadersMultipleRows()
     {
         $expected = $this->_loadTxtResource(__METHOD__);
@@ -323,6 +454,20 @@ class TextOutputTest extends AbstractTest
     {
         $expected = $this->_loadTxtResource(__METHOD__);
         $output = new TextOutput($this->_oneHeaderNoRows);
+        $this->assertSame($expected, $output->roundedBorder()->generate());
+    }
+
+    public function test_RoundedBorder_MultipleHeadersNoRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersNoRows);
+        $this->assertSame($expected, $output->roundedBorder()->generate());
+    }
+
+    public function test_RoundedBorder_MultipleHeadersMultipleRows()
+    {
+        $expected = $this->_loadTxtResource(__METHOD__);
+        $output = new TextOutput($this->_multipleHeadersMultipleRows);
         $this->assertSame($expected, $output->roundedBorder()->generate());
     }
 }

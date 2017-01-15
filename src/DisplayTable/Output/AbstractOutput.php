@@ -2,7 +2,6 @@
 namespace Mmarica\DisplayTable\Output;
 
 use Mmarica\DisplayTable\Input\AbstractInput;
-use Mmarica\DisplayTable\Input\DefaultInput;
 
 
 /**
@@ -18,13 +17,10 @@ abstract class AbstractOutput
     /**
      * AbstractOutput constructor
      *
-     * @param null|AbstractInput $input (optional) Input object
+     * @param AbstractInput $input Input object
      */
-    public function __construct($input = null)
+    public function __construct($input)
     {
-        if (is_null($input))
-            $input = new DefaultInput();
-
         $this->_input = $input;
     }
 

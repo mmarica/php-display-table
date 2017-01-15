@@ -27,12 +27,12 @@ class TextOutput extends AbstractOutput
     /**
      * @var array
      */
-    protected $_header;
+    protected $_headerRows;
 
     /**
      * @var array
      */
-    protected $_rows;
+    protected $_dataRows;
 
     /**
      * @var array
@@ -47,17 +47,17 @@ class TextOutput extends AbstractOutput
     /**
      * @var array
      */
-    protected $_paddedHeader;
+    protected $_paddedHeaderRows;
 
     /**
      * @var array
      */
-    protected $_paddedSpaces;
+    protected $_paddedEmptyRow;
 
     /**
      * @var array
      */
-    protected $_paddedRows;
+    protected $_paddedDataRows;
 
     /**
      * Remove horizontal and vertical padding
@@ -229,33 +229,42 @@ class TextOutput extends AbstractOutput
      */
     public function generate()
     {
-        list($this->_header, $this->_rows) = $this->_input->get();
+        list($this->_headerRows, $this->_dataRows) = $this->_input->get();
         $this->_computeColumnLengths();
         $this->_computePaddedElements();
 
         $border = BorderFactory::create($this->_borderType, $this->_paddedColumnLengths);
+        $output = '';
 
         // the header section of the table
-        if (count($this->_header)) {
-            $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->headerContent($this->_paddedSpaces), $this->_vPadding) : '';
+        $headerCount = 0;
+        if (count($this->_paddedHeaderRows)) {
+            $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->headerContent($this->_paddedEmptyRow), $this->_vPadding) : '';
+            $output .= $border->headerTop();
 
-            $output = $border->headerTop();
-            $output .= $headerVPaddingLines;
-            $output .= $border->headerContent($this->_paddedHeader);
-            $output .= $headerVPaddingLines;
+            $headerParts = array();
+            foreach ($this->_paddedHeaderRows as $index => $row) {
+                $headerPart = $headerVPaddingLines;
+                $headerPart .= $border->headerContent($row);
+                $headerPart .= $headerVPaddingLines;
 
-            $output .= count($this->_rows) ? $border->headerIntersection() : $border->headerBottom();
-        } else {
-            $output = $border->dataTop();
+                $headerParts[] = $headerPart;
+                $headerCount++;
+            }
+
+            $output .= implode($border->headerIntersection(), $headerParts);
+            $output .= count($this->_paddedDataRows) ? $border->headerIntersection() : $border->headerBottom();
         }
 
+        if (!$headerCount)
+            $output .= $border->dataTop();
+
         // the data section of the table
-        if (count($this->_paddedRows)) {
-            $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->dataContent($this->_paddedSpaces), $this->_vPadding) : '';
+        if (count($this->_paddedDataRows)) {
+            $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->dataContent($this->_paddedEmptyRow), $this->_vPadding) : '';
 
             $dataParts = array();
-
-            foreach ($this->_paddedRows as $row) {
+            foreach ($this->_paddedDataRows as $row) {
                 $dataPart = $dataVPaddingLines;
                 $dataPart .= $border->dataContent($row);
                 $dataPart .= $dataVPaddingLines;
@@ -279,16 +288,18 @@ class TextOutput extends AbstractOutput
         $lengths = array();
 
         // if a table header exists, take into account the length of the column names
-        if (count($this->_header)) {
-            $index = 0;
-            foreach ($this->_header as $value) {
-                $lengths[$index] = strlen($value);
-                $index++;
+        if (count($this->_headerRows)) {
+            foreach ($this->_headerRows as $row) {
+                $index = 0;
+                foreach ($row as $value) {
+                    $lengths[$index] = strlen($value);
+                    $index++;
+                }
             }
         }
 
         // take into account the length of the each element from every data row
-        foreach ($this->_rows as $row) {
+        foreach ($this->_dataRows as $row) {
             $index = 0;
             foreach ($row as $value) {
                 $lengths[$index] = isset($lengths[$index]) ? max($lengths[$index], strlen($value)) : strlen($value);
@@ -313,23 +324,29 @@ class TextOutput extends AbstractOutput
      */
     protected function _computePaddedElements()
     {
-        $this->_paddedHeader = array();
-        $this->_paddedSpaces = array();
+        $this->_paddedHeaderRows = array();
+        foreach ($this->_headerRows as $row) {
+            $paddedRow = array();
 
-        foreach ($this->_columnLengths as $index => $length) {
-            $this->_paddedHeader[] = str_pad(isset($this->_header[$index]) ? $this->_header[$index] : '', $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
-            $this->_paddedSpaces[] = str_repeat(' ', $length + 2 * $this->_hPadding);
+            foreach ($this->_columnLengths as $index => $length)
+                $paddedRow[] = str_pad(isset($row[$index]) ? $row[$index] : '', $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
+
+            $this->_paddedHeaderRows[] = $paddedRow;
         }
 
-        $this->_paddedRows = array();
+        $this->_paddedEmptyRow = array();
+        foreach ($this->_columnLengths as $index => $length) {
+            $this->_paddedEmptyRow[] = str_repeat(' ', $length + 2 * $this->_hPadding);
+        }
 
-        foreach ($this->_rows as $row) {
+        $this->_paddedDataRows = array();
+        foreach ($this->_dataRows as $row) {
             $paddedRow = array();
 
             foreach ($this->_columnLengths as $index => $length)
                 $paddedRow[] = str_pad(str_pad(isset($row[$index]) ? $row[$index] : '', $length), $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
 
-            $this->_paddedRows[] = $paddedRow;
+            $this->_paddedDataRows[] = $paddedRow;
         }
     }
 }

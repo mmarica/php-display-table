@@ -7,9 +7,9 @@ namespace Mmarica\DisplayTable\Input;
  */
 class DefaultInput extends AbstractInput
 {
-    public function __construct($header = array(), $rows = array())
+    public function __construct($headerRows = array(), $dataRows = array())
     {
-        $this->_header = $header;
-        $this->_rows = $rows;
+        $this->_headerRows = $headerRows;
+        $this->_dataRows = $dataRows;
     }
 }

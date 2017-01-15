@@ -9,25 +9,13 @@ use Mmarica\DisplayTable\Output\TextOutput;
 
 class DisplayTableTest extends AbstractTest
 {
-    public function test_FromArray()
+    public function test_Create()
     {
-        $header = array('#', 'Person', 'Hobbies');
-        $rows = array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        );
-
-        $this->assertInstanceOf(DisplayTable::class, DisplayTable::fromArray($header, $rows));
-    }
-
-    public function test_WithoutData()
-    {
-        $this->assertInstanceOf(DisplayTable::class, DisplayTable::withoutData());
+        $this->assertInstanceOf(DisplayTable::class, DisplayTable::create());
     }
 
     public function test_ToText()
     {
-        $this->assertInstanceOf(TextOutput::class, DisplayTable::fromArray()->toText());
+        $this->assertInstanceOf(TextOutput::class, DisplayTable::create()->toText());
     }
 }

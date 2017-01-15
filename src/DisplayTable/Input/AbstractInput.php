@@ -7,36 +7,51 @@ namespace Mmarica\DisplayTable\Input;
  */
 abstract class AbstractInput
 {
-    protected $_header = array();
-    protected $_rows = array();
+    protected $_headerRows = array();
+    protected $_dataRows = array();
     
-    public function setHeader($header)
+    public function setHeaderRows($header)
     {
-        $this->_header = $header;
+        $this->_headerRows = $header;
     }
 
-    public function getHeader()
+    public function getHeaderRows()
     {
-        return $this->_header;
+        return $this->_headerRows;
     }
 
-    public function setRows($rows)
+    public function setDataRows($rows)
     {
-        $this->_rows = $rows;
+        $this->_dataRows = $rows;
     }
 
-    public function getRows()
+    public function getDataRows()
     {
-        return $this->_rows;
+        return $this->_dataRows;
     }
 
-    public function addRow($row)
+    public function addHeaderRow($row)
     {
-        $this->_rows[] = $row;
+        $this->_headerRows[] = $row;
+    }
+
+    public function addHeaderRows($rows)
+    {
+        $this->_headerRows = array_merge($this->_dataRows, $rows);
+    }
+
+    public function addDataRow($row)
+    {
+        $this->_dataRows[] = $row;
+    }
+
+    public function addDataRows($rows)
+    {
+        $this->_dataRows = array_merge($this->_dataRows, $rows);
     }
 
     public function get()
     {
-        return array($this->_header, $this->_rows);
+        return array($this->_headerRows, $this->_dataRows);
     }
 }

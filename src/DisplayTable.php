@@ -1,7 +1,8 @@
 <?php
 namespace Mmarica;
 
-use Mmarica\DisplayTable\Input;
+use Mmarica\DisplayTable\Input\AbstractInput;
+use Mmarica\DisplayTable\Input\DefaultInput;
 use Mmarica\DisplayTable\Output;
 
 
@@ -11,7 +12,7 @@ use Mmarica\DisplayTable\Output;
 class DisplayTable
 {
     /**
-     * @var Input\AbstractInput
+     * @var AbstractInput
      */
     protected $_input;
 
@@ -19,21 +20,8 @@ class DisplayTable
      * DisplayTable constructor
      *
      */
-    protected function __construct() {}
-
-    /**
-     * Create a table instance with data from an array
-     *
-     * @param array $headers (optional) Header rows
-     * @param array $data    (optional) Data rows
-     * @return static
-     */
-    public static function fromArray($headers = array(), $data = array())
-    {
-        $instance = new static();
-        $instance->_input = new Input\DefaultInput($headers, $data);
-
-        return $instance;
+    protected function __construct() {
+        $this->_input = new DefaultInput();
     }
 
     /**
@@ -41,10 +29,10 @@ class DisplayTable
      *
      * @return static
      */
-    public static function withoutData()
+    public static function create()
     {
         $instance = new static();
-        $instance->_input = new Input\DefaultInput();
+        $instance->_input = new DefaultInput();
 
         return $instance;
     }
@@ -58,6 +46,53 @@ class DisplayTable
     {
         $table = new Output\TextOutput($this->_input);
         return $table;
+    }
+
+    /**
+     * Add one header row
+     *
+     * @param array $row Header row
+     * @return static
+     */
+    public function headerRow($row)
+    {
+        $this->_input->addHeaderRow($row);
+        return $this;
+    }
+
+    /**
+     * Add multiple header rows
+     *
+     * @param array $rows Header rows
+     * @return static
+     */
+    public function headerRows($rows)
+    {
+        $this->_input->addHeaderRows($rows);
+        return $this;
+    }
+    /**
+     * Add one data row
+     *
+     * @param array $row Data row
+     * @return static
+     */
+    public function dataRow($row)
+    {
+        $this->_input->addDataRow($row);
+        return $this;
+    }
+
+    /**
+     * Add multiple data rows
+     *
+     * @param array $rows Data rows
+     * @return static
+     */
+    public function dataRows($rows)
+    {
+        $this->_input->addDataRows($rows);
+        return $this;
     }
 }
 
