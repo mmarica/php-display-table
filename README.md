@@ -11,7 +11,8 @@ A simple PHP Library for generating tables in text format, useful for writing su
 
 + [Installation](#installation)
 + [Requirements](#requirements)
-+ [Examples](#examples)
++ [Documentation](#documentation)
++ [Example](#example)
 
 ## Installation
 
@@ -29,9 +30,14 @@ The following versions of PHP are supported by this version.
 + PHP 7.0
 + PHP 7.1
 
-## Examples
+## Documentation
 
-### Your first console table
++ [Border styles](docs/border_styles.md)
++ [Padding](docs/padding.md)
++ [Header and data](docs/header_and_data.md)
++ [Same data, multiple tables](docs/same_data_multiple_tables.md)
+
+## Example
 
 Printing a text table is as simple as this:
 
@@ -61,176 +67,4 @@ print DisplayTable::create()
 | 2 | Chewbacca     | Growling, hibernating            |
 | 3 | Philip J. Fry | Time traveling, eating anchovies |
 '---'---------------'----------------------------------'
-```
-
-### Changing the border style
-
-Multiple border styles are available:
-+ Bubble
-+ Compact
-+ Differentiated
-+ Dotted
-+ Girder
-+ Github
-+ Mysql
-+ Rounded (default)
-+ No Border
-
-Changing the border style is a method call away:
- 
-```php
-<?php
-require_once dirname(__FILE__) . '/vendor/autoload.php';
-
-use Mmarica\DisplayTable;
-
-print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->mysqlBorder()
-->generate();
-```
-
-```
-+---+---------------+----------------------------------+
-| # |    Person     |             Hobbies              |
-+---+---------------+----------------------------------+
-| 1 | Mihai         | Cycling, Gaming, Programming     |
-| 2 | Chewbacca     | Growling, hibernating            |
-| 3 | Philip J. Fry | Time traveling, eating anchovies |
-+---+---------------+----------------------------------+
-
-```
-
-### Customizing the padding
-
-The horizontal and vertical padding can be easily customized:
-
-```php
-<?php
-require_once dirname(__FILE__) . '/vendor/autoload.php';
-
-use Mmarica\DisplayTable;
-
-print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->hPadding(2)->vPadding(1)
-->generate();
-```
-
-```
-.-----.-----------------.------------------------------------.
-|     |                 |                                    |
-|  #  |     Person      |              Hobbies               |
-|     |                 |                                    |
-:-----+-----------------+------------------------------------:
-|     |                 |                                    |
-|  1  |  Mihai          |  Cycling, Gaming, Programming      |
-|     |                 |                                    |
-|     |                 |                                    |
-|  2  |  Chewbacca      |  Growling, hibernating             |
-|     |                 |                                    |
-|     |                 |                                    |
-|  3  |  Philip J. Fry  |  Time traveling, eating anchovies  |
-|     |                 |                                    |
-'-----'-----------------'------------------------------------'
-```
-
-### Multiple headers
-
-The tables can have more than one header row:
-
-```php
-<?php
-require_once dirname(__FILE__) . '/vendor/autoload.php';
-
-use Mmarica\DisplayTable;
-
-print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->headerRow(array('-', '(who)', '(what)'))
-    /*
-     * This is a valid alternative:
-     * ->headerRows(
-     *      array('#', 'Person', 'Hobbies'),
-     *      array('-', '(who)', '(what)')
-     * )
-     */
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->generate();
-```
-
-```
-.---.---------------.----------------------------------.
-| # |    Person     |             Hobbies              |
-:---+---------------+----------------------------------:
-| - |     (who)     |              (what)              |
-:---+---------------+----------------------------------:
-| 1 | Mihai         | Cycling, Gaming, Programming     |
-| 2 | Chewbacca     | Growling, hibernating            |
-| 3 | Philip J. Fry | Time traveling, eating anchovies |
-'---'---------------'----------------------------------'
-```
-
-### Using the same data to print multiple tables in different styles
-
-```php
-<?php
-require_once dirname(__FILE__) . '/vendor/autoload.php';
-
-use Mmarica\DisplayTable;
-
-$table = DisplayTable::create()
-     ->headerRow(array('#', 'Person', 'Hobbies'))
-     ->dataRows(
-         array(
-             array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-             array('2', 'Chewbacca', 'Growling, hibernating'),
-             array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-         )
-     );
-
-print $table->toText()->differentiatedBorder()->generate();
-print $table->toText()->dottedBorder()->generate();
-```
-
-```
-+===+===============+==================================+
-| # |    Person     |             Hobbies              |
-+===+===============+==================================+
-| 1 | Mihai         | Cycling, Gaming, Programming     |
-+---+---------------+----------------------------------+
-| 2 | Chewbacca     | Growling, hibernating            |
-+---+---------------+----------------------------------+
-| 3 | Philip J. Fry | Time traveling, eating anchovies |
-+---+---------------+----------------------------------+
-........................................................
-: # :    Person     :             Hobbies              :
-:...:...............:..................................:
-: 1 : Mihai         : Cycling, Gaming, Programming     :
-: 2 : Chewbacca     : Growling, hibernating            :
-: 3 : Philip J. Fry : Time traveling, eating anchovies :
-:...:...............:..................................:
 ```
