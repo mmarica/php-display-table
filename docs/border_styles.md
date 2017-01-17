@@ -8,8 +8,8 @@ Multiple border styles are available:
 + [Girder](#girder)
 + [Github](#github)
 + [Mysql](#mysql)
-+ [Rounded (default)](#rounded)
-+ [No Border](#noborder)
++ [Rounded (default)](#rounded-default)
++ [No Border](#no-border)
 
 ## Bubble
  
