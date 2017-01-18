@@ -66,7 +66,7 @@ class BorderFactory
                 return new RoundedBorder($columnLengths);
 
             default:
-                throw new \UnexpectedValueException('Invalid border type: ' . $borderType);
+                throw new \UnexpectedValueException(sprintf('Invalid border type "%s"', $borderType));
         }
     }
 }

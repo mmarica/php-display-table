@@ -2,6 +2,7 @@
 namespace Mmarica;
 
 use Mmarica\DisplayTable\Input\AbstractInput;
+use Mmarica\DisplayTable\Input\CsvFileInput;
 use Mmarica\DisplayTable\Input\DefaultInput;
 use Mmarica\DisplayTable\Output;
 
@@ -33,6 +34,22 @@ class DisplayTable
     {
         $instance = new static();
         $instance->_input = new DefaultInput();
+
+        return $instance;
+    }
+
+    /**
+     * Create a table instance with data from a CSV file input
+     *
+     * @param string $filename The CSV file path and name
+     * @param int    $headerCount The number of lines from the file that should be considered as header
+     * @param string $delimiter   The delimiter used to separate elements of a line
+     * @return static
+     */
+    public static function fromCsv($filename, $headerCount = 1, $delimiter = ',')
+    {
+        $instance = new static();
+        $instance->_input = new CsvFileInput($filename, $headerCount, $delimiter);
 
         return $instance;
     }

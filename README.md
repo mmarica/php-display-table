@@ -42,6 +42,7 @@ The following versions of PHP are supported by this version.
 + [Padding](docs/padding.md)
 + [Header and data](docs/header_and_data.md)
 + [Same data, multiple tables](docs/same_data_multiple_tables.md)
++ [Get input from CSV file](docs/get_input_from_csv_file.md)
 
 ## Example
 
