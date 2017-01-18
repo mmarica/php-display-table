@@ -7,6 +7,12 @@ use Tests\AbstractTest;
 
 class CsvFileInputTest extends AbstractTest
 {
+    public function test_FileNotFound()
+    {
+        $this->setExpectedException(\Exception::class);
+        @new CsvFileInput('missing_file.csv');
+    }
+
     public function test_Default()
     {
         $input = new CsvFileInput($this->_getResourceFilename(__METHOD__, '.csv'));
