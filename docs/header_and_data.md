@@ -2,7 +2,7 @@
 
 A table can have [one header row](#one-header-row), [multiple header rows](#multiple-header-rows) or even [no header at all](#no-header-rows).
 
-It also can have [one data row](#one-data-row), [multiple data rows](#multiple-data-rows) or [no data rows](#no-data).
+It also can have [one data row](#one-data-row), [multiple data rows](#multiple-data-rows) or [no data rows](#no-data-rows).
 
 ### One header row
 
