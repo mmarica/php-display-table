@@ -18,4 +18,16 @@ class DisplayTableTest extends AbstractTest
     {
         $this->assertInstanceOf(TextOutput::class, DisplayTable::create()->toText());
     }
+
+    public function test_HeaderRows()
+    {
+        DisplayTable::create()->headerRow(array());
+        DisplayTable::create()->headerRows(array(array()));
+    }
+
+    public function test_DataRows()
+    {
+        DisplayTable::create()->dataRow(array());
+        DisplayTable::create()->dataRows(array(array()));
+    }
 }
