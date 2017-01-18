@@ -1,6 +1,10 @@
 ## Padding
 
-The horizontal and vertical padding can be easily customized:
+The default values for padding are:
++ horizontal: 1
++ vertical: 0
+
+The padding can be easily customized:
 
 ```php
 <?php
@@ -38,4 +42,36 @@ print DisplayTable::create()
 |  3  |  Philip J. Fry  |  Time traveling, eating anchovies  |
 |     |                 |                                    |
 '-----'-----------------'------------------------------------'
+```
+
+Or maybe you would prefer no padding at all:
+
+```php
+<?php
+require_once dirname(__FILE__) . '/vendor/autoload.php';
+
+use Mmarica\DisplayTable;
+
+print DisplayTable::create()
+    ->headerRow(array('#', 'Person', 'Hobbies'))
+    ->dataRows(
+        array(
+            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
+            array('2', 'Chewbacca', 'Growling, hibernating'),
+            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
+        )
+    )
+->toText()
+->noPadding()
+->generate();
+```
+
+```
+.-.-------------.--------------------------------.
+|#|   Person    |            Hobbies             |
+:-+-------------+--------------------------------:
+|1|Mihai        |Cycling, Gaming, Programming    |
+|2|Chewbacca    |Growling, hibernating           |
+|3|Philip J. Fry|Time traveling, eating anchovies|
+'-'-------------'--------------------------------'
 ```

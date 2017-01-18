@@ -1,6 +1,6 @@
 {
     "name": "mmarica/display-table",
-    "description": "Display tables in ASCII format",
+    "description": "Display tables in text format",
     "type": "library",
     "license": "MIT",
     "authors": [

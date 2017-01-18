@@ -1,3 +1,9 @@
+```
++=========+========+=======+=========+
+| Console | Tables | Made  |  Easy   |
++=========+========+=======+=========+
+```
+
 # Display tables
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/mmarica/display-table.svg?style=flat&label=release)](https://packagist.org/packages/mmarica/display-table)

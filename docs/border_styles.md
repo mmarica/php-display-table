@@ -9,7 +9,7 @@ Multiple border styles are available:
 + [Github](#github)
 + [Mysql](#mysql)
 + [No Border](#no-border)
-+ [Rounded (default)](#rounded-default)
++ [Rounded](#rounded) (default)
 
 ## Bubble
  
@@ -266,7 +266,7 @@ print DisplayTable::create()
  3  Philip J. Fry  Time traveling, eating anchovies 
 ```
 
-## Rounded (default)
+## Rounded
 
 ```php
 <?php
