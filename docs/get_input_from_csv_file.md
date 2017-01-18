@@ -1,4 +1,4 @@
-## Padding
+## Get input from CSV file
 
 For this example, create a file named 'table.csv' in the same folder as your script, with this content:
 
