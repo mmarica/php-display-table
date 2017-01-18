@@ -37,7 +37,7 @@ abstract class AbstractInput
 
     public function addHeaderRows($rows)
     {
-        $this->_headerRows = array_merge($this->_dataRows, $rows);
+        $this->_headerRows = array_merge($this->_headerRows, $rows);
     }
 
     public function addDataRow($row)
