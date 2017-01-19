@@ -25,13 +25,13 @@ class DisplayTableTest extends AbstractTest
 
     public function test_HeaderRows()
     {
-        DisplayTable::create()->headerRow(array());
-        DisplayTable::create()->headerRows(array(array()));
+        DisplayTable::create()->headerRow([]);
+        DisplayTable::create()->headerRows([[]]);
     }
 
     public function test_DataRows()
     {
-        DisplayTable::create()->dataRow(array());
-        DisplayTable::create()->dataRows(array(array()));
+        DisplayTable::create()->dataRow([]);
+        DisplayTable::create()->dataRows([[]]);
     }
 }

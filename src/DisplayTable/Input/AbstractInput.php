@@ -7,8 +7,8 @@ namespace Mmarica\DisplayTable\Input;
  */
 abstract class AbstractInput
 {
-    protected $_headerRows = array();
-    protected $_dataRows = array();
+    protected $_headerRows = [];
+    protected $_dataRows = [];
     
     public function setHeaderRows($header)
     {
@@ -52,6 +52,6 @@ abstract class AbstractInput
 
     public function get()
     {
-        return array($this->_headerRows, $this->_dataRows);
+        return [$this->_headerRows, $this->_dataRows];
     }
 }

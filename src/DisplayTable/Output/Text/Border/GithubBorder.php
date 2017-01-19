@@ -7,7 +7,7 @@ namespace Mmarica\DisplayTable\Output\Text\Border;
  */
 class GithubBorder extends AbstractBorder
 {
-    protected $_headerContent = array('|', '|', '|');
-    protected $_headerIntersection = array('|', '-', '|', '|');
-    protected $_dataContent = array('|', '|', '|');
+    protected $_headerContent = ['|', '|', '|'];
+    protected $_headerIntersection = ['|', '-', '|', '|'];
+    protected $_dataContent = ['|', '|', '|'];
 }

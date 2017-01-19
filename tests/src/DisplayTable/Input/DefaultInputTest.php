@@ -15,16 +15,16 @@ class DefaultInputTest extends AbstractTest
     /**
      * @var array
      */
-    protected $_headerRows = array('#', 'Person', 'Hobbies');
+    protected $_headerRows = ['#', 'Person', 'Hobbies'];
 
     /**
      * @var array
      */
-    protected $_dataRows = array(
-        array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-        array('2', 'Chewbacca', 'Growling, hibernating'),
-        array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-    );
+    protected $_dataRows = [
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ];
 
     protected function setUp()
     {
@@ -43,9 +43,9 @@ class DefaultInputTest extends AbstractTest
     {
         $input = clone $this->_input;
 
-        $rows = array(
-            array('No.', 'Who', 'Likes')
-        );
+        $rows = [
+            ['No.', 'Who', 'Likes']
+        ];
         $input->setHeaderRows($rows);
 
         $this->assertSame($input->getHeaderRows(), $rows);
@@ -56,9 +56,9 @@ class DefaultInputTest extends AbstractTest
         $input = clone $this->_input;
         $rows = $this->_headerRows;
 
-        $row = array('No.', 'Who', 'Likes');
+        $row = ['No.', 'Who', 'Likes'];
         $input->addHeaderRow($row);
-        $input->addHeaderRows(array($row));
+        $input->addHeaderRows([$row]);
 
         $rows[] = $row;
         $rows[] = $row;
@@ -71,7 +71,7 @@ class DefaultInputTest extends AbstractTest
         $input = clone $this->_input;
         $rows = $this->_dataRows;
 
-        $row = array('4', 'Peter', 'Unit tests');
+        $row = ['4', 'Peter', 'Unit tests'];
         $rows[] = $row;
         $rows[] = $row;
 
@@ -84,9 +84,9 @@ class DefaultInputTest extends AbstractTest
         $input = clone $this->_input;
         $rows = $this->_dataRows;
 
-        $row = array('4', 'Peter', 'Unit tests');
+        $row = ['4', 'Peter', 'Unit tests'];
         $input->addDataRow($row);
-        $input->addDataRows(array($row));
+        $input->addDataRows([$row]);
 
         $rows[] = $row;
         $rows[] = $row;

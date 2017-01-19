@@ -7,5 +7,5 @@ namespace Mmarica\DisplayTable\Output\Text\Border;
  */
 class CompactBorder extends AbstractBorder
 {
-    protected $_headerIntersection = array('', '-', '', '');
+    protected $_headerIntersection = ['', '-', '', ''];
 }

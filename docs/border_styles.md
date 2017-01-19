@@ -20,17 +20,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->bubbleBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->bubbleBorder()
+    ->generate();
 ```
 
 ```
@@ -54,17 +52,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->compactBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->compactBorder()
+    ->generate();
 ```
 
 ```
@@ -84,17 +80,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->differentiatedBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->differentiatedBorder()
+    ->generate();
 ```
 
 ```
@@ -118,17 +112,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->dottedBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->dottedBorder()
+    ->generate();
 ```
 
 ```
@@ -150,17 +142,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->girderBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->girderBorder()
+    ->generate();
 ```
 
 ```
@@ -184,17 +174,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->githubBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->githubBorder()
+    ->generate();
 ```
 
 ```
@@ -214,17 +202,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->mysqlBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->mysqlBorder()
+    ->generate();
 ```
 
 ```
@@ -246,17 +232,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->noBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->noBorder()
+    ->generate();
 ```
 
 ```
@@ -275,17 +259,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::create()
-    ->headerRow(array('#', 'Person', 'Hobbies'))
-    ->dataRows(
-        array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        )
-    )
-->toText()
-->roundedBorder()
-->generate();
+    ->headerRow(['#', 'Person', 'Hobbies'])
+    ->dataRows([
+        ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+        ['2', 'Chewbacca', 'Growling, hibernating'],
+        ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+    ])
+    ->toText()
+    ->roundedBorder()
+    ->generate();
 ```
 
 ```

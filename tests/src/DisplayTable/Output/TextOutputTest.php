@@ -44,22 +44,22 @@ class TextOutputTest extends AbstractTest
     {
         parent::setUp();
 
-        $headers = array(
-            array('#', 'Person', 'Hobbies'),
-            array('-', '(who)', '(what)'),
-        );
-        $rows = array(
-            array('1', 'Mihai', 'Cycling, Gaming, Programming'),
-            array('2', 'Chewbacca', 'Growling, hibernating'),
-            array('3', 'Philip J. Fry', 'Time traveling, eating anchovies'),
-        );
+        $headers = [
+            ['#', 'Person', 'Hobbies'],
+            ['-', '(who)', '(what)'],
+        ];
+        $rows = [
+            ['1', 'Mihai', 'Cycling, Gaming, Programming'],
+            ['2', 'Chewbacca', 'Growling, hibernating'],
+            ['3', 'Philip J. Fry', 'Time traveling, eating anchovies'],
+        ];
 
         // ready-to-use inputs
-        $this->_noHeadersOneRow = new DefaultInput(array(), array($rows[0]));
-        $this->_noHeadersMultipleRows = new DefaultInput(array(), $rows);
-        $this->_oneHeaderNoRows = new DefaultInput(array($headers[0]));
-        $this->_oneHeaderMultipleRows = new DefaultInput(array($headers[0]), $rows);
-        $this->_multipleHeadersNoRows = new DefaultInput($headers, array());
+        $this->_noHeadersOneRow = new DefaultInput([], [$rows[0]]);
+        $this->_noHeadersMultipleRows = new DefaultInput([], $rows);
+        $this->_oneHeaderNoRows = new DefaultInput([$headers[0]]);
+        $this->_oneHeaderMultipleRows = new DefaultInput([$headers[0]], $rows);
+        $this->_multipleHeadersNoRows = new DefaultInput($headers, []);
         $this->_multipleHeadersMultipleRows = new DefaultInput($headers, $rows);
     }
 

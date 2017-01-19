@@ -15,8 +15,8 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Mmarica\DisplayTable;
 
 print DisplayTable::fromCsv('table.csv')
-->toText()
-->generate();
+    ->toText()
+    ->generate();
 ```
 
 ```
@@ -45,19 +45,19 @@ use Mmarica\DisplayTable;
 use Mmarica\DisplayTable\Input\CsvFileInput;
 
 print DisplayTable::fromCsv(
-    'table.csv', // csv file name, doh!
-    2,           // number of lines that represent the header
-
-    // csv format options start here (for details look here: http://php.net/manual/en/function.fgetcsv.php)
-    array(
-        CsvFileInput::CSV_LENGTH => 4096,
-        CsvFileInput::CSV_DELIMITER => ';',
-        CsvFileInput::CSV_ENCLOSURE => '\'',
-        CsvFileInput::CSV_ESCAPE => '\\',
+        'table.csv', // csv file name, doh!
+        2,           // number of lines that represent the header
+    
+        // csv format options start here (for details look here: http://php.net/manual/en/function.fgetcsv.php)
+        [
+            CsvFileInput::CSV_LENGTH => 4096,
+            CsvFileInput::CSV_DELIMITER => ';',
+            CsvFileInput::CSV_ENCLOSURE => '\'',
+            CsvFileInput::CSV_ESCAPE => '\\',
+        ]
     )
-)
-->toText()
-->generate();
+    ->toText()
+    ->generate();
 ```
 
 ```

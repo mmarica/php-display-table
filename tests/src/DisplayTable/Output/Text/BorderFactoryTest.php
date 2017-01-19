@@ -18,54 +18,54 @@ class BorderFactoryTest extends AbstractTest
     public function test_create_InvalidBorderType()
     {
         $this->setExpectedException(\UnexpectedValueException::class);
-        BorderFactory::create('invalid', array());
+        BorderFactory::create('invalid', []);
     }
 
     public function test_create_RoundedBorder()
     {
-        $border = BorderFactory::create(BorderFactory::ROUNDED_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::ROUNDED_BORDER, []);
         $this->assertInstanceOf(RoundedBorder::class, $border);
     }
 
     public function test_create_MysqlBorder()
     {
-        $border = BorderFactory::create(BorderFactory::MYSQL_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::MYSQL_BORDER, []);
         $this->assertInstanceOf(MysqlBorder::class, $border);
     }
 
     public function test_create_DottedBorder()
     {
-        $border = BorderFactory::create(BorderFactory::DOTTED_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::DOTTED_BORDER, []);
         $this->assertInstanceOf(DottedBorder::class, $border);
     }
 
     public function test_create_DifferentiatedBorder()
     {
-        $border = BorderFactory::create(BorderFactory::DIFFERENTIATED_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::DIFFERENTIATED_BORDER, []);
         $this->assertInstanceOf(DifferentiatedBorder::class, $border);
     }
 
     public function test_create_BubbleBorder()
     {
-        $border = BorderFactory::create(BorderFactory::BUBBLE_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::BUBBLE_BORDER, []);
         $this->assertInstanceOf(BubbleBorder::class, $border);
     }
 
     public function test_create_GirderBorder()
     {
-        $border = BorderFactory::create(BorderFactory::GIRDER_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::GIRDER_BORDER, []);
         $this->assertInstanceOf(GirderBorder::class, $border);
     }
 
     public function test_create_CompactBorder()
     {
-        $border = BorderFactory::create(BorderFactory::COMPACT_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::COMPACT_BORDER, []);
         $this->assertInstanceOf(CompactBorder::class, $border);
     }
 
     public function test_create_NoBorder()
     {
-        $border = BorderFactory::create(BorderFactory::NO_BORDER, array());
+        $border = BorderFactory::create(BorderFactory::NO_BORDER, []);
         $this->assertInstanceOf(NoBorder::class, $border);
     }
 }

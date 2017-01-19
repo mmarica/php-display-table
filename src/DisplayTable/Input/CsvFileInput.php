@@ -16,11 +16,11 @@ class CsvFileInput extends AbstractInput
      * Csv File Input constructor
      *
      * @param string $filename    The csv file path and name
-     * @param int    $headerCount The number of lines from the file that should be considered as header
-     * @param array  $csvOptions  CSV specific options
+     * @param int    $headerCount (optional) The number of lines from the file that should be considered as header
+     * @param array  $csvOptions  (optional) CSV specific options
      * @throws \Exception
      */
-    public function __construct($filename, $headerCount = 1, $csvOptions = array())
+    public function __construct($filename, $headerCount = 1, $csvOptions = [])
     {
         // Apply csv options (if any)
         $length = isset($csvOptions[self::CSV_LENGTH]) ? $csvOptions[self::CSV_LENGTH] : 16384;

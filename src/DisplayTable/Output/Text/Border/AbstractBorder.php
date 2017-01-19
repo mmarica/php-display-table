@@ -14,7 +14,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_headerTop = array('', '', '', '');
+    protected $_headerTop = ['', '', '', ''];
 
     /**
      * Glue elements of a header content row (text cells)
@@ -22,7 +22,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_headerContent = array('', '', '');
+    protected $_headerContent = ['', '', ''];
 
     /**
      * Elements of the header intersection border (used between two header rows or between a header and the following data row)
@@ -30,7 +30,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_headerIntersection = array('', '', '', '');
+    protected $_headerIntersection = ['', '', '', ''];
 
     /**
      * Elements of the header bottom border (used when no data rows follow)
@@ -38,7 +38,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_headerBottom = array('', '', '', '');
+    protected $_headerBottom = ['', '', '', ''];
 
     /**
      * Elements of the data top border (used when no header rows are present)
@@ -46,7 +46,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_dataTop = array('', '', '', '');
+    protected $_dataTop = ['', '', '', ''];
 
     /**
      * Glue elements of a data content row (text cells)
@@ -54,7 +54,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_dataContent = array('', '', '');
+    protected $_dataContent = ['', '', ''];
 
     /**
      * Elements of the data intersection border (between two data rows)
@@ -62,7 +62,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_dataIntersection = array('', '', '', '');
+    protected $_dataIntersection = ['', '', '', ''];
 
     /**
      * Elements of the data bottom border
@@ -70,7 +70,7 @@ abstract class AbstractBorder
      *
      * @var array
      */
-    protected $_dataBottom = array('', '', '', '');
+    protected $_dataBottom = ['', '', '', ''];
 
     /**
      * The maximum length for each column after padding
@@ -96,7 +96,7 @@ abstract class AbstractBorder
      */
     public function headerTop()
     {
-        $elements = array();
+        $elements = [];
 
         foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_headerTop[1], $length);
@@ -127,7 +127,7 @@ abstract class AbstractBorder
      */
     public function headerIntersection()
     {
-        $elements = array();
+        $elements = [];
 
         foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_headerIntersection[1], $length);
@@ -147,7 +147,7 @@ abstract class AbstractBorder
      */
     public function headerBottom()
     {
-        $elements = array();
+        $elements = [];
 
         foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_headerBottom[1], $length);
@@ -167,7 +167,7 @@ abstract class AbstractBorder
      */
     public function dataTop()
     {
-        $elements = array();
+        $elements = [];
 
         foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_dataTop[1], $length);
@@ -198,7 +198,7 @@ abstract class AbstractBorder
      */
     public function dataIntersection()
     {
-        $elements = array();
+        $elements = [];
 
         foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_dataIntersection[1], $length);
@@ -218,7 +218,7 @@ abstract class AbstractBorder
      */
     public function dataBottom()
     {
-        $elements = array();
+        $elements = [];
 
         foreach ($this->_columnLengths as $length)
             $elements[] = str_repeat($this->_dataBottom[1], $length);
