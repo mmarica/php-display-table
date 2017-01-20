@@ -1,6 +1,7 @@
 {
     "name": "mmarica/display-table",
     "description": "Display tables in text format",
+    "keywords": ["console table","terminal table", "text table"],
     "type": "library",
     "license": "MIT",
     "authors": [
