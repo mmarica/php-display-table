@@ -25,41 +25,6 @@ class TextOutput extends AbstractOutput
     protected $_borderType = BorderFactory::ROUNDED_BORDER;
 
     /**
-     * @var array
-     */
-    protected $_headerRows;
-
-    /**
-     * @var array
-     */
-    protected $_dataRows;
-
-    /**
-     * @var array
-     */
-    protected $_columnLengths;
-
-    /**
-     * @var array
-     */
-    protected $_paddedColumnLengths;
-
-    /**
-     * @var array
-     */
-    protected $_paddedHeaderRows;
-
-    /**
-     * @var array
-     */
-    protected $_paddedEmptyRow;
-
-    /**
-     * @var array
-     */
-    protected $_paddedDataRows;
-
-    /**
      * Remove horizontal and vertical padding
      *
      * @return self
@@ -229,21 +194,19 @@ class TextOutput extends AbstractOutput
      */
     public function generate()
     {
-        list($this->_headerRows, $this->_dataRows) = $this->_input->get();
-        $this->_computeColumnLengths();
-        $this->_computePaddedElements();
+        list($paddedColumnLengths, $paddedHeaderRows, $paddedDataRows, $paddedEmptyRow) = $this->_computePaddedElements();
 
-        $border = BorderFactory::create($this->_borderType, $this->_paddedColumnLengths);
+        $border = BorderFactory::create($this->_borderType, $paddedColumnLengths);
         $output = '';
 
         // the header section of the table
         $headerCount = 0;
-        if (count($this->_paddedHeaderRows)) {
-            $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->headerContent($this->_paddedEmptyRow), $this->_vPadding) : '';
+        if (count($paddedHeaderRows)) {
+            $headerVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->headerContent($paddedEmptyRow), $this->_vPadding) : '';
             $output .= $border->headerTop();
 
             $headerParts = [];
-            foreach ($this->_paddedHeaderRows as $index => $row) {
+            foreach ($paddedHeaderRows as $index => $row) {
                 $headerPart = $headerVPaddingLines;
                 $headerPart .= $border->headerContent($row);
                 $headerPart .= $headerVPaddingLines;
@@ -253,18 +216,18 @@ class TextOutput extends AbstractOutput
             }
 
             $output .= implode($border->headerIntersection(), $headerParts);
-            $output .= count($this->_paddedDataRows) ? $border->headerIntersection() : $border->headerBottom();
+            $output .= count($paddedDataRows) ? $border->headerIntersection() : $border->headerBottom();
         }
 
         if (!$headerCount)
             $output .= $border->dataTop();
 
         // the data section of the table
-        if (count($this->_paddedDataRows)) {
-            $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->dataContent($this->_paddedEmptyRow), $this->_vPadding) : '';
+        if (count($paddedDataRows)) {
+            $dataVPaddingLines = $this->_vPadding > 0 ? str_repeat($border->dataContent($paddedEmptyRow), $this->_vPadding) : '';
 
             $dataParts = [];
-            foreach ($this->_paddedDataRows as $row) {
+            foreach ($paddedDataRows as $row) {
                 $dataPart = $dataVPaddingLines;
                 $dataPart .= $border->dataContent($row);
                 $dataPart .= $dataVPaddingLines;
@@ -280,16 +243,17 @@ class TextOutput extends AbstractOutput
     }
 
     /**
-     * Compute the maximum length for each column based on the header and data values
-     *
+     * Compute header, data and empty row elements with horizontal padding
      */
-    protected function _computeColumnLengths()
+    protected function _computePaddedElements()
     {
+        list($headerRows, $dataRows) = $this->_input->get();
+
         $lengths = [];
 
         // if a table header exists, take into account the length of the column names
-        if (count($this->_headerRows)) {
-            foreach ($this->_headerRows as $row) {
+        if (count($headerRows)) {
+            foreach ($headerRows as $row) {
                 $index = 0;
                 foreach ($row as $value) {
                     $lengths[$index] = strlen($value);
@@ -299,7 +263,7 @@ class TextOutput extends AbstractOutput
         }
 
         // take into account the length of the each element from every data row
-        foreach ($this->_dataRows as $row) {
+        foreach ($dataRows as $row) {
             $index = 0;
             foreach ($row as $value) {
                 $lengths[$index] = isset($lengths[$index]) ? max($lengths[$index], strlen($value)) : strlen($value);
@@ -307,46 +271,42 @@ class TextOutput extends AbstractOutput
             }
         }
 
-        $this->_columnLengths = $lengths;
-
         // compute the padded column lengths by adding the horizontal padding
-        $this->_paddedColumnLengths = array_map(
+        $paddedColumnLengths = array_map(
             function($length) {
                 return $length + 2 * $this->_hPadding;
             }
             , $lengths
         );
-    }
 
-    /**
-     * Compute header, data and empty row elements with horizontal padding
-     *
-     */
-    protected function _computePaddedElements()
-    {
-        $this->_paddedHeaderRows = [];
-        foreach ($this->_headerRows as $row) {
+        // header rows with horizontal padding
+        $paddedHeaderRows = [];
+        foreach ($headerRows as $row) {
             $paddedRow = [];
 
-            foreach ($this->_columnLengths as $index => $length)
+            foreach ($lengths as $index => $length)
                 $paddedRow[] = str_pad(isset($row[$index]) ? $row[$index] : '', $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
 
-            $this->_paddedHeaderRows[] = $paddedRow;
+            $paddedHeaderRows[] = $paddedRow;
         }
 
-        $this->_paddedEmptyRow = [];
-        foreach ($this->_columnLengths as $index => $length) {
-            $this->_paddedEmptyRow[] = str_repeat(' ', $length + 2 * $this->_hPadding);
-        }
-
-        $this->_paddedDataRows = [];
-        foreach ($this->_dataRows as $row) {
+        // data rows with horizontal padding
+        $paddedDataRows = [];
+        foreach ($dataRows as $row) {
             $paddedRow = [];
 
-            foreach ($this->_columnLengths as $index => $length)
+            foreach ($lengths as $index => $length)
                 $paddedRow[] = str_pad(str_pad(isset($row[$index]) ? $row[$index] : '', $length), $length + 2 * $this->_hPadding, ' ', STR_PAD_BOTH);
 
-            $this->_paddedDataRows[] = $paddedRow;
+            $paddedDataRows[] = $paddedRow;
         }
+
+        // empty row with horizontal padding
+        $paddedEmptyRow = [];
+        foreach ($lengths as $index => $length) {
+            $paddedEmptyRow[] = str_repeat(' ', $length + 2 * $this->_hPadding);
+        }
+
+        return array($paddedColumnLengths, $paddedHeaderRows, $paddedDataRows, $paddedEmptyRow);
     }
 }
