@@ -22,7 +22,7 @@ class CsvFileInput extends AbstractInput
      */
     public function __construct($filename, $headerCount = 1, $csvOptions = [])
     {
-        // Apply csv options (if any)
+        // apply csv options (if any) over defaults
         $length = isset($csvOptions[self::CSV_LENGTH]) ? $csvOptions[self::CSV_LENGTH] : 16384;
         $delimiter = isset($csvOptions[self::CSV_DELIMITER]) ? $csvOptions[self::CSV_DELIMITER] : ',';
         $enclosure = isset($csvOptions[self::CSV_ENCLOSURE]) ? $csvOptions[self::CSV_ENCLOSURE] : '"';

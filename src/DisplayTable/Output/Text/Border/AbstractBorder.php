@@ -8,6 +8,32 @@ namespace Mmarica\DisplayTable\Output\Text\Border;
  */
 abstract class AbstractBorder
 {
+    /*
+        Full table with multiple header and data rows:
+
+        [ht0][ht1][ht1][ht1][ht1][ht1][ht2][ht1][ht1][ht1][ht1][ht1][ht3]
+        [hc0]         header          [hc1]         header          [hc2]
+        [hi0][hi1][hi1][hi1][hi1][hi1][hi2][hi1][hi1][hi1][hi1][hi1][hi3]
+        [hc0]         header          [hc1]         header          [hc2]
+        [hi0][hi1][hi1][hi1][hi1][hi1][hi2][hi1][hi1][hi1][hi1][hi1][hi3]
+        [dc0]           data          [dc1]         data            [dc2]
+        [di0][di1][di1][di1][di1][di1][di2][di1][di1][di1][di1][di1][di3]
+        [dc0]           data          [dc1]         data            [dc2]
+        [db0][db1][db1][db1][db1][db1][db2][db1][db1][db1][db1][db1][db3]
+
+        Header bottom border is used for header-only tables:
+
+        [ht0][ht1][ht1][ht1][ht1][ht1][ht2][ht1][ht1][ht1][ht1][ht1][ht3]
+        [hc0]         header          [hc1]         header          [hc2]
+        [hb0][hb1][hb1][hb1][hb1][hb1][hb2][hb1][hb1][hb1][hb1][hb1][hb3]
+
+        Data top border is used for data-only tables:
+
+        [dt0][dt1][dt1][dt1][dt1][dt1][dt2][dt1][dt1][dt1][dt1][dt1][dt3]
+        [dc0]           data          [dc1]         data            [dc2]
+        [db0][db1][db1][db1][db1][db1][db2][db1][db1][db1][db1][db1][db3]
+     */
+
     /**
      * Elements of the header top border
      * ht0, ht1, ht2, ht3

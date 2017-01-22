@@ -30,6 +30,8 @@ class BorderFactory
     const ROUNDED_BORDER = 'rounded_border';
 
     /**
+     * Create a borde instance of the specified type
+     *
      * @param string $borderType    Border type
      * @param array  $columnLengths List of maximum lengths for every column
      * @return AbstractBorder

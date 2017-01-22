@@ -7,49 +7,101 @@ namespace Mmarica\DisplayTable\Input;
  */
 abstract class AbstractInput
 {
+    /**
+     * @var array
+     */
     protected $_headerRows = [];
+
+    /**
+     * @var array
+     */
     protected $_dataRows = [];
-    
-    public function setHeaderRows($header)
+
+    /**
+     * Set the header rows
+     *
+     * @param array $headerRows Header rows
+     */
+    public function setHeaderRows($headerRows)
     {
-        $this->_headerRows = $header;
+        $this->_headerRows = $headerRows;
     }
 
+    /**
+     * Get the header rows
+     *
+     * @return array
+     */
     public function getHeaderRows()
     {
         return $this->_headerRows;
     }
 
-    public function setDataRows($rows)
+    /**
+     * Set the data rows
+     *
+     * @param array $dataRows Data rows
+     */
+    public function setDataRows($dataRows)
     {
-        $this->_dataRows = $rows;
+        $this->_dataRows = $dataRows;
     }
 
+    /**
+     * Get the data rows
+     *
+     * @return array
+     */
     public function getDataRows()
     {
         return $this->_dataRows;
     }
 
-    public function addHeaderRow($row)
+    /**
+     * Add a header row
+     *
+     * @param array $headerRow Header row to add
+     */
+    public function addHeaderRow($headerRow)
     {
-        $this->_headerRows[] = $row;
+        $this->_headerRows[] = $headerRow;
     }
 
-    public function addHeaderRows($rows)
+    /**
+     * Add header rows
+     *
+     * @param array $headerRows Header rows to add
+     */
+    public function addHeaderRows($headerRows)
     {
-        $this->_headerRows = array_merge($this->_headerRows, $rows);
+        $this->_headerRows = array_merge($this->_headerRows, $headerRows);
     }
 
-    public function addDataRow($row)
+    /**
+     * Add a data row
+     *
+     * @param array $dataRow Data row to add
+     */
+    public function addDataRow($dataRow)
     {
-        $this->_dataRows[] = $row;
+        $this->_dataRows[] = $dataRow;
     }
 
-    public function addDataRows($rows)
+    /**
+     * Add data rows
+     *
+     * @param array $dataRows Data rows to add
+     */
+    public function addDataRows($dataRows)
     {
-        $this->_dataRows = array_merge($this->_dataRows, $rows);
+        $this->_dataRows = array_merge($this->_dataRows, $dataRows);
     }
 
+    /**
+     * Get the list of header rows and data rows
+     *
+     * @return array
+     */
     public function get()
     {
         return [$this->_headerRows, $this->_dataRows];

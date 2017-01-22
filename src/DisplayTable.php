@@ -19,11 +19,8 @@ class DisplayTable
 
     /**
      * DisplayTable constructor
-     *
      */
-    protected function __construct() {
-        $this->_input = new DefaultInput();
-    }
+    private function __construct() {}
 
     /**
      * Create a table instance without any data
@@ -88,6 +85,7 @@ class DisplayTable
         $this->_input->addHeaderRows($rows);
         return $this;
     }
+
     /**
      * Add one data row
      *
