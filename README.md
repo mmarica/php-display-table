@@ -30,7 +30,7 @@ $ composer require mmarica/display-table
 
 ## Requirements
 
-The following versions of PHP are supported by this version.
+The following versions of PHP are supported:
 
 + PHP 5.6
 + PHP 7.0
